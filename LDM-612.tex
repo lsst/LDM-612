@@ -1,0 +1,101 @@
+% vim: tw=0:wrap:linebreak
+\documentclass[DM,toc,lsstdraft]{lsstdoc}
+
+\usepackage{comment}
+\usepackage{datetime}
+\usepackage{microtype}
+
+\newcommand{\microarcsec}{$\mu$as\xspace}
+\interfootnotelinepenalty=10000
+
+
+\setcounter{secnumdepth}{3}
+
+%%%%%%%%%%%%%%%%%%%%%
+% Introduce mechanism to turn on and off various annotations (\XXX command,
+% \begin{notes}, and anything else bracketed by \ifannotated ... \fi)
+%
+\newif\ifannotated
+\annotatedtrue
+\annotatedfalse	% uncomment this to hide all annotations (comments, notes, etc)
+
+\ifannotated
+	% leave things as-is
+\else
+	% hide all \XXX commands
+	\renewcommand{\XXX}{}
+
+	% hide all \begin{note}...\end{note} text
+	\renewenvironment{note}[1][Note]
+	{}
+	{}
+\fi
+%%%%%%%%%%%%%%%%%%%%%
+
+\title{Plans and Policies for LSST Alert Distribution}
+\author{
+    E.C.~Bellm and coauthors
+     \emph{for the LSST Project}
+}
+
+\setDocRef{LDM-612}
+\setDocCurator{E.C.~Bellm}
+\date{\today}
+
+\setDocAbstract{%
+A major product of the nightly processing of LSST images is a world-public stream of alerts from transient, variable, and moving sources.
+Science users will access these alerts through community brokers or through a simple filtering service provided by LSST.
+This document provides a guide to the planned alert distribution system to aid science users, broker developers, funding agencies, and LSST Project personnel.
+It describes the components of the alert distribution system and the data rights required to access specific scientific products.
+It provides guidelines for organizations developing community brokers.
+And it describes the planned capabilities of the LSST simple alert filtering service and Science Platform to aid science users in planning for LSST science.
+}
+
+%
+%   Revision history
+%
+% OLDEST FIRST: VERSION, DATE, DESCRIPTION, OWNER NAME
+\setDocChangeRecord{%
+\addtohist{1}{2017-12-28}{Initial version}{Eric Bellm}
+}
+
+
+\begin{document}
+
+\maketitle
+
+\include{sections/introduction}
+
+\include{sections/components}
+
+\include{sections/data_rights}
+
+\include{sections/community_brokers}
+
+\include{sections/mini_broker}
+
+\section{Glossary}
+
+\begin{description}
+\item[AP] Alert Production
+\item[DAC] Data Access Center
+\item[DMS] Data Management System
+\item[DR] Data Release.
+\item[DRP] Data Release Production
+\item[EPO] Education and Public Outreach
+\item[MOPS] Moving Object Pipeline System
+\item[SQL] Structured Query Language, the common language for querying relational databases.
+\item[TBD] To Be Determined
+\item[Visit] A pair of exposures of the same area of the sky taken in immediate
+succession.  A Visit for LSST consists of a 15 second exposure, a 2
+second readout time, and a second 15 second exposure.
+\item[VO] Virtual Observatory
+\item[VOEvent] A VO standard for disseminating information about transient events.
+\item[WCS] World Coordinate System.  A bidirectional mapping between pixel- and sky-coordinates.
+\end{description}
+
+\clearpage
+
+\bibliography{lsst,refs_ads,refs}
+
+\end{document}
