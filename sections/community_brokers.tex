@@ -1,1 +1,92 @@
 \section{Guidelines for Community Brokers}
+
+\subsection{Why are there requirements on community brokers?}
+
+Networking resources - Each full alert stream requires 1 gbs bandwidth
+
+Staffing resources - It is anticipated that community brokers will require some level of support from the LSST operations team
+
+Science integrity – We would like reliability for the community
+
+World-public – We would like to prioritize resource investment into brokers that will serve a broad community
+
+\subsection{How many Community Brokers are expected?}
+
+Initial sizing estimates supported only four full streams due to network bandwidth limitations.
+
+Current capacity projections indicate a larger number may be possible, but with some uncertainty:
+
+\begin{itemize}
+	\item Depends on actual network capacity and usage patterns
+
+	\item Depends on details of the alert format
+
+	\item Depends on the achieved purity of the alert stream
+\end{itemize}
+
+Don’t think we can make a final decision on the number of brokers until we have at least processed data from ComCam.
+
+
+\subsection{What is the planned proposal process?}
+
+\subsection{Who is eligible to propose for a community broker?}
+
+\subsection{Who is eligible to propose for a community broker?}
+
+\subsection{How will proposed brokers be evaluated?}
+
+Demonstration of availability of appropriate technical and personnel resources
+\begin{itemize}
+	\item Large inbound and outbound network bandwidth (full alert stream is a few TB/night)
+	\item Petabytes of disk capacity
+	\item Databases handling of billions of sources
+	\item Compute resources to handle sophisticated classification and filtering tasks in real time at scale
+	\item Personnel to develop and maintain the service
+\end{itemize}
+
+
+Potential to add scientific that serves a large community, enables high-profile science, and/or provides unique capabilities
+
+Willingness to make products world public (preferred)
+
+Integration with follow-up resources and/or the broader time-domain ecosystem
+
+Demonstrated performance and/or community adoption on precursor streams
+
+Demonstration of scientific validity on precursor data or by data challenge
+
+Applicability of international agreements, if relevant
+
+
+\subsection{What is the anticipated timeline?}
+
+March 2018: present draft policy document to SAC for feedback
+
+August 2018: obtain Project approval for policy document
+
+Mid 2018: Set up test alert stream with sample precursor data
+
+2019: VO interactions to develop format
+
+2020: Call for proposals for community brokers
+
+	Sample commissioning alerts with ComCam \textit{with substantial latency}
+
+2021: Finalize number of full streams
+
+	Sample commissioning alerts with LSSTCam \textit{with substantial latency}
+
+	Selection of LSST brokers for early operations
+
+2022: Begin operations
+
+It is reasonable to expect periodic review of broker performance and usage during LSST Operations.
+
+
+\subsection{Must community brokers consume the whole stream?}
+
+\subsection{Must community brokers serve the whole stream?}
+
+\subsection{Must community brokers redistribute alerts to everyone?}
+
+
