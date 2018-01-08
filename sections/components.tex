@@ -1,1 +1,43 @@
-\section{Components and Capabilities of the LSST Alert Distribution System}
+\section{Components and Capabilities of the LSST Alert Distribution System}\label{sec:components}
+
+\subsection{Relevant aspects of the fiber networks, NCSA, and Alert Generation pipelines.}
+
+\subsection{Alert Packets}
+
+Contents and triggering criteria.
+
+{\it Common Question: What do Alerts contain? The full past light curve, non-detections, the host photo-z, etc. Obviously what we're going to answer here anyway.}
+
+{\it Common Question: What is the size of the Alert packet and what fraction of that is image stamp?}
+
+{\it Common Question: Will Alerts be released after 60 or 120 seconds?}
+
+{\it Common Question: Requests for descriptions of all cases that trigger Alerts in addition to a SNR>5 DIASource. For example: telescope slews, a source reaching saturation, the forced photometry done for all DIAObjects with detections in past 12 months.}
+
+{\it Common Question: What will be the format of source association to e.g., DRP Objects (id or full record).}
+
+
+
+\subsection{Alert Transport}
+
+{\it Common Question: How will an interrupted stream recuperate from a slow-down? Will there be, for example, no alerts issued once they're older than 300s? (Probably the public will want all of the Alerts, even with comprised latency).}
+
+{\it Common Question: How behind will the Alert Stream get during visits to crowded fields?} MLG notes that the answer might be ``not at all" if elastic computational resources are deployed at NCSA (convos with K.T.).
+
+
+\subsection{Community Brokers}
+
+{\it Common Question: Do all brokers need to forward the raw alert stream publicly? This is also asked in Section \ref{sec:community_brokers}.}
+
+
+\subsection{The LSST DAC}
+
+\subsubsection{Processed Images and Catalogs}
+
+\subsubsection{L1 DB}
+
+\subsubsection{Alert DB}
+
+\subsubsection{The LSST mini-broker}
+
+\subsubsection{The LSST Science Platform}

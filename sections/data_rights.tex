@@ -1,1 +1,27 @@
-\section{Data Rights to Alert Stream Components}
+\section{Data Rights to Alert Stream Components}\label{sec:data_rights}
+
+This will probably become a summary of the relevant aspects of LSE-349 (in progress). 
+
+{\it Common Question: which users can back-query (or replay) the alert stream? This would be equivalent to being able to access the Alert Database, so would this be strictly limited to data rights holders?}
+
+{\it Common Question: is there a return path for brokers (or enriched broker products) to be worked with in the DAC?  Tension is that if brokers must make their products world-public, they cannot use proprietary DAC access.  But if I have DAC access, I want to be able to use it--e.g., fire off a script to do quick forced photometry on a cutout.}
+
+Note that Steve K has some relevant policy text here:
+\url{https://docushare.lsstcorp.org/docushare/dsweb/Get/LPM-151/}
+
+
+\subsection{Members (Data Rights Holders) -- alert packets and DAC access}
+
+{\it Common Question: Usage policy, e.g., whose service gets throttled when Science Platform server is overwhelmed? Case scenario: a broker with associated real-time processing of DRP images in the DAC for e.g., SNR<5 forced photometry, host galaxy details.}
+
+\subsection{International Partners without DAC access}
+
+{\it Common Question: can international partners without DAC access actually get a user account via collaboration with partner institution that does have DAC access?}
+
+\subsection{LSST EPO (cf. LIT-94) -- redacted subset of alert stream}
+
+\subsection{All others (public) -- alert packets only}
+
+Consider public use policy that is favorable to use by more than just the astronomical field? E.g., for data science applications.
+
+{\it Common Question: LSST has stated the alert stream will be public, but only through brokers. the lsst mini-broker will only be available through the DAC, so, not strictly public. Brokers might be required to make the full stream, or their filtered streams, public. Will they also be required to provide publicly accessible basic filters? Or will (somehow) the mini-broker be set up to allow this for public use?}
