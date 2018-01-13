@@ -1,24 +1,43 @@
 \section{Components and Capabilities of the LSST Alert Distribution System}\label{sec:components}
 
+Description of the end-to-end system from data acquisition to scientific use of alerts.
 
 \subsection{Overview of LSST Data Acquisition, Transfer, and Processing}
 
-(relevant aspects of the fiber networks, NCSA, and Alert Generation pipelines)
+This section will discuss the relevant aspects of the fiber networks, NCSA, and Alert Generation pipelines.
 
-should discuss MOPS and Precovery/Forced Photometry either here or in the relevant DAC section
+\subsubsection{Fibre Networks}
 
-\citeds{LDM-151}
+\subsubsection{National Center for Supercomputing Applications (NCSA)}
+
+\subsubsection{Alert Generation Pipeline}
+
+% MLG draft -- trying not to reproduce information in LDM-151 or LSE-163
+The processes and products of the prompt (Level 1) difference image analysis (DIA) pipeline are described in \citeds{LSE-163}, with detailed descriptions of the algorithmic components in \citeds{LDM-151}. In short, every new calibrated image (i.e., $2\times15$ second consecutive images, combined and corrected for instrument signatures) is matched to a deeper template image created from previous images (typically, from at least a few months prior), and then the template is subtracted to create the difference image. Source detection and measurement algorithms are run on the difference image. Deblending will only be run if necessary (\citeds{LSE-163}, page 11). Characteristics like flux and shape are measured for all sources in the difference image (e.g., PSF flux, trail and dipole parameters; a full list can be found in Table 1 of \citeds{LSE-163}). 
+
+% MLG draft
+All sources detected on a difference image with signal-to-noise ratio $>5$, whether in positive or negative flux, initiate an {\tt Alert}. The exception is sources with $SNR>5$ but also a {\it ``high probability of being instrumental non-astrophysical artifacts"} \cite{LSE-163}. The application of real/bogus (spuriousness) algorithms might only be done if the fraction of false positives is greater than 50\% (\citeds{LDM-151}; OSS-REQ-0354) {\bf (but how would that be known without first applying real-bogus?)}. Rejected sources might not be persisted (i.e., not included in the {\tt DIASource} table and no {\tt Alert} is triggered). \citeds{LDM-151} states that the default technique will be {\it ``based on a trained random forest classifier ... conditioned on the image quality and airmass of the observation''}, but otherwise the spuriousness algorithm is very sparsely defined in \citeds{LDM-151}: {\it ``Some per-source measure of likelihood the detection is junk. May use machine learning on other measurements or pixels. May be augmented by spuriousness measures that aren't purely per-source"} (page 118-11).
+
+% MLG draft
+The next step of the Alert Generation Pipeline is source association. ... [continue here]
+
+% EB: should discuss MOPS and Precovery/Forced Photometry either here or in the relevant DAC section
+
+% \citeds{LDM-151}, \citeds{LSE-163}
+
+{\it Common Question: Will Alerts be released after 60 or 120 seconds?}
+
 
 \subsection{Alert Packets}
 
 Contents and triggering criteria.
 \citeds{LSE-163}
 
+Remember to note that MPChecker will run in-line and results included in Alert.
+
 {\it Common Question: What do Alerts contain? The full past light curve, non-detections, the host photo-z, etc. Obviously what we're going to answer here anyway.}
 
 {\it Common Question: What is the size of the Alert packet and what fraction of that is image stamp?}
-
-{\it Common Question: Will Alerts be released after 60 or 120 seconds?}
 
 {\it Common Question: Requests for descriptions of all cases that trigger Alerts in addition to a SNR>5 DIASource. For example: telescope slews, a source reaching saturation, the forced photometry done for all DIAObjects with detections in past 12 months.}
 
@@ -31,6 +50,12 @@ Contents and triggering criteria.
 {\it Common Question: How will an interrupted stream recuperate from a slow-down? Will there be, for example, no alerts issued once they're older than 300s? (Probably the public will want all of the Alerts, even with comprised latency).}
 
 {\it Common Question: How behind will the Alert Stream get during visits to crowded fields?} MLG notes that the answer might be ``not at all" if elastic computational resources are deployed at NCSA (convos with K.T.).
+
+
+\subsection{Alert Stream Diagnostics?}
+
+%MLG proposing this subsection
+Perhaps here we could talk about some alert stream diagnostics to build. E.g., a "Alert Stream" homepage tracking alerts/s in the past 30, 300, and 3000 seconds; all-sky map of alert locations; "last image" with alert locations drawn on; real/bogus fraction; artifact pie-chart; apparent magnitude distributions; "hot oddities" ML-flagged outliers in shape or brightness; I don't know what all. Perhaps DM-Square team is already doing this?
 
 
 \subsection{Community Brokers}
@@ -49,3 +74,8 @@ Contents and triggering criteria.
 \subsubsection{The LSST mini-broker}
 
 \subsubsection{The LSST Science Platform}
+
+\subsection{Target Observation Managers?}
+
+% MLG proposing this subsection
+The final end use of alerts is not just brokers, but TOMs. Might LSST provide or support development for a Science Platform TOM that integrates with the LSST mini-broker? Some community brokers such as the future LASAIR (UK) have TOM functionality built in. 
