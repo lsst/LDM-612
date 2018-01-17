@@ -1,48 +1,83 @@
 \section{Components and Capabilities of the LSST Alert Distribution System}\label{sec:components}
 
-Description of the end-to-end system from data acquisition to scientific use of alerts.
+Description of the end-to-end system from data acquisition to scientific use of {\tt Alerts}.
 
 \subsection{Overview of LSST Data Acquisition, Transfer, and Processing}
 
 This section will discuss the relevant aspects of the fiber networks, NCSA, and Alert Generation pipelines.
 
-\subsubsection{Fibre Networks}
+\subsubsection{Fiber Networks}
 
 \subsubsection{National Center for Supercomputing Applications (NCSA)}
 
-\subsubsection{Alert Generation Pipeline}
+\subsubsection{Alert Generation Pipeline}\label{sssec:AGP}
 
-% MLG draft -- trying not to reproduce information in LDM-151 or LSE-163
-The processes and products of the prompt (Level 1) difference image analysis (DIA) pipeline are described in \citeds{LSE-163}, with detailed descriptions of the algorithmic components in \citeds{LDM-151}. In short, every new calibrated image (i.e., $2\times15$ second consecutive images, combined and corrected for instrument signatures) is matched to a deeper template image created from previous images (typically, from at least a few months prior), and then the template is subtracted to create the difference image. Source detection and measurement algorithms are run on the difference image. Deblending will only be run if necessary (\citeds{LSE-163}, page 11). Characteristics like flux and shape are measured for all sources in the difference image (e.g., PSF flux, trail and dipole parameters; a full list can be found in Table 1 of \citeds{LSE-163}). 
-
-% MLG draft
-All sources detected on a difference image with signal-to-noise ratio $>5$, whether in positive or negative flux, initiate an {\tt Alert}. The exception is sources with $SNR>5$ but also a {\it ``high probability of being instrumental non-astrophysical artifacts"} \cite{LSE-163}. The application of real/bogus (spuriousness) algorithms might only be done if the fraction of false positives is greater than 50\% (\citeds{LDM-151}; OSS-REQ-0354) {\bf (but how would that be known without first applying real-bogus?)}. Rejected sources might not be persisted (i.e., not included in the {\tt DIASource} table and no {\tt Alert} is triggered). \citeds{LDM-151} states that the default technique will be {\it ``based on a trained random forest classifier ... conditioned on the image quality and airmass of the observation''}, but otherwise the spuriousness algorithm is very sparsely defined in \citeds{LDM-151}: {\it ``Some per-source measure of likelihood the detection is junk. May use machine learning on other measurements or pixels. May be augmented by spuriousness measures that aren't purely per-source"} (page 118-11).
+% MGL -- trying not to reproduce too much of the information in LDM-151 or LSE-163, not sure right level of detail has been reached. Particular issues in boldface. Text is 0th level.
 
 % MLG draft
-The next step of the Alert Generation Pipeline is source association. ... [continue here]
+The processes and products of the prompt (Level 1) difference image analysis (DIA) pipeline are described in \citeds{LSE-163}, with detailed descriptions of the algorithmic components in \citeds{LDM-151}. Here we review the basic steps toward {\tt Alert} creation, starting from image acquisition. Approximately $\sim90\%$ of the available on-sky observing time will be use for the LSST main survey, commonly called the wide-fast-deep (WFD), which will cover $\sim18000$ square degrees of sky with $\gtrsim800$ standard visits total in six filters, $ugrizy$. Each standard visit is defined as $2\times15$ second exposures that will be combined during reduction; alternative standard visits of $1\times30$ seconds might be adopted instead. The other $\sim10\%$ of the observing time will be used for Special Programs, and might employ non-standard visits with shorter or longer exposure times (see \citeds{DMTN-065} for a summary of the diversity of data from Special Programs). The expectation is that so long as a non-standard visit can be successfully differenced with a template image, it can contribute to the Alert Generation Pipeline; \citeds{DMTN-065} goes into greater detail about which kinds of non-standard images will be able to contribute.
 
-% EB: should discuss MOPS and Precovery/Forced Photometry either here or in the relevant DAC section
+% MLG draft
+The Alert Generation Pipeline starts with difference imaging analysis (DIA). Every new image is processed (e.g., instrument signature removal), matched to a deeper template image (a transient-free stack of older images), and then the template is subtracted from the processed image to create the difference image. Source detection and measurement algorithms are run on the difference image; deblending will only be run if necessary (\citeds{LSE-163}, page 11). Characteristics like flux and shape are measured for all sources in the difference image (e.g., PSF flux, trail and dipole parameters; a full list can be found in Table 1 of \citeds{LSE-163}). 
 
-% \citeds{LDM-151}, \citeds{LSE-163}
+% MLG draft
+All difference-image sources with signal-to-noise ratio $>5$, whether in positive or negative flux, are considered ``detected" and incorporated into the {\tt DIASource} catalog. One exception is sources with $SNR>5$ but also a {\it ``high probability of being instrumental non-astrophysical artifacts"} \cite{LSE-163}. The application of real/bogus (spuriousness) algorithms might only be done if the fraction of false positives is greater than 50\% (\citeds{LDM-151}; OSS-REQ-0354) {\bf (but how would that be known without first applying real-bogus?)}. Rejected sources might not be persisted (i.e., not included in the {\tt DIASource} catalog and no {\tt Alert} is triggered). \citeds{LDM-151} states that the default technique will be {\it ``based on a trained random forest classifier ... conditioned on the image quality and airmass of the observation''}, but otherwise the spuriousness algorithm is very sparsely defined in \citeds{LDM-151}: {\it ``Some per-source measure of likelihood the detection is junk. May use machine learning on other measurements or pixels. May be augmented by spuriousness measures that aren't purely per-source"} (page 118-11). {\bf Placeholder for future high-level description of the real/bogus classifier, which we'll probably want to describe here, as it's particularly relevant for real-time science?} Another exception is a small fraction of high-priority sources with $SNR<5$ that meet some set of criteria, such as $SNR>3$ and near one of Earth's gravitational keyholes (i.e., a potentially hazardous asteroid), would be persisted and lead to {\tt Alerts} (Section 3.2.1, \citeds{LSE-163}). Additionally, some $SNR<5$ {\tt DIASources} will be kept for diagnostic purposes but not lead to {\tt Alerts}.
 
-{\it Common Question: Will Alerts be released after 60 or 120 seconds?}
+% MLG draft
+The next step of the Alert Generation Pipeline is the association with known objects. Every {\tt DIASource} will have one unique match to a {\tt DIAOjbect} (stationary object) or Solar System Object {\tt SSObject} (moving object; more on these in Section \ref{sssec:AGP_MOPS}). If no association can be made, a new {\tt DIAObject} is created; {\tt DIAObjects} can also be externally-provided coordinates. {\bf The exact source-association algorithms are currently in development} (see Section 3.2.5 of \citeds{LDM-151}) but will be probabilistic and incorporate motion models for parallax and proper motion. It is important to note that, especially in crowded fields, there might be instances of {\tt DIASource} association reassignment as, e.g., motion models improve over time. {\tt DIASources} will also be matched by location to the 3 nearest stars and 3 nearest galaxies in the {\tt Objects} catalog from the last data release with a probability of association provided for each (\citeds{LDM-151}).
+
+% MLG draft
+The final step of the {\tt Alert} Generation Pipeline is updating the {\tt DIAObject} parameters to include the most recently detected {\tt DIASource} such as, e.g.,  parallax, proper motion, mean flux over time, and perodic and non-periodic features of the light curve. {\bf Question: for new {\tt DIASources}, there will be something like the limiting magnitude of the most recent image of the field, but this doesn't seem included in Table 1 of \citeds{LSE-163}?}.
+
+%{\it Common Question: Will Alerts be released after 60 or 120 seconds?}
+The requirement governing the latency of reporting on optical transients -- the time between shutter close and {\tt Alert} distribution -- is {\tt OTT1 = 1} minute (DMS-REQ-0004, \citeds{LSE-61}). {\bf Other relevant quantities such as GB processed per minute, number of {\tt DIASources} per visit, number of {\tt DIAObjects} survey-total, etc.?}
+
+% MLG draft
+At this point, the {\tt DIASource} is used to create an {\tt Alert} packet (Section \ref{ssec:packets}). The entire {\tt DIASource} and updated {\tt DIAObject} records go out in the {\tt Alert}. There are several more near-real-time steps in the DIA processing pipeline that happen: MOPS and forced photometry. They're relevant so we discuss them here, but {\tt Alert} packet formation and distribution are not dependent on their completion.
+
+\subsubsection{Moving Objects Processing System}\label{sssec:AGP_MOPS}
+
+% MLG draft
+The Moving Objects Processing System (MOPS) runs in the day on the previous night's {\tt DIASources} and so is not part of the Alert Generation Pipeline. Through e.g., tracklet creation and orbit fits, MOPS builds and updates the {\tt SSObject} catalog. MOPS will interface with the Minor Planets Center, and will have ingested all previously known moving objects into its {\tt SSObjects} catalog.  At the time of a new image acquisition, the emphemerides of all existing {\tt SSObjects} will be generated so that {\tt DIASources} can be matched to the expected locations of known moving objects, as mentioned above. More on MOPS is found in \citeds{LDM-156} {\bf (is that still the best reference?).}
+
+\subsubsection{Forced Photometry}
+
+%  MLG draft
+Forced photometry on difference images is performed in two scenarios related to the Alert Generation Pipeline. In both cases, the forced photometry is not a prerequisite step for {\tt Alert} packet creation or generation and is not included in the {\tt Alert}. First, forced photometry will be done for all {\tt DIAObjects} with a detection in the past $\sim12$ months (regardless of whether they are associated with a $SNR>5$ source in the most recent difference image). These measurements are stored as flagged {\tt DIASources} (or equivalent in a separate table). Second, forced photometry will be done on the last 30 days of difference images for all newly created {\tt DIAObjects} (i.e., all {\tt DIASources} with no association to an existing {\tt DIAObject} or {\tt SSObject}). This is commonly referred to as ``precovery" photometry. These measurements are also stored as flagged {\tt DIASources}. Precovery photometry will be available within at least 24 hours by querying the {\tt DIASource} catalog. {\bf (There was a proposal to lower this from 24 hours to ``before the next night"?)}
+%So long as it does not interfere with the processing for {\tt Alert} distribution, the forced photometry may be run at night. 
+Additionally, a service shall be provided to end-users (e.g., through the Science Platform) to obtain full-survey precovery for a limited number of {\tt DIAObjects}, also within 24 hours (DMS-REQ-0341, \citeds{LSE-61}). 
+
+{\bf It seems that MOPS also does some precovery photometry in order to use predictions of tracklets and orbits as further constraints? E.g., Section 3.5.6 in LDM-151. Double check on this and perhaps include.}
 
 
-\subsection{Alert Packets}
+\subsection{Alert Packets}\label{ssec:packets}
 
-Contents and triggering criteria.
-\citeds{LSE-163}
+% MLG draft
+% {\it Common Question: What do Alerts contain? The full past light curve, non-detections, the host photo-z, etc. What will be the format of source association to e.g., DRP Objects: just ID numbers or the full record?}
+Contents of an {\tt Alert} packet are described in Section 3.5.1 of \citeds{LSE-163}; packets will include:
+\begin{itemize}
+\item a unique {\tt Alert} ID {\bf (format? alphanumeric?)}
+\item the {\tt DIASource} record that triggered the {\tt Alert}
+\item the entire associated {\tt DIAObject} or {\it SSObject} record
+\item the previous 12 months of associated {\tt DIASource} records
+\item {\it ``Matching Object IDs from the latest Data Release, if they exist, and 12 months of their DIASource records"} (see MLG Question below)
+\item postage stamps at the {\tt DIASource} location
+\end{itemize}
 
-Remember to note that MPChecker will run in-line and results included in Alert.
+{\bf MLG Question:} Section 3.5.1 of \citeds{LSE-163} has an item that says {\it "Matching Object IDs from the latest Data Release, if they exist, and 12 months of their DIASource records"}. Does this refer to the 3 nearest stars and 3 nearest galaxies from the last DRP's {\tt Object} catalog? It must not, or it would say the last 12 months of the {\tt Source} records for that {\tt Object}. If this is referring to a location-matched {\tt DIAObject} from the last DRP, then why would only the {\tt DIAObject} ID be supplied, but also the last 12 months of full {\tt DIASource} records? I.e., why not the full {\tt DIAObject} record? Also, if this is coming from the last DRP, why restrict to only 12 months, which will have redundancy with the {\it ``previous 12 months of associated {\tt DIASource} records"} from the Level 1 catalog already supplied? Why not the full-survey of {\tt DIASource} records that are in the DRP DIA catalog? 
 
-{\it Common Question: What do Alerts contain? The full past light curve, non-detections, the host photo-z, etc. Obviously what we're going to answer here anyway.}
+% MLG draft
+Postage stamps are images that contain the entire footprint of the {\tt DIAObject} and will be no smaller than $6\arcsec \times 6\arcsec$. The image cut-outs will be the data, variance, and mask for each of the new, template, and difference image. Combinations of new/template/difference are commonly called the postage stamp ``triplet".
+
+% MLG draft
+The full list of parameters that are measured and included in the {\tt DIASource} and {\tt DIAObject} records are provided in Tables 1 and 2 of \citeds{LSE-163}, respectively. {\bf Probably here we could summarize those parameters that will be most useful for brokers and filtering?} Remember to note that MPChecker will run in-line and results included in Alert.
 
 {\it Common Question: What is the size of the Alert packet and what fraction of that is image stamp?}
 
 {\it Common Question: Requests for descriptions of all cases that trigger Alerts in addition to a SNR>5 DIASource. For example: telescope slews, a source reaching saturation, the forced photometry done for all DIAObjects with detections in past 12 months.}
+--> Objects that were rising and become saturated would not be detected with $SNR>5$ on the difference image, and thus not become a {\tt DIASource} and not spawn an {\tt Alert}. Forced photometry is not going to be done within the 60 seconds for {\tt Alert} generation.
 
-{\it Common Question: What will be the format of source association to e.g., DRP Objects (id or full record).}
-
+{\bf Direct readers to a set of online {\tt Alert} sample packets for simulated LSST sources?}
 
 
 \subsection{Alert Transport}
