@@ -1,95 +1,161 @@
 \section{Guidelines for Community Brokers}\label{sec:community_brokers}
 
-{\it Common Question: Do all brokers need to forward the raw alert stream publicly? This is also asked in Section \ref{sec:components}. Relatedly, people ask more generally about the specific minimum or required functionality that brokers must provide.}
+\subsection{The Role of Community Brokers}
 
-{\it Common Question: How many brokers will be awarded and when will the process be defined?} Obviously going to be answered here.
+Community brokers will play a vital role in enabling time-domain science with LSST.
+By receiving the LSST alert stream, adding value, and redistributing it to the scientific community, brokers facilitate full exploitation of the scientific value of the real-time LSST alerts.
 
-\subsection{Why are there requirements on community brokers?}
-
-Networking resources - Each full alert stream requires 1 gbs bandwidth
-
-Staffing resources - It is anticipated that community brokers will require some level of support from the LSST operations team
-
-Science integrity ? We would like reliability for the community
-
-World-public ? We would like to prioritize resource investment into brokers that will serve a broad community
-
-\subsection{How many Community Brokers are expected?}
-
-Initial sizing estimates supported only four full streams due to network bandwidth limitations.
-
-Current capacity projections indicate a larger number may be possible, but with some uncertainty:
+We envision that community brokers, individually or jointly, may provide a variety of functions.  These may include, but are not limited to:
 
 \begin{itemize}
-	\item Depends on actual network capacity and usage patterns
-
-	\item Depends on details of the alert format
-
-	\item Depends on the achieved purity of the alert stream
+	\item redistribute alert packets
+	\item filter alerts
+	\item cross-correlate LSST alerts with other static catalogs or alert streams
+	\item classify events scientifically
+	\item provide user interfaces to the data
+	\item coordinate scientific activity 
+	\item trigger followup observing
+	\item for users with appropriate data rights, enable followup queries and user-generated processing within the LSST Data Access Center
+	\item archive alerts
+	\item manage annotation \& citation 
+	\item collect classification and other information gathered by the scientific community
 \end{itemize}
 
-Don?t think we can make a final decision on the number of brokers until we have at least processed data from ComCam.
+Some these functions may be performed by ``Target and Observation Managers'' that may either be integrated into community brokers directly or connect to annotated and/or filtered streams delivered by a broker.
+For simplicity, we will here refer to any system that connects directly to the LSST alert stream as a broker.
 
+\subsection{Requirements for Community Brokers}
 
-\subsection{What is the planned proposal process?}
+Because of the large data volume of the alert stream (several TB per night), finite bandwidth from the LSST datacenter prevents sending a full copy of the alert stream to all interested parties.
+Additionally, we anticipate that community brokers will require some level of support from the LSST operations team.
+Accordingly, LSST will conduct an open proposal process in order to select brokers with sufficient technical capability to enable valuable and reliable scientific returns.
 
-\subsection{Who is eligible to propose for a community broker?}
+We believe the scientific community will be best served by a rich broker ecosystem offering diverse capabilities. 
+Any institution worldwide may submit a proposal.
+Recognizing that different science goals may benefit from different technical approaches, and that proposing institutionals may have a range of strengths and experience, the proposal call will not place any explicit functional requirements on proposed brokers.  
+Thus a proposed broker is not \textit{required} to consume the whole stream, to redistribute the full stream, to make its products world-public, or to provide archiving of alerts, for example.
+However, given the small and finite number of brokers to be selected (\S \ref{sec:numbrokers}) and the evaluation criteria (\S \ref{sec:evaluation}), proposals offering to do so will be more likely to be selected.
+The selection committee will evaluate the proposals holistically, weighing the unique capabilities proposed in order to maximize the scientific output of LSST.
 
-\subsection{Who is eligible to propose for a community broker?}
+However, proposed brokers will be evaluated strictly to ensure that they have appropriate technical and personnel resources to support their proposed goals.
 
-\subsection{How will proposed brokers be evaluated?}
+While we expect the evaluation process to favor proposals that receive the full alert stream, brokers may propose to receive only a filtered subset of events (or a subset of the alert packet contents).  
+We anticipate that this facility would be provided by the same technology underlying the LSST mini-broker, potentially with less restrictive requirements than are placed on user-provided filters. 
 
-Demonstration of availability of appropriate technical and personnel resources
+\subsection{The Broker Selection Panel}
+
+Broker proposals will be evaluated by a panel designated by the LSST Science Advisory Committee.  Appropriate care will be taken to avoid conflicts of interest.
+The panel will include ex officio representatives from the LSST Project Office and Data Management to provide policy and technical guidance.
+
+\subsection{Evaluation of Community Broker Proposals} \label{sec:evaluation}
+
+The broker selection panel will evaluate proposals with a primary goal of maximizing the scientific utilization of LSST---recognizing that many of LSST's scientific returns are likely to be unanticipated.
+
+The panel will use the following evaluation criteria:
+
+\subsubsection{Scientific Value}
+
+The panel will consider whether a proposed broker has the potential to add scientific value that serves a large community, enables high-profile science, or provides unique capabilities.
+In particular, the panel will evaluate the proposed contributions to LSST's four science pillars\footnote{Probing Dark Matter and Dark Energy, Taking an Inventory of the Solar System, Exploring the Transient Optical Sky, and Mapping the Milky Way}.
+The panel will prioritize science cases that require or take advantange of the unique aspects of the LSST alert stream, namely its real-time and world-public nature.
+
+\subsubsection{Appropriate Resources}
+
+The panel will evaluate whether the proposal is technically feasible and appropriate supported.  At minimum, this requires:
+
 \begin{itemize}
-	\item Large inbound and outbound network bandwidth (full alert stream is a few TB/night)
+	\item Large inbound and outbound network bandwidth (the full alert stream is a few TB/night)
 	\item Petabytes of disk capacity
 	\item Databases handling of billions of sources
 	\item Compute resources to handle sophisticated classification and filtering tasks in real time at scale
-	\item Personnel to develop and maintain the service
+	\item Appropriate personnel to develop and maintain the service
+	\item Institutional support to ensure the longevity and stability of the service.
 \end{itemize}
 
+Depending on the relative timing of the proposal evaluation and the progress of LSST commissioning, the panel may request proof-of-concept execution on LSST commissioning datasets.
 
-Potential to add scientific that serves a large community, enables high-profile science, and/or provides unique capabilities
+\subsubsection{Availability to the World Community}
 
-Willingness to make products world public (preferred)
+Because community brokers are the means by which scientists without LSST data rights may access the public contents of the alert packets, the panel will prefer proposals that make their products and services world-public.
 
-Integration with follow-up resources and/or the broader time-domain ecosystem
+\subsubsection{Scientific Validity}
 
-Demonstrated performance and/or community adoption on precursor streams
+The panel will look for evidence that scientific products, such as photometric classifications, produced by a proposed broker are accurate.  
+Brokers may demonstrate performance in production on precursor surveys or by data challenge.
+The proposal call will provide archived alert streams from precursor surveys that may be used for testing and evaluation.
 
-Demonstration of scientific validity on precursor data or by data challenge
+\subsubsection{Integration with the Time-Domain Ecosystem}
 
-Applicability of international agreements, if relevant
+For science cases involving real-time followup, the panel will consider the extent to which proposed brokers facilitate integration with followup resources, other surveys and alert streams, other brokers and services, existing communities of observers, and archives.  	
 
 
-\subsection{What is the anticipated timeline?}
+\subsubsection{Community Adoption}
 
-March 2018: present draft policy document to SAC for feedback
+The panel will consider whether a proposed broker system has already demonstrated scientific value and community adoption on precursor streams.  
+This evaluation will also assess the 
+range of scientific, geographic, and institutional communities that have utilized the service as well as the publications it enabled.
 
-August 2018: obtain Project approval for policy document
 
-Mid 2018: Set up test alert stream with sample precursor data
+\subsubsection{Complementarity}
 
-2019: VO interactions to develop format
+To maximize scientific returns, the panel will make a final selection of an ensemble of complimentary brokers rather than attempting to strictly rank disparate proposals.   Accordingly the final selection may include lower-ranked proposals if they provide capabilities not present in the top-ranked brokers or serve other scientific communities.
 
-2020: Call for proposals for community brokers
+\subsubsection{International Agreements}
 
-	Sample commissioning alerts with ComCam \textit{with substantial latency}
+The panel will consider the applicability of any international agreements, if relevant.
 
-2021: Finalize number of full streams
+\subsection{Determining the Number of Community Brokers} \label{sec:numbrokers}
 
-	Sample commissioning alerts with LSSTCam \textit{with substantial latency}
+Initial sizing estimates indicated that only four full streams could be provided from the LSST Data Facility due to network bandwidth limitations.  
+Current capacity projections indicate a larger number may be possible, but with some uncertainty.
+The available capacity will depend on:
 
-	Selection of LSST brokers for early operations
+\begin{itemize}
+	\item actual network capacity and usage patterns
+	\item details of the alert format
+	\item the achieved purity of the alert stream
+\end{itemize}
 
-2022: Begin operations
+The proposal call will provide updated estimates based on pipeline performance on precursor surveys.
+Final capacity determination will not be possible until commissioning data is available from ComCam.
+The broker selection panel may elect to make guaranteed and provisional selections based on these estimates.
+
+\subsection{Resources for Proposers}
+
+To aid in broker development and testing, at the time of the broker proposal call LSST will make available canned alert streams for precursor and/or simulated datasets generated by the LSST Alert Production pipelines and distributed with the expected formats and protocols.
+
+\subsection{Resources for Selected Brokers}
+
+Selected community brokers may expect fractional FTE support from the LSST Data Facility to integrate with the alert stream.  
+Additionally, status information will be available during operations to diagnose processing and data transport problems as they arise.
+
+\subsection{Timeline}
+
+\begin{enumerate}
+  \setcounter{enumi}{2017}
+	\item \begin{itemize}
+		\item Plans and Policies for LSST Alert Distribution document issued
+	\end{itemize}
+	\item \begin{itemize}
+		\item Document bulk transport format and interface
+		\item Set up test alert stream with sample precursor data
+		\item Issue call for proposals for community brokers
+		\end{itemize}
+	\item \begin{itemize}
+		\item Broker proposals due
+		\item Produce sample commissioning alerts with ComCam \textit{with substantial latency}
+		\end{itemize}
+	\item \begin{itemize}
+			\item Finalize number of full streams
+			\item Selection of community brokers for early operations
+			\item Produce sample commissioning alerts with LSSTCam \textit{with substantial latency}
+			\item Integrate selected brokers with the LSST Alert System
+		\end{itemize}
+
+	\item \begin{itemize}
+			\item Begin full LSST operations
+	\end{itemize}
+
+\end{enumerate}
 
 It is reasonable to expect periodic review of broker performance and usage during LSST Operations.
-
-
-\subsection{Must community brokers consume the whole stream?}
-
-\subsection{Must community brokers serve the whole stream?}
-
-\subsection{Must community brokers redistribute alerts to everyone?}
-
