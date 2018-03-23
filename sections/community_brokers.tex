@@ -16,7 +16,6 @@ We envision that community brokers, individually or jointly, may provide a varie
 	\item coordinate scientific activity 
 	\item trigger followup observing
 	\item for users with appropriate data rights, facilitate followup queries and/or user-generated processing within the LSST Data Access Center
-	\item archive alerts
 	\item manage annotation \& citation 
 	\item collect classification and other information gathered by the scientific community
 \end{itemize}
@@ -32,12 +31,12 @@ Accordingly, LSST will conduct an open proposal process in order to select broke
 
 We believe the scientific community will be best served by a rich broker ecosystem offering diverse capabilities. 
 Any institution worldwide may submit a proposal.
+Demonstration of appropriate technical and personnel resources to support the proposed goals will be the minimum requirement to be considered.
+
 Recognizing that different science goals may benefit from different technical approaches, and that proposing institutions may have a range of strengths and experience, the proposal call will not place any explicit functional requirements on proposed brokers.  
-Thus a proposed broker is not \textit{required} to consume the whole stream, to redistribute the full stream, to make its products world-public, or to provide archiving of alerts, for example.
+Thus a proposed broker is not \textit{required} to consume the whole stream, to redistribute the full stream, or to make its products world-public, for example.
 However, given the small and finite number of brokers to be selected (\S \ref{sec:numbrokers}) and the evaluation criteria (\S \ref{sec:evaluation}), proposals offering to do so will be more likely to be selected.
 The selection committee will evaluate the proposals holistically, weighing the unique capabilities proposed in order to maximize the scientific output of LSST.
-
-However, proposed brokers will be evaluated strictly to ensure that they have appropriate technical and personnel resources to support their proposed goals.
 
 While we expect the evaluation process to favor proposals that receive the full alert stream, brokers may propose to receive only a filtered subset of events (or a subset of the alert packet contents).  
 We anticipate that this facility would be provided by the same technology underlying the LSST mini-broker, potentially with less restrictive requirements than are placed on user-provided filters. 
@@ -47,21 +46,10 @@ We anticipate that this facility would be provided by the same technology underl
 Broker proposals will be evaluated by a panel designated by the LSST Science Advisory Committee.  Appropriate care will be taken to avoid conflicts of interest.
 The panel will include ex officio representatives from the LSST Project Office and Data Management to provide policy and technical guidance.
 
-\subsection{Evaluation of Community Broker Proposals} \label{sec:evaluation}
+\subsection{Required Technical Resources} \label{sec:resources}
 
-The broker selection panel will evaluate proposals with a primary goal of maximizing the scientific utilization of LSST---recognizing that many of LSST's scientific returns are likely to be unanticipated.
-
-The panel will use the following evaluation criteria:
-
-\subsubsection{Scientific Value}
-
-The panel will consider whether a proposed broker has the potential to add scientific value that serves a large community, enables high-profile science, or provides unique capabilities.
-In particular, the panel will evaluate the proposed contributions to LSST's four science pillars\footnote{Probing Dark Matter and Dark Energy, Taking an Inventory of the Solar System, Exploring the Transient Optical Sky, and Mapping the Milky Way}.
-The panel will prioritize science cases that require or take advantage of the unique aspects of the LSST alert stream, namely its real-time and world-public nature.
-
-\subsubsection{Appropriate Resources}
-
-The panel will evaluate whether the proposal is technically feasible and appropriate supported.  At minimum, this requires:
+The panel will evaluate whether the proposal is technically feasible and appropriately supported for the proposed goals.  
+At minimum, this requires:
 
 \begin{itemize}
 	\item Large inbound and outbound network bandwidth (the full alert stream is a few TB/night)
@@ -73,6 +61,18 @@ The panel will evaluate whether the proposal is technically feasible and appropr
 \end{itemize}
 
 Depending on the relative timing of the proposal evaluation and the progress of LSST commissioning, the panel may request proof-of-concept execution on LSST commissioning datasets.
+
+\subsection{Evaluation of Community Broker Proposals} \label{sec:evaluation}
+
+The broker selection panel will evaluate proposals with a primary goal of maximizing the scientific utilization of LSST---recognizing that many of LSST's scientific returns are likely to be unanticipated.
+
+The panel will evaluate broker proposals that demonstrate appropriate technical resources (\S \ref{sec:resources}) using the following evaluation criteria:
+
+\subsubsection{Scientific Value}
+
+The panel will consider whether a proposed broker has the potential to add scientific value that serves a large community, enables high-profile science, or provides unique capabilities.
+In particular, the panel will evaluate the proposed contributions to LSST's four science pillars\footnote{Probing Dark Matter and Dark Energy, Taking an Inventory of the Solar System, Exploring the Transient Optical Sky, and Mapping the Milky Way}.
+The panel will prioritize science cases that require or take advantage of the unique aspects of the LSST alert stream, namely its real-time and world-public nature.
 
 \subsubsection{Availability to the World Community}
 
@@ -100,9 +100,9 @@ range of scientific, geographic, and institutional communities that have utilize
 
 To maximize scientific returns, the panel will make a final selection of an ensemble of complimentary brokers rather than attempting to strictly rank disparate proposals.   Accordingly the final selection may include lower-ranked proposals if they provide capabilities not present in the top-ranked brokers or serve other scientific communities.
 
-\subsubsection{International Agreements}
+\subsubsection{Existing Agreements}
 
-The panel will consider the applicability of any international agreements, if relevant.
+The panel will consider the applicability of any existing agreements, if relevant.
 
 \subsection{Determining the Number of Community Brokers} \label{sec:numbrokers}
 
@@ -126,7 +126,7 @@ To aid in broker development and testing, at the time of the broker proposal cal
 
 \subsection{Resources for Selected Brokers}
 
-Selected community brokers may expect fractional FTE support from the LSST Data Facility to integrate with the alert stream.  
+Selected community brokers will receive basic support from the LSST Operations Team to ensure that the agreed to (portion of) the alert stream is pushed out with the expected form, content, reliability, and timing.
 Additionally, status information will be available during operations to diagnose processing and data transport problems as they arise.
 
 \subsection{Timeline}
