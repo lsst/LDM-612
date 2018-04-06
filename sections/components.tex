@@ -16,7 +16,7 @@ This section will discuss the relevant aspects of the fiber networks, NCSA, and 
 The prompt pipeline that processes data during the night and generates {\tt Alerts} is described in \citeds{LSE-163}, with detailed descriptions of its algorithmic components provided in \citeds{LDM-151}. The basic modules include data reduction (e.g., instrument signature removal), difference imaging analysis (DIA; the subtraction of a template image), and source detection, association, and measurement \citedsp{LSE-163}. The LSST Data Management team anticipates that all standard and alternative standard visits ($2\times15$ or $1\times30$ exposures, respectively), whether obtained as part of the main wide-fast-deep (WFD) survey or a Special Program, can and will be processed by the Prompt Pipeline and used to generate {\tt Alerts}. The caveat might be images of fields too crowded for the prompt pipeline to successfully produce alerts within {\tt OTT1 = 1} minute (DMS-REQ-0004, \citeds{LSE-61}; however, elastically allocated computational resource might be applied to handle DIA in crowded fields). In addition, the prompt pipeline might also be able to process non-standard visits with longer or shorter exposure times provided that, e.g., the visit image can be successfully PDF-matched and differenced with a template image. The prompt pipeline's capabilities in this respect are to be determined; see \citeds{DMTN-065} for a summary of the diversity of data from Special Programs.
 
 % MLG draft
-All sources in a difference image that have a signal-to-noise ratio ${\rm SNR}>5$ in positive or negative flux are considered ``detected" and incorporated into the {\tt DIASource} catalog, and will cause an {\tt Alert} to be issued. Exceptions to this rule may include: (1) sources with ${\rm SNR} > 5$ that have a {\it ``high probability of being instrumental non-astrophysical artifacts"} \citedsp{LSE-163} from e.g., a to-be-determined spuriousness or real/bogus classifier \citedsp{LDM-151}; (2) sources with ${\rm SNR} < 5$ that meet other criteria, such as being near one of Earth's gravitational keyholes (i.e., a potentially hazardous asteroid). Additionally some ${\rm SNR} < 5$ sources will be kept for diagnostic purposes, but will not lead to {\tt Alerts}. Source association and measurement occurs prior to {\tt Alert} generation: every {\tt DIASource} will have one unique match to a {\tt DIAOjbect} (stationary object) or Solar System Object {\tt SSObject} (moving object; see Section \ref{sssec:AGP_MOPS}). The stationary source association algorithms will be probabilistic and incorporate motion models for parallax and proper motion \citedsp{LDM-151}. If no association is possible a new {\tt DIAObject} is created. Source measurements including centroid, fluxes, shapes, and other characterization parameters (see e.g., Table 1 of \citeds{LSE-163}) are made, and the time-evolving parameters of {\tt DIAObject} such as the parallax, mean flux, and periodic/non-periodic light curve features, are updated to include the new associated {\tt DIASource}. At this point, the {\tt DIASource} is used to create an {\tt Alert} packet, which is described in Section \ref{ssec:packets}.
+All sources in a difference image that have a signal-to-noise ratio ${\rm SNR}>5$ in positive or negative flux are considered ``detected" and incorporated into the {\tt DIASource} catalog, and will cause an {\tt Alert} to be issued. The may be exceptions to this rule, such as the following two examples. (1) Sources with ${\rm SNR} > 5$ that have a {\it ``high probability of being instrumental non-astrophysical artifacts"} \citedsp{LSE-163}. This information would come from, for example, a to-be-determined spuriousness or real/bogus classifier \citedsp{LDM-151}. (2) Sources with ${\rm SNR} < 5$ that meet other criteria, such as being near one of Earth's gravitational keyholes (i.e., a potentially hazardous asteroid). Additionally some ${\rm SNR} < 5$ sources will be kept for diagnostic purposes, but will not lead to {\tt Alerts}. Source association and measurement occurs prior to {\tt Alert} generation: every {\tt DIASource} will have one unique match to a {\tt DIAOjbect} (stationary object) or Solar System Object {\tt SSObject} (moving object; see Section \ref{sssec:AGP_MOPS}). The stationary source association algorithms will be probabilistic and incorporate motion models for parallax and proper motion \citedsp{LDM-151}. If no association is possible a new {\tt DIAObject} is created. Source measurements including centroid, fluxes, shapes, and other characterization parameters (see e.g., Table 1 of \citeds{LSE-163}) are made, and the time-evolving parameters of {\tt DIAObject} such as the parallax, mean flux, and periodic/non-periodic light curve features, are updated to include the new associated {\tt DIASource}. At this point, the {\tt DIASource} is used to create an {\tt Alert} packet, which is described in Section \ref{ssec:packets}.
 
 %%%MLG commented out the following statements on Tue Apr 3.
 % Deblending for difference image sources will only be run if necessary (\citeds{LSE-163}, page 11). 
@@ -29,7 +29,7 @@ All sources in a difference image that have a signal-to-noise ratio ${\rm SNR}>5
 % MLG draft
 The bulk of the Moving Objects Processing System (MOPS; \citeds{LDM-156}) runs in the day using algorithms that generate tracklets and fit orbits to identify and characterize moving objects. All identified moving objects are stored in the {\tt SSObject} catalog. MOPS will interface with the Minor Planets Center (MPC) and will ingest all previously known or externally identified moving objects into the {\tt SSObjects} catalog, and use MPC astrometry in the orbital parameter fits. As part of Alert Generation, the night-MOPS pipeline will calculate the predicted locations of {\tt SSObjects} in each newly acquired visit image for fast and accurate source association. {\tt Alerts} will be issued on ${\rm SNR} > 5$ detections of all moving sources.
 
-\subsubsection{Forced Photometry}
+\subsubsection{Forced Photometry}\label{sssec:AGP_force}
 
 Forced photometry is performed on difference images in two ways; neither are in the direct path to Alert Generation and do not contribute to the {\tt Alert} packet contents, but both are a part of prompt processing. First, forced photometry is done on every difference image at the locations of all {\tt DIAObjects} detected in the past 12 months, and the results are stored as flagged {\tt DIASources} (or in an equivalent but separate table). This happens in real time as a part of DIA, and the {\tt DIASource} and {\tt DIAObject} catalogs are updated during the night. Second, forced photometry is done at the locations of all {\em new} sources (i.e., unassociated) on every difference image from the past 30 days. This is commonly referred to as ``precovery" photometry, and the results will be stored as flagged {\tt DIASources} (or in an equivalent but separate table). Precovery photometry will be completed and made available no later than the sunset of the following night.
 %So long as it does not interfere with the processing for {\tt Alert} distribution, the forced photometry may be run at night.  
@@ -39,8 +39,6 @@ Additionally, a service shall be provided to users to obtain full-survey precove
 
 \subsection{Alert Packets}\label{ssec:packets}
 
-% MLG draft
-% {\it Common Question: What do Alerts contain? The full past light curve, non-detections, the host photo-z, etc. What will be the format of source association to e.g., DRP Objects: just ID numbers or the full record?}
 The contents of an {\tt Alert} packet are fully described in Section 3.5.1 of \citeds{LSE-163}. We reproduce the list of included data here:
 \renewcommand{\labelenumi}{\Roman{enumi}.}
 \begin{enumerate}
@@ -55,14 +53,10 @@ The contents of an {\tt Alert} packet are fully described in Section 3.5.1 of \c
 
 It is important to note that records from the prompt products database will never have a history of much more than the past 12 months; full-survey histories are only available in the data release pipeline products. Postage stamps are images that contain the entire footprint of the {\tt DIAObject} and will be no smaller than $6\arcsec \times 6\arcsec$. The image cut-outs will contain the data, variance, and mask frames for the difference and template images only. The full list of parameters that are measured and included in the {\tt DIASource} and {\tt DIAObject} records are provided in Tables 1 and 2 of \citeds{LSE-163}, respectively. The average size of an {\tt Alert} packet will be {\bf XXX?} kilobytes and {\bf XXX?} \% of this is the postage stamp. The {\em only} trigger for an {\tt Alert} is the detection of a source in a difference image with ${\rm SNR} > 5$: for example, objects that become saturated or return to the same brightness as in the template image will not generate an {\tt Alert}. Other observatory information such as telescope slews, dome closures, or changes to the weather conditions will not be issued as {\tt Alerts}. Samples of {\tt Alert} packets in the {\tt VOEvent} format can be found at {\bf [website X?]}.
 
-{\bf MLG Questions:} \\
+{\bf MLG questions about Alert packet contents:} \\
 Item VI -- The wording has plural IDs, and refers first to {\tt Object} and then to {\tt DIASource}. It is unclear how many matches are being returned, and whether the matches are to {\tt Objects/Sources} or {\tt DIAObjects/DIASources}. \\
 Item VI -- Why are 12 months of {\tt DIASources} from the data release pipeline being included in the {\tt Alert}, when (a) this might be mostly redundant with the past 12 months of prompt pipeline {\tt DIASources} and (b) the fully survey of {\tt DIASources} could be included instead. \\
 Item VII -- A cutout of the new image is no longer being included? Or is this a DPDD oversight?
-
-%%% MLG: these have been answered, above.
-% Common Question: What is the size of the Alert packet and what fraction of that is image stamp?
-% Common Question: Requests for descriptions of all cases that trigger Alerts in addition to a SNR>5 DIASource. For example: telescope slews, a source reaching saturation, the forced photometry done for all DIAObjects with detections in past 12 months.
 
 \subsection{Alert Transport}
 
@@ -74,27 +68,38 @@ Item VII -- A cutout of the new image is no longer being included? Or is this a 
 \subsection{Alert Stream Diagnostics?}
 
 %MLG proposing this subsection
-Perhaps here we could talk about some alert stream diagnostics to build. E.g., a "Alert Stream" homepage tracking alerts/s in the past 30, 300, and 3000 seconds; all-sky map of alert locations; "last image" with alert locations drawn on; real/bogus fraction; artifact pie-chart; apparent magnitude distributions; "hot oddities" ML-flagged outliers in shape or brightness; I don't know what all. Perhaps DM-Square team is already doing this?
+{\bf MLG proposes this section.} Perhaps here we could talk about some alert stream diagnostics to build. E.g., a "Alert Stream" homepage tracking alerts/s in the past 30, 300, and 3000 seconds; all-sky map of alert locations; "last image" with alert locations drawn on; real/bogus fraction; artifact pie-chart; apparent magnitude distributions; "hot oddities" ML-flagged outliers in shape or brightness; I don't know what all. Perhaps DM-Square team is already doing this?
 
 
 \subsection{Community Brokers}
 
-{\it Common Question: Do all brokers need to forward the raw alert stream publicly? This is also asked in Section \ref{sec:community_brokers}.}
+% MLG Draft
+The final destination of all LSST {\tt Alerts} will be community brokers. The LSST envisions supporting full-stream delivery to a small number of brokers, which in turn will serve a broader science community, but LSST cannot support stream delivery to individuals. The role of community brokers is discussed at length in Section \ref{sec:community_brokers}. In addition, the LSST will provide a mini-broker service through the Science Platform, which is discussed in Section \ref{sssec:mini-broker}. The fact that {\tt Alerts} are world public means that they can be delivered to community brokers at non-partner institutes, and that those brokers can freely redistribute LSST {\tt Alerts} or repackages of their contents to unaffiliated scientists. It does not mean that LSST will store {\tt Alerts} in a publicly accessible archive: the only public access to {\tt Alerts} will be through community brokers. Data rights for the alert stream are discussed in detail in Section \ref{sec:data_rights}.
 
+\subsubsection{Target Observation Managers?}
+
+% MLG proposing this subsection
+{\bf MLG proposes this section exist, but it might not be necessary.}  The final end {\em use} of alerts is not just community brokers, but Target Observation Managers (TOMs). Although the line between brokers and TOMs is indefinite, the main functionality of TOMs is to aggregate the information from brokered {\tt Alerts} (or other broker output) and provide a user interface to schedule follow-up and share data. TOMs are typically designed to be specific to a certain science domain. For example, supernova TOMs might ingest all {\tt Alerts} that a broker flags as likely transients, aggregate information from the LSST {\tt Alert} and perhaps other sky surveys, and prioritize events for photometric or spectroscopic follow-up. The extent to which this is done by humans or by code would vary between TOMs. Eventually, some TOMs may even automatically trigger a telescope for e.g., spectroscopy, and auto-ingest the data to reduce and provide a preliminary classification -- which might be used to trigger more follow-up, all without human intervention. However, one of the main features of TOMs is usually the facilitation of human interaction with time-domain data. Some community brokers that are in development have a significant amount of TOM-like functionality built in to their design. 
 
 \subsection{The LSST Data Access Center}
 
-\subsubsection{Processed Images and Catalogs}
+Brokers might want to incorporate additional LSST information outside of what is available in the {\tt Alert} packet. This section describes the basic data products and their availability timelines, and how they can be accessed. All access to proprietary LSST data will be via the LSST Data Access Center (DAC), administered by NCSA. This is the case for both Project and Science Community members. Access will be through authorized user accounts that are subject to authentication protocols, and all accounts will be subject to caps on the amount of computational resources available for query, processing, and storage. {\bf MLG: I think there's not yet a proper reference for the DAC?} The following data products and services will be available through the DAC. For a full description of the LSST data products, see \citeds{LSE-163}.
 
-\subsubsection{L1 Database}
+\subsubsection{Prompt Processing Products}
+
+Products of the prompt processing pipeline will be available in the DAC on a timescale of minutes to hours. Products related to {\tt Alert} generation (Section \ref{sssec:AGP}), such as processed single-visit images, difference images, and updated versions of the {\tt DIASource} and {\tt DIAObject} catalogs, become available with the same latency as {\tt Alert} delivery: 1 minute. Forced photometry and MOPS run during the day and updated versions of the relevant catalogs are available before sunset (Sections \ref{sssec:AGP_force}, \ref{sssec:AGP_MOPS}). It is important to note that the prompt catalogs are limited to a $\sim12$ month window (i.e., include data since the most recent annual release), and that e.g., variability characterization parameters, are only calculated for that time window.
+
+\subsubsection{Data Release Products}
+
+Annual releases of all the LSST data will include processed and stacked images, catalogs of {\tt Sources}, {\tt ForcedSources}, and {\tt Objects} from measurements on the stacked and individual images, as well as calibration information. It will also include a  reprocessing of all images with the latest DIA codes and full-survey versions of {\tt DIASource} and {\tt DIAObject} catalogs -- e.g., the variability characterization parameters are calculated from the survey-to-date.
 
 \subsubsection{Alert Database}
 
-\subsubsection{The LSST mini-broker}
+All {\tt Alerts} will be stored in their full original form in a database that can be queried. These queries can be combined with the aforementioned data products of the prompt and data release pipelines. The {\tt Alerts} database is updated in real time as {\tt Alerts} are issued.
+
+\subsubsection{The LSST mini-broker}\label{sssec:mini-broker}
 
 \subsubsection{The LSST Science Platform}
 
-\subsection{Target Observation Managers?}
+The LSST Science Platform (LSP) is described in full in \citeds{LSE-319} and \citeds{LDM-554}. It will serve as a portal to the data, toolkit for analysis, and processing power. The most relevant for brokers is probably web application programming interface (API). 
 
-% MLG proposing this subsection
-The final end use of alerts is not just brokers, but TOMs. Might LSST provide or support development for a Science Platform TOM that integrates with the LSST mini-broker? Some community brokers such as the future LASAIR (UK) have TOM functionality built in. 

@@ -1,35 +1,39 @@
 \section{Data Rights to Alert Stream Components}\label{sec:data_rights}
 
-
 % it may make sense to either a) make a table or b) organize this by product
 % rather than by rights level
 
-This will probably become a summary of the relevant aspects of LSE-349 (in progress). 
+% MLG draft text in this section (will need review by Wil and Beth)
 
-{\it Common Question: which users can back-query (or replay) the alert stream? This would be equivalent to being able to access the Alert Database, so would this be strictly limited to data rights holders?}
+Data rights and access policies are formally described in \citeds{LSE-349}. Those policies are written to apply to {\em individuals}, but we could think of brokers as individuals for the purposes of data rights. In this scenario, some brokers would have DAC privileges, and some would not. The following information is consistent with \citeds{LSE-349} as of its 2018-03-19 version, however, that is not the final version and so {\bf the following is not yet sanctioned and will need some iteration.}
 
-{\it Common Question: is there a return path for brokers (or enriched broker products) to be worked with in the DAC?  Tension is that if brokers must make their products world-public, they cannot use proprietary DAC access.  But if I have DAC access, I want to be able to use it--e.g., fire off a script to do quick forced photometry on a cutout.}
+The LSST {\tt Alert} Stream is a world-public data product. The {\tt Alert} Stream will be delivered to a to-be-determined set of community brokers (Section \ref{sec:community_brokers}). Affiliation with an LSST partner institute (i.e., holding data rights) will not be a prerequisite for hosting a broker. Brokers may share (or not share) the contents of {\tt Alert} packets with whomever they choose, and brokers will not be prohibited from storing {\tt Alerts} and making them available at later times (i.e., the {\tt Alert} packets themselves are world-public indefinitely). Although in \citeds{LSE-349}, DAPOL-700 forbids the reproduction or distribution of any of the proprietary data or services, {\em which by default includes the {\tt Alerts} Database}, in this particular case it will be allowed because doing so is in-line with LSST's intent to make the {\tt Alerts} world-public (see end of Section 3.6 in \citeds{LSE-349})
 
-Note that Steve K has some relevant policy text here:
-\url{https://docushare.lsstcorp.org/docushare/dsweb/Get/LPM-151/}
+{\it A common question related to the above: The alert stream is called a world-public data product, but is only available through community brokers who are not required to pass along alerts to any/all interested parties. Additionally, the LSST mini-broker will only be available through the DAC, which requires data rights. Therefore, it seems that the Alert Stream is not actually world-public?}
 
+In the case where a broker with data rights uses proprietary LSST data products, e.g., through a DAC LSP web API, then restrictions may apply. The basic premise of distributing derived data products is that it is not a violation of LSST data rights policies so long as proprietary data products cannot be recreated from the derived data product (see DAPOL-660 through 720 in \citeds{LSE-349}). An example would be a community broker that uses its DAC access to obtain the full-history forced-photometry light curve for an {\tt Alert}, and includes this information in e.g., a prioritization parameter that represents the likelihood of an object being a tidal disruption flare. The prioritization parameter can be shared publicly, but the light curves (and any directly measured light curve features?) remain proprietary.
+
+{\it A common question about broker DAC privileges: Will there be a way for brokers to make products available through the DAC, so that authorization (in the case of brokers using proprietary data products) can be handled by LSST's protocols?} Case scenario: a broker runs an associated user-generated pipeline/script that does forced photometry on the prompt single-visit process images when a previously variable {\tt DIAObject} is undetected at ${\rm SNR}<5$. Furthermore, brokers that are accessing the DAC through a web API during the night might use a large amount of the DAC's computational resources. {\bf MLG: Has this been sized? Is it possible? How would decisions to throttle usage be made, if it became necessary to do so?}
+
+%Note that Steve K has some relevant policy text here: \url{https://docushare.lsstcorp.org/docushare/dsweb/Get/LPM-151/}
 
 \subsection{Members (Data Rights Holders) -- alert packets and DAC access}
 
-{\it Common Question: Usage policy, e.g., whose service gets throttled when Science Platform server is overwhelmed? Case scenario: a broker with associated real-time processing of DRP images in the DAC for e.g., SNR<5 forced photometry, host galaxy details.}
+Data rights holders will have access to the mini-broker for filtering the alert stream. Since the alerts themselves are world public, any individual who uses the mini-broker to process the alert stream can export mini-brokered alert packets and share them with non-partners. If proprietary data is used within the DAC to e.g., filter, categorize, or add information to Alerts via the mini-broker, then just like with community broker products, that member's mini-broker product becomes subject to data rights policy (just like any other derived data product).
 
-\subsection{International Partners without DAC access}
 
-{\it Common Question: can international partners without DAC access actually get a user account via collaboration with partner institution that does have DAC access?}
+%\subsection{International Partners without DAC access}
+%{\it Common Question: can international partners without DAC access actually get a user account via collaboration with partner institution that does have DAC access?}
 
 \subsection{LSST EPO (cf. LIT-94) -- redacted subset of alert stream}
-
 %cf. LEP-31, LSE-131, LIT-97
+{\bf MLG: Not sure if we need this section, or what to put here, since EPO use of a redacted alert stream is separate from brokers?}
 
 \subsection{All others (public) -- alert packets only}
 
 % need to clarify that brokers can't expose outputs of DAC services to unauthenticated users
 
-Consider public use policy that is favorable to use by more than just the astronomical field? E.g., for data science applications.
+{\bf MLG: I think this might be covered in the main section text above.}
 
-{\it Common Question: LSST has stated the alert stream will be public, but only through brokers. the lsst mini-broker will only be available through the DAC, so, not strictly public. Brokers might be required to make the full stream, or their filtered streams, public. Will they also be required to provide publicly accessible basic filters? Or will (somehow) the mini-broker be set up to allow this for public use?}
+% MLG: Consider public use policy that is favorable to use by more than just the astronomical field? E.g., for data science applications.
+
