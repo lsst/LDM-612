@@ -1,5 +1,27 @@
 \section{Introduction}\label{sec:introduction}
 
+LSST will discover large numbers of astrophysical objects that move, change, or appear.
+Because of their intrinsic temporal variability, full scientific exploitation of many classes of these events requires rapid discovery and additional follow-up observations.
+Accordingly, LSST's real-time Prompt Processing pipelines will identify such detections using difference imaging and report them using world-public \textit{alerts} issued within 60 seconds of the shutter closure.
+
+These alert packets will contain not only the information about the most recent detection but also a historical lightcurve, cutout images, timeseries features, and other contextual information.
+An LSST science user will be able to use the contents of a single alert packet and make an rapid but informed decision about whether the event is relevant to their scientific goals.
+LSST expects to produce about ten million of these alerts nightly.
+The resulting \textit{alert stream} will be large---more than 1\,TB nightly---but will contain all classes of astrophysical events, from the youngest supernovae to the most distant RR Lyrae to slow-moving Trans-Neptunian Objects.
+The task for the scientist is to identify the small subset of events of interest in the larger alert stream.
+
+To do so, astronomers will rely on third party \textit{community brokers}, software systems that receive the full LSST alert stream and add additional information to it.
+Community brokers may crossmatch the LSST stream to multiwavelength catalogs, join LSST alerts with those from other surveys, provide machine-learned classifications of events, and/or offer user filters to winnow the stream.
+LSST will itself offer a simple filtering service, the ``mini-broker,'' that will apply user-supplied filters to the alert stream.
+Individual scientists will receive alerts through one or more of these services.
+
+The large volume of the alert stream and the finite bandwidth from the LSST Data Facility necessitates a proposal process to select community brokers to receive the full stream.
+This document outlines the process, criteria, and timeline by which LSST will choose community brokers.
+To provide context, we also summarize the major features of the LSST Alert Production systems as well as relevant data rights concerns.
+
+Throughout the document, we provide references to the formal LSST requirements and design documents as an aid to the interested reader.
+
+\textit{
 Goal: In narrative language, outline LSST plans and policies for alert distribution for a broad audience.
 
 Audience: LSST science users, community broker developers, funding agencies, LSST Project personnel
@@ -54,3 +76,4 @@ Related documents: existing requirements documents (SRD, DMSR, DPDD, etc.) used 
 Paragraph of overview for sections?
 
 Conventions used in this document, such as the use of {\tt tt text formatting}, using {\tt Source} for a detection in a single image and {\tt Object} for a given location on the sky, etc. Direct readers to Glossary in Section \ref{sec:glossary}.
+}
