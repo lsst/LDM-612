@@ -1,57 +1,48 @@
 \section{Data Rights to Alert Stream Components}\label{sec:data_rights}
 
-% it may make sense to either a) make a table or b) organize this by product
-% rather than by rights level
-
-% MLG draft text in this section (will need review by Wil and Beth)
-
-Data rights and access policies are formally described in \citeds{LSE-349}.
-Those policies are written to apply to {\em individuals}, but we could think of brokers as individuals for the purposes of data rights.
-In this scenario, some brokers would have DAC privileges, and some would not.
-The following information is consistent with \citeds{LSE-349} as of its 2018-03-19 version, however, that is not the final version and so {\bf the following is not yet sanctioned and will need some iteration.}
-
-The LSST {\tt Alert} Stream is a world-public data product.
-The {\tt Alert} Stream will be delivered to a to-be-determined set of community brokers (Section \ref{sec:community_brokers}).
-Affiliation with an LSST partner institute (i.e., holding data rights) will not be a prerequisite for hosting a broker.
-Brokers may share (or not share) the contents of {\tt Alert} packets with whomever they choose, and brokers will not be prohibited from storing {\tt Alerts} and making them available at later times (i.e., the {\tt Alert} packets themselves are world-public indefinitely).
-Although in \citeds{LSE-349}, DAPOL-700 forbids the reproduction or distribution of any of the proprietary data or services, {\em which by default includes the {\tt Alerts} Database}, in this particular case it will be allowed because doing so is in-line with LSST's intent to make the {\tt Alerts} world-public (see end of Section 3.6 in \citeds{LSE-349})
-
-{\it A common question related to the above: The alert stream is called a world-public data product, but is only available through community brokers who are not required to pass along alerts to any/all interested parties.
-Additionally, the LSST mini-broker will only be available through the DAC, which requires data rights.
-Therefore, it seems that the Alert Stream is not actually world-public?}
-
-In the case where a broker with data rights uses proprietary LSST data products, e.g., through a DAC LSP web API, then restrictions may apply.
-The basic premise of distributing derived data products is that it is not a violation of LSST data rights policies so long as proprietary data products cannot be recreated from the derived data product (see DAPOL-660 through 720 in \citeds{LSE-349}).
-An example would be a community broker that uses its DAC access to obtain the full-history forced-photometry light curve for an {\tt Alert}, and includes this information in e.g., a prioritization parameter that represents the likelihood of an object being a tidal disruption flare.
-The prioritization parameter can be shared publicly, but the light curves (and any directly measured light curve features?) remain proprietary.
-
-{\it A common question about broker DAC privileges: Will there be a way for brokers to make products available through the DAC, so that authorization (in the case of brokers using proprietary data products) can be handled by LSST's protocols?} Case scenario: a broker runs an associated user-generated pipeline/script that does forced photometry on the prompt single-visit process images when a previously variable {\tt DIAObject} is undetected at ${\rm SNR}<5$.
-Furthermore, brokers that are accessing the DAC through a web API during the night might use a large amount of the DAC's computational resources.
-{\bf MLG: Has this been sized?
-Is it possible?
-How would decisions to throttle usage be made, if it became necessary to do so?}
-
-%Note that Steve K has some relevant policy text here: \url{https://docushare.lsstcorp.org/docushare/dsweb/Get/LPM-151/}
-
-\subsection{Members (Data Rights Holders) -- alert packets and DAC access}
-
-Data rights holders will have access to the mini-broker for filtering the alert stream.
-Since the alerts themselves are world public, any individual who uses the mini-broker to process the alert stream can export mini-brokered alert packets and share them with non-partners.
-If proprietary data is used within the DAC to e.g., filter, categorize, or add information to Alerts via the mini-broker, then just like with community broker products, that member's mini-broker product becomes subject to data rights policy (just like any other derived data product).
+Data rights and access policies are formally described in \citeds{LPM-216}. 
+Here we summarize the aspects most relevant to the alert stream.
+The interested reader is advised to consult \citeds{LPM-216} for details.
+\textbf{LPM-216 is not yet change-controlled and so the following should be regarded as provisional until it is.}
 
 
-%\subsection{International Partners without DAC access}
-%{\it Common Question: can international partners without DAC access actually get a user account via collaboration with partner institution that does have DAC access?}
+The LSST {\tt Alerts} are a world-public data product.
+We use ``public'' here in the sense of DAPOL-020 \citeds{LPM-216}:  \texttt{Alert} packets can be freely shared with anyone, by anyone, anywhere, worldwide.
+However, LSST is not committed to serving alert packets directly to individuals without data rights;
+thus, the term ``public'' means ``shareable'' and should not be misinterpreted as ``freely available.''
 
-\subsection{LSST EPO (cf. LIT-94) -- redacted subset of alert stream}
-%cf. LEP-31, LSE-131, LIT-97
-{\bf MLG: Not sure if we need this section, or what to put here, since EPO use of a redacted alert stream is separate from brokers?}
+Instead, the LSST {\tt Alert} Stream will be delivered to a to-be-determined set of community brokers (Section \ref{sec:community_brokers}).
+An institution is not required to hold data rights in order to host a broker.
+Brokers may share (or not share) the contents of {\tt Alert} packets with whomever they choose, 
+although the broker selection process (\S \ref{sec:community_brokers}) will prioritize selection of brokers that will provide world-public access.
+Brokers will not be prohibited from storing {\tt Alerts} and making them available at later times;
+the {\tt Alert} packets themselves are world-public indefinitely, and thus aggregations of public products are also permitted.
 
-\subsection{All others (public) -- alert packets only}
+Brokers hosted by institutions with LSST data rights and data access (DAPOL-040) may access proprietary LSST data products, such as through API interfaces exposed by the LSST Science Platform.
+The broker would then be responsible for ensuring access to the proprietary data products is restricted to data rights holders (DAPOL-020).
+However, brokers may create and make public \textit{derived} data products that use proprietary data.
+DAPOL-620 defines derived data products as data that cannot be used to recreate any proprietary \textbf{ECB: draft says ``original''} LSST data products.
+Derived data products may be shared without restriction.
 
-% need to clarify that brokers can't expose outputs of DAC services to unauthenticated users
+For  example,  a community broker could use its DAC access to obtain the proprietary full-history forced-photometry light curve for a \texttt{DIAObject} identified by a public {\tt Alert}, 
+and then use this information to construct a classification probability that represents the likelihood the object is a tidal disruption event.
+The classification probability can be shared publicly without restriction, but the light curve itself must remain proprietary.
 
-{\bf MLG: I think this might be covered in the main section text above.}
+%{\it A common question about broker DAC privileges: Will there be a way for brokers to make products available through the DAC, so that authorization (in the case of brokers using proprietary data products) can be handled by LSST's protocols?} Case scenario: a broker runs an associated user-generated pipeline/script that does forced photometry on the prompt single-visit process images when a previously variable {\tt DIAObject} is undetected at ${\rm SNR}<5$.
+%Furthermore, brokers that are accessing the DAC through a web API during the night might use a large amount of the DAC's computational resources.
+%{\bf MLG: Has this been sized?
+%Is it possible?
+%How would decisions to throttle usage be made, if it became necessary to do so?}
 
-% MLG: Consider public use policy that is favorable to use by more than just the astronomical field? E.g., for data science applications.
 
+Full LSST Users (DAPOL-080) will have access to the mini-broker in the Data Access Center for filtering the alert stream.
+Since the alerts themselves are world public, a Full LSST USer who uses the mini-broker to process the alert stream can export filtered alert packets (or any subset of their contents) and share them freely.
+Full LSST Users may use other DAC services to query and process proprietary data products. 
+For example, a user might identify a \texttt{DIAObject} of interest from a mini-broker filter, query the Prompt Products Database to retrieve the precovery forced photometry, and then run user-generated processing on the Processed Visit Images.
+These proprietary products must not be distributed to individuals without data rights.
+However, as for community brokers, if a user generates derived data products (such as a classification probability derived from a fit to the forced photometry lightcurve), these may be freely shared.
+
+As an example, we consider a Full LSST user who is searching for supernovae using the mini-broker.
+The LSST user wants to share a target with a collaborator who does not have data rights so that the collaborator may obtain a spectrum.
+The LSST user may send their collaborator the sky position and time of the first LSST detection (public from the \texttt{Alert} packet), the alert packet cutout images (public from the \texttt{Alert} packet), and their assessment that the target is a likely supernova Ia (derived data product).
+They may not share a larger cutout from the Processed Visit Image to use as a finder chart nor the forced photometry lightcurve they used to derive the supernova classification (proprietary data products).
