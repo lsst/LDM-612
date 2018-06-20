@@ -30,10 +30,10 @@ Additionally, we anticipate that community brokers will require some level of su
 Accordingly, LSST will conduct an open proposal process in order to select brokers with sufficient technical capability to enable valuable and reliable scientific returns.
 
 We believe the scientific community will be best served by a rich broker ecosystem offering diverse capabilities. 
-Any institution worldwide may submit a proposal.
+Any institution worldwide may submit a Letter of Intent (\S \ref{sec:LOIs}), and if invited, a full proposal.
 Demonstration of appropriate technical and personnel resources to support the proposed goals will be the minimum requirement to be considered.
 
-Recognizing that different science goals may benefit from different technical approaches, and that proposing institutions may have a range of strengths and experience, the proposal call will not place any explicit functional requirements on proposed brokers.  
+Recognizing that different science goals may benefit from different technical approaches, and that proposing institutions may have a range of strengths and experience, the proposal solicitation will not place any explicit functional requirements on proposed brokers.  
 Thus a proposed broker is not \textit{required} to consume the whole stream, to redistribute the full stream, or to make its products world-public, for example.
 However, given the small and finite number of brokers to be selected (\S \ref{sec:numbrokers}) and the evaluation criteria (\S \ref{sec:evaluation}), proposals offering to do so will be more likely to be selected.
 The selection committee will evaluate the proposals holistically, weighing the unique capabilities proposed in order to maximize the scientific output of LSST.
@@ -46,9 +46,20 @@ We anticipate that this facility would be provided by the same technology underl
 Broker proposals will be evaluated by a panel designated by the LSST Science Advisory Committee.  Appropriate care will be taken to avoid conflicts of interest.
 The panel will include ex officio representatives from the LSST Project Office and Data Management to provide policy and technical guidance.
 
+\subsection{Letters of Intent} \label{sec:LOIs}
+
+The broker proposal process will have two stages:  
+an initial open call for Letters of Intent (LOIs) from all interested parties, and a subsequent full proposal call solicited from invited LOI writers.
+This two-stage process ensures those writing full proposals have a reasonable chance at selection and provides an opportunity for early feedback.
+An invitation to submit a full proposal may also be valuable to proposers in obtaining relevant funding.
+
+Evaluation of LOIs will use the same criteria as the full proposals (see below).
+In general we expect that all credible LOIs will be invited to submit full proposals.
+
+
 \subsection{Required Technical Resources} \label{sec:resources}
 
-The panel will evaluate whether the proposal is technically feasible and appropriately supported for the proposed goals.  
+The panel will evaluate whether the proposed broker system is technically feasible and appropriately supported for the proposed goals.  
 At minimum, this requires:
 
 \begin{itemize}
@@ -59,8 +70,6 @@ At minimum, this requires:
 	\item Appropriate personnel to develop and maintain the service
 	\item Institutional support to ensure the longevity and stability of the service.
 \end{itemize}
-
-Depending on the relative timing of the proposal evaluation and the progress of LSST commissioning, the panel may request proof-of-concept execution on LSST commissioning datasets.
 
 \subsection{Evaluation of Community Broker Proposals} \label{sec:evaluation}
 
@@ -98,7 +107,8 @@ range of scientific, geographic, and institutional communities that have utilize
 
 \subsubsection{Complementarity}
 
-To maximize scientific returns, the panel will make a final selection of an ensemble of complimentary brokers rather than attempting to strictly rank disparate proposals.   Accordingly the final selection may include lower-ranked proposals if they provide capabilities not present in the top-ranked brokers or serve other scientific communities.
+To maximize scientific returns, the panel will make a final selection of an ensemble of complimentary brokers rather than attempting to strictly rank disparate proposals.   
+Accordingly the final selection may include lower-ranked proposals if they provide capabilities not present in the top-ranked brokers or serve other scientific communities.
 
 \subsubsection{Existing Agreements}
 
@@ -116,46 +126,51 @@ The available capacity will depend on:
 	\item the achieved purity of the alert stream
 \end{itemize}
 
-The proposal call will provide updated estimates based on pipeline performance on precursor surveys.
+The proposal solicitation will provide updated estimates based on pipeline performance on precursor surveys.
 Final capacity determination will not be possible until commissioning data is available from ComCam.
 The broker selection panel may elect to make guaranteed and provisional selections based on these estimates.
 
 \subsection{Resources for Proposers}
 
-To aid in broker development and testing, at the time of the broker proposal call LSST will make available canned alert streams for precursor and/or simulated datasets generated by the LSST Alert Production pipelines and distributed with the expected formats and protocols.
+To aid in broker development and testing, at the time of the broker proposal solicitation LSST will make available canned alert streams for precursor and/or simulated datasets generated by the LSST Alert Production pipelines and distributed with the expected formats and protocols.
 
 \subsection{Resources for Selected Brokers}
 
+Selected brokers will be expected to sign a Memorandum of Understanding codifying agreement to respect LSST Data Rights policies (where relevant) and outlining expected interfaces, support, and Service-Level Agreements for both parties.
 Selected community brokers will receive basic support from the LSST Operations Team to ensure that the agreed to (portion of) the alert stream is pushed out with the expected form, content, reliability, and timing.
 Additionally, status information will be available during operations to diagnose processing and data transport problems as they arise.
 
 \subsection{Timeline}
 
+{
+	\renewcommand\labelenumi{\textbf{\theenumi}}
 \begin{enumerate}
   \setcounter{enumi}{2017}
-	\item \begin{itemize}
+	\item \begin{itemize} % 2018
 		\item Plans and Policies for LSST Alert Distribution document issued
 	\end{itemize}
-	\item \begin{itemize}
+	\item \begin{itemize}% 2019
+		\item Issue call for Letters of Intent (LOI)
 		\item Document bulk transport format and interface
 		\item Set up test alert stream with sample precursor data
-		\item Issue call for proposals for community brokers
+		\item Invite full proposals for community brokers from selected LOIs
 		\end{itemize}
-	\item \begin{itemize}
+	\item \begin{itemize} %2020
 		\item Broker proposals due
 		\item Produce sample commissioning alerts with ComCam \textit{with substantial latency}
 		\end{itemize}
-	\item \begin{itemize}
+	\item \begin{itemize} %2021
 			\item Finalize number of full streams
 			\item Selection of community brokers for early operations
 			\item Produce sample commissioning alerts with LSSTCam \textit{with substantial latency}
-			\item Integrate selected brokers with the LSST Alert System
 		\end{itemize}
 
-	\item \begin{itemize}
+	\item \begin{itemize} %2022
+			\item Integrate selected brokers with the LSST Alert System
 			\item Begin full LSST operations
 	\end{itemize}
 
 \end{enumerate}
+}
 
 It is reasonable to expect periodic review of broker performance and usage during LSST Operations.
