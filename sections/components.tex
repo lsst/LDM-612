@@ -1,24 +1,23 @@
 \section{Components and Capabilities of the LSST Alert Distribution System}\label{sec:components}
 
-Description of the end-to-end system from data acquisition to scientific use of {\tt Alerts}.
+In this section we provide a high-level overview of the LSST Alert Production process to provide background for science users of LSST \texttt{Alerts}.
 
-\subsection{Overview of LSST Data Acquisition, Transfer, and Processing}
+\subsection{Data Acquisition, Transfer, and Processing}
 
-This section will discuss the relevant aspects of the fiber networks, NCSA, and Alert Generation pipelines.
+LSST will survey the sky repeatedly using standard or alternative standard visits ($2\times15$\,second or $1\times30$\,second exposures, respectively).  
+Immediately after the camera shutter closes, the images will be transferred via fiber networks up to the LSST Data Facility (LDF) at the National Center for Supercomputing Applications (NCSA).
+All subsequent data processing leading to \texttt{Alerts} occurs in the LDF.
 
-\subsubsection{Fiber Networks}
+\subsubsection{Alert Production Pipeline}\label{sec:AP}
 
-\subsubsection{National Center for Supercomputing Applications (NCSA)}
-
-\subsubsection{Alert Generation Pipeline}\label{sssec:AGP}
-
-% MLG draft
-The prompt pipeline that processes data during the night and generates {\tt Alerts} is described in \citeds{LSE-163}, with detailed descriptions of its algorithmic components provided in \citeds{LDM-151}.
-The basic modules include data reduction (e.g., instrument signature removal), difference imaging analysis (DIA; the subtraction of a template image), and source detection, association, and measurement \citedsp{LSE-163}.
-The LSST Data Management team anticipates that all standard and alternative standard visits ($2\times15$ or $1\times30$ exposures, respectively), whether obtained as part of the main wide-fast-deep (WFD) survey or a Special Program, can and will be processed by the Prompt Pipeline and used to generate {\tt Alerts}.
-The caveat might be images of fields too crowded for the prompt pipeline to successfully produce alerts within {\tt OTT1 = 1} minute (DMS-REQ-0004, \citeds{LSE-61}; however, elastically allocated computational resource might be applied to handle DIA in crowded fields).
-In addition, the prompt pipeline might also be able to process non-standard visits with longer or shorter exposure times provided that, e.g., the visit image can be successfully PDF-matched and differenced with a template image.
-The prompt pipeline's capabilities in this respect are to be determined; see \citeds{DMTN-065} for a summary of the diversity of data from Special Programs.
+The LSST Data Management Alert Production (AP) pipeline processes data during the night and generates {\tt Alerts}.
+It is described in \citeds{LSE-163}, with detailed descriptions of its algorithmic components provided in \citeds{LDM-151}.
+The basic modules include data reduction (e.g., instrument signature removal, photometric and astrometric calibration), difference imaging analysis (DIA; the subtraction of a template image), and source detection, association, and measurement \citedsp{LSE-163}.
+The AP pipeline will process all standard and alternative standard visits ($2\times15$ or $1\times30$ exposures, respectively), whether obtained as part of the main wide-fast-deep survey or a Special Program \citeds{DMTN-065} and generate {\tt Alerts} within the required {\tt OTT1 = 1} minute after the shutter closes (DMS-REQ-0004, \citeds{LSE-61})\footnote{
+The AP pipeline may also be able to process non-standard visits with longer or shorter exposure times provided that, e.g., the visit image can be successfully PSF-matched and differenced with a template image.
+\texttt{Alert} generation in crowded fields that produce more than the 10,000 alerts 
+The caveat might be images of fields too crowded for the prompt pipeline to successfully produce alerts within ; however, elastically allocated computational resource might be applied to handle DIA in crowded fields.
+}
 
 % MLG draft
 All sources in a difference image that have a signal-to-noise ratio ${\rm SNR}>5$ in positive or negative flux are considered ``detected" and incorporated into the {\tt DIASource} catalog, and will cause an {\tt Alert} to be issued.
@@ -62,7 +61,7 @@ Additionally, a service shall be provided to users to obtain full-survey precove
 This service will be made available through the Science Platform.
 % {\bf It seems that MOPS also does some precovery photometry in order to use predictions of tracklets and orbits as further constraints?
 E.g., Section 3.5.6 in LDM-151.
-Probably not necessary to include since it wound't contribute to Alerts.}
+Probably not necessary to include since it wound't contribute to Alerts.
 
 
 \subsection{Alert Packets}\label{ssec:packets}
