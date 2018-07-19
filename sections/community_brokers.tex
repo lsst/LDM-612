@@ -20,7 +20,7 @@ We envision that community brokers, individually or jointly, may provide a varie
 	\item collect classification and other information gathered by the scientific community
 \end{itemize}
 
-Some these functions may be performed by ``Target and Observation Managers'' that may either be integrated into community brokers directly or connect to annotated and/or filtered streams delivered by a broker.
+Some of these functions may be performed by ``Target and Observation Managers'' that may either be integrated into community brokers directly or connect to annotated and/or filtered streams delivered by a broker.
 For simplicity, we will here refer to any system that connects directly to the LSST alert stream as a broker.
 
 \subsection{Requirements for Community Brokers}
@@ -53,8 +53,7 @@ an initial open call for Letters of Intent (LOIs) from all interested parties, a
 This two-stage process ensures those writing full proposals have a reasonable chance at selection and provides an opportunity for early feedback.
 An invitation to submit a full proposal may also be valuable to proposers in obtaining relevant funding.
 
-Evaluation of LOIs will use the same criteria as the full proposals (see below).
-In general we expect that all credible LOIs will be invited to submit full proposals.
+LOIs will be evaluated using the same criteria as the full proposals (\S \ref{sec:resources}--\ref{sec:evaluation}), with recognition that the proposed brokers may be in the conceptual or early design stage at the time of the LOI.
 
 
 \subsection{Required Technical Resources} \label{sec:resources}
@@ -65,7 +64,7 @@ At minimum, this requires:
 \begin{itemize}
 	\item Large inbound and outbound network bandwidth (the full alert stream is a few TB/night)
 	\item Petabytes of disk capacity
-	\item Databases handling of billions of sources
+	\item Databases capable of handling of billions of sources
 	\item Compute resources to handle sophisticated classification and filtering tasks in real time at scale
 	\item Appropriate personnel to develop and maintain the service
 	\item Institutional support to ensure the longevity and stability of the service.
@@ -107,8 +106,8 @@ range of scientific, geographic, and institutional communities that have utilize
 
 \subsubsection{Complementarity}
 
-To maximize scientific returns, the panel will make a final selection of an ensemble of complimentary brokers rather than attempting to strictly rank disparate proposals.   
-Accordingly the final selection may include lower-ranked proposals if they provide capabilities not present in the top-ranked brokers or serve other scientific communities.
+To maximize scientific returns, the panel will aim to select an ensemble of complimentary brokers.
+Brokers that are more limited in scope or scientific goals may be selected if they are providing capabilities not present in the other selected brokers or are serving scientific communities that would otherwise be unable to use LSST alerts.
 
 \subsubsection{Existing Agreements}
 
@@ -137,7 +136,7 @@ To aid in broker development and testing, at the time of the broker proposal sol
 \subsection{Resources for Selected Brokers}
 
 Selected brokers will be expected to sign a Memorandum of Understanding codifying agreement to respect LSST Data Rights policies (where relevant) and outlining expected interfaces, support, and Service-Level Agreements for both parties.
-Selected community brokers will receive basic support from the LSST Operations Team to ensure that the agreed to (portion of) the alert stream is pushed out with the expected form, content, reliability, and timing.
+Selected community brokers will receive basic support from the LSST Operations Team to ensure that the alert stream is delivered with the expected form, content, reliability, and timing.
 Additionally, status information will be available during operations to diagnose processing and data transport problems as they arise.
 
 \subsection{Timeline}
