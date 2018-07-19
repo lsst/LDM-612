@@ -1,7 +1,9 @@
 \section{Data Rights to Alert Stream Components}\label{sec:data_rights}
 
-\textbf{LPM-261 is not yet change-controlled and so the following should be regarded as provisional until it is. Broken references are to LPM-261.} 
-The proposed LSST data rights and data access policies (DAPOLs) are formally described in \citeds{LPM-261}. Here we summarize the aspects most relevant to the alert stream. The interested reader is advised to consult \citeds{LPM-261} for details.
+\textbf{LPM-261 is not yet change-controlled and the following should be regarded as provisional until it is.}
+LSST data rights and data access policies (DAPOLs) are formally described in \citeds{LPM-261}. 
+Here we summarize the aspects most relevant to the alert stream. 
+The interested reader is advised to consult \citeds{LPM-261} for details.
 
 LSST {\tt Alert} packets (\S \ref{sec:packets}) are a world-public data product.
 We use ``public'' here in the sense of DAPOL-020:  \texttt{Alert} packets can be freely shared with anyone, by anyone, anywhere, worldwide.
@@ -10,7 +12,7 @@ thus, the term ``public'' means ``shareable'' and should not be misinterpreted a
 
 Instead, the LSST {\tt Alert} Stream will be delivered to a to-be-determined set of community brokers (Section \ref{sec:community_brokers}).
 An institution is not required to hold data rights in order to host a broker.
-Brokers may share (or not share) the contents of {\tt Alert} packets with whomever they choose, 
+Brokers may share (or not share) the contents of {\tt Alert} packets with whomever they choose,
 although the broker selection process (\S \ref{sec:community_brokers}) will prioritize selection of brokers that will provide world-public access.
 Brokers will not be prohibited from storing {\tt Alerts} and making them available at later times;
 the {\tt Alert} packets themselves are world-public indefinitely, and thus aggregations of public products are also permitted.
@@ -22,7 +24,7 @@ The broker would then be responsible for ensuring access to the proprietary data
 Any \textit{derived} data products that are generated from proprietary data are also proprietary until published, after which they are considered public. 
 DAPOL-620 defines derived data products as data that cannot be used to recreate any proprietary LSST data products.
 
-For example, a community broker could use DAC APIs to obtain the proprietary full-history forced-photometry light curve for a \texttt{DIAObject} identified by a public {\tt Alert}, 
+For example, a community broker could use DAC APIs to obtain the proprietary full-history forced-photometry light curve for a \texttt{DIAObject} identified by a public {\tt Alert},
 and then use this information to construct a classification probability that represents the likelihood the object is a tidal disruption event.
 The classification probability would, under the currently proposed data rights policies, be classified as a derived data product that is proprietary until published. The light curve itself remains proprietary.
 
