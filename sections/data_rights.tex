@@ -5,14 +5,14 @@ LSST data rights and data access policies (DAPOLs) are formally described in \ci
 Here we summarize the aspects most relevant to the alert stream. 
 The interested reader is advised to consult \citeds{LPM-261} for details.
 
-LSST {\tt Alert} packets (\S \ref{sec:packets}) are a world-public data product.
-We use ``public'' here in the sense of DAPOL-020:  \texttt{Alert} packets can be freely shared with anyone, by anyone, anywhere, worldwide.
+LSST alert packets (\S \ref{sec:packets}) are a world-public data product.
+We use ``public'' here in the sense of DAPOL-020:  alert packets can be freely shared with anyone, by anyone, anywhere, worldwide.
 However, LSST is not committed to serving alert packets directly to individuals without data rights;
 thus, the term ``public'' means ``shareable'' and should not be misinterpreted as ``freely available.''
 
-Instead, the LSST {\tt Alert} Stream will be delivered to a to-be-determined set of community brokers (Section \ref{sec:community_brokers}).
+Instead, the LSST alert stream will be delivered to a to-be-determined set of community brokers (Section \ref{sec:community_brokers}).
 An institution is not required to hold data rights in order to host a broker.
-Brokers may share (or not share) the contents of {\tt Alert} packets with whomever they choose,
+Brokers may share (or not share) the contents of alert packets with whomever they choose,
 although the broker selection process (\S \ref{sec:community_brokers}) will prioritize selection of brokers that will provide world-public access.
 Brokers will not be prohibited from storing alerts and making them available at later times;
 the alert packets themselves are world-public indefinitely, and thus aggregations of public products are also permitted.
@@ -24,7 +24,7 @@ The broker would then be responsible for ensuring access to the proprietary data
 Any \textit{derived} data products that are generated from proprietary data are also proprietary until published, after which they are considered public. 
 DAPOL-620 defines derived data products as data that cannot be used to recreate any proprietary LSST data products.
 
-For example, a community broker could use Science Platform APIs to obtain the proprietary full-history forced-photometry light curve for a \texttt{DIAObject} identified by a public {\tt Alert},
+For example, a community broker could use Science Platform APIs to obtain the proprietary full-history forced-photometry light curve for a \texttt{DIAObject} identified by a public alert,
 and then use this information to construct a classification probability that represents the likelihood the object is a tidal disruption event.
 The classification probability would, under the currently proposed data rights policies, be classified as a derived data product that is proprietary until published. The light curve itself remains proprietary.
 
@@ -40,5 +40,5 @@ However, exceptions for the sharing of derived data products in advance of publi
 As an example, we consider a Full LSST user who is searching for supernovae using the mini-broker and then performing lightcurve fits using the forced photometry lightcurve.
 The LSST user wants to share a target with a collaborator who does not have data rights so that the collaborator may obtain a spectrum.
 This is justified under DAPOL-720 if the spectrum will uniquely enable a single-object publication (e.g., supernova data do not typically yield a publishable unit without spectroscopic classification).
-The LSST user may send their collaborator the sky position and time of the LSST detections (public from the \texttt{Alert} packet), the alert packet cutout images (public from the \texttt{Alert} packet), and their assessment that the target is a likely supernova (i.e., the derived data product required to enable the publication).
+The LSST user may send their collaborator the sky position and time of the LSST detections (public from the alert packet), the alert packet cutout images (public from the alert packet), and their assessment that the target is a likely supernova (the derived data product which requres sharing to enable the publication).
 They may not share the forced photometry light-curve they used to derive the supernova classification (proprietary data products).
