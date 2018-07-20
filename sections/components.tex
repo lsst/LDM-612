@@ -1,14 +1,16 @@
 \section{Components and Capabilities of the LSST Alert Distribution System}\label{sec:components}
 
-In this section we provide a high-level overview of the LSST Alert Production process to provide background for science users of LSST \texttt{Alerts}.
+In this section we provide a high-level overview of the LSST Alert Production process to provide background for science users of LSST alerts.
 
-\subsection{Data Acquisition, Transfer, and Processing}
+\subsection{Facilities}
+
+\subsubsection{Data Acquisition, Transfer, and Processing}
 
 LSST will survey the sky repeatedly using standard or alternative standard visits ($2\times15$\,second or $1\times30$\,second exposures, respectively).  
 Immediately after the camera shutter closes, the images will be transferred via fiber networks up to the LSST Data Facility (LDF; \S \ref{sec:LDF}) at the National Center for Supercomputing Applications (NCSA).
-All subsequent data processing leading to \texttt{Alerts} occurs in the LDF.
+All subsequent data processing leading to alerts occurs in the LDF.
 
-\subsection{The LSST Data Facility and Data Access Center} \label{sec:LDF}
+\subsubsection{The LSST Data Facility and Data Access Center} \label{sec:LDF}
 
 The LSST Data Facility (LDF) provides the primary site for LSST data processing and data access.
 \citeds{LDM-230} describes the concept of operations for the LDF.
@@ -16,35 +18,35 @@ The LDF hosts a variety of computational services, including the Prompt Processi
 The LDF also hosts a Data Access Center (DAC) that provides access to proprietary data products (\S \ref{sec:data_rights}) through the LSST Science Platform (\S \ref{sec:LSP}).
 The LDF also hosts the alert stream feeds to community brokers (\S \ref{sec:alert_distribution}).
 
-\subsection{Alert Production Pipeline}\label{sec:AP}
+\subsection{Pipelines and Services}
 
-The LSST Data Management (DM) Alert Production (AP) pipeline processes data during the night and generates {\tt Alerts}.
+\subsubsection{Alert Production Pipeline}\label{sec:AP}
+
+The LSST Data Management (DM) Alert Production (AP) pipeline processes data during the night and generates alerts.
 It is described in \citeds{LSE-163}, with detailed descriptions of its algorithmic components provided in \citeds{LDM-151}.
 The basic modules include single-frame image processing (e.g., instrument signature removal, photometric and astrometric calibration), difference imaging analysis (DIA; the subtraction of a template image), and source detection, association, and measurement \citedsp{LSE-163}.
-The AP pipeline will process all standard and alternative standard visits, whether obtained as part of the main wide-fast-deep survey or a Special Program \citedsp{DMTN-065} and generate {\tt Alerts} within the required {\tt OTT1 = 1} minute after the shutter closes (DMS-REQ-0004, \citeds{LSE-61})\footnote{
+The AP pipeline will process all standard and alternative standard visits, whether obtained as part of the main wide-fast-deep survey or a Special Program \citedsp{DMTN-065} and generate alerts within the required {\tt OTT1 = 1} minute after the shutter closes (DMS-REQ-0004, \citeds{LSE-61})\footnote{
 The AP pipeline may also be able to process non-standard visits with longer or shorter exposure times provided that, e.g., the visit image can be successfully PSF-matched and differenced with a template image.
-\texttt{Alert} generation in crowded fields may produce more than the maximum of 10,000 \texttt{Alerts} per visit required to be supported by DM; \texttt{Alert} generation in this circumstance is still under study.
+Alert generation in crowded fields may produce more than the maximum of 10,000 alerts per visit required to be supported by DM; \texttt{Alert} generation in this circumstance is still under study.
 }.
 
-% MLG draft
 All sources in a difference image that have a signal-to-noise ratio ${\rm SNR}>5$ in positive or negative flux are considered ``detected" \texttt{DIASources}, are incorporated into the {\tt DIASource} catalog, and will cause an {\tt Alert} to be issued\footnote{
 There may be exceptions to this rule, such as the following two examples.
 (1) Sources with ${\rm SNR} > 5$ that have a {\it ``high probability of being instrumental non-astrophysical artifacts"} \citedsp{LSE-163}, potentially as determined by 
-a to-be-developed spuriousness or real/bogus classifier \citedsp{LDM-151}, may not produce \texttt{Alerts}.
-(2) Sources with ${\rm SNR} < 5$ that meet other to-be-determined criteria, such as the likelihood of being a potentially hazardous asteroid, could produce \texttt{Alerts}.
-}.
-Additionally some ${\rm SNR} < 5$ sources will be kept for diagnostic purposes, but will not lead to {\tt Alerts}.
-Source association and measurement occurs prior to {\tt Alert} generation: every {\tt DIASource} will have one unique match to a {\tt DIAObject} (stationary object) or known Solar System Object {\tt SSObject} (moving object; see Section \ref{sec:AGP_MOPS}).
+a to-be-developed spuriousness or real/bogus classifier \citedsp{LDM-151}, may not produce alerts.
+(2) Sources with ${\rm SNR} < 5$ that meet other to-be-determined criteria, such as the likelihood of being a potentially hazardous asteroid, could produce alerts.}.
+Additionally some ${\rm SNR} < 5$ sources will be kept for diagnostic purposes, but will not lead to alerts.
+Source association and measurement occurs prior to alert generation: every {\tt DIASource} will have one unique match to a {\tt DIAObject} (stationary object) or known Solar System Object {\tt SSObject} (moving object; see Section \ref{sec:AGP_MOPS}).
 The stationary source association algorithms will be probabilistic and incorporate motion models for parallax and proper motion \citedsp{LDM-151}.
 If no association is possible a new {\tt DIAObject} is created.
 Source measurements including centroid, fluxes, shapes, and other characterization parameters (Table 1 of \citeds{LSE-163}) are made, and the time-evolving parameters of the {\tt DIAObject} such as the parallax, mean flux, and periodic/non-periodic light curve features, are updated to include the new associated {\tt DIASource}.
 At this point, the {\tt DIASource} is used to create an {\tt Alert} packet (\S \ref{sec:packets}).
 
-\subsection{Moving Objects Processing System}\label{sec:AGP_MOPS}
+\subsubsection{Moving Objects Processing System}\label{sec:AGP_MOPS}
 
 
 As part of Alert Generation, the Known Solar System Object Association pipeline will calculate the predicted locations of known solar system objects (the LSST {\tt SSObjects} catalog) in each newly acquired visit image. 
-{\tt Alerts} will be issued for all ${\rm SNR} > 5$ \texttt{DIASource} detections of \texttt{SSObjects}.
+Alerts will be issued for all ${\rm SNR} > 5$ \texttt{DIASource} detections of \texttt{SSObjects}.
 
 After the completion of a night of observing,
 the LSST Moving Objects Processing System (MOPS; \citeds{LDM-156}) will attempt to identify new \texttt{SSObjects} using the updated Prompt Products Database (\S \ref{sec:ppdb}).
@@ -53,7 +55,47 @@ Newly identified moving objects are added to the {\tt SSObject} catalog.
 MOPS will interface with the Minor Planets Center (MPC) and will ingest all previously known or externally identified moving objects into the {\tt SSObjects} catalog, and use MPC astrometry in the orbital parameter fits.
 
 
-\subsection{Alert Packets}\label{sec:packets}
+\subsubsection{Alert Distribution} \label{sec:alert_distribution}
+
+\texttt{Alert} packets (\S \ref{sec:packets}) will be queued for distribution to community brokers (\S \ref{sec:community_brokers}) and the LSST mini-broker (\S \ref{sec:mini-broker}). 
+LSST is prototyping  a bulk transport system built on the open-source distributed queue system Apache Kafka\footnote{\url{http://kafka.apache.org/}}, with Apache Avro\footnote{\url{http://avro.apache.org/}} used as a binary serialization format.
+Initial tests indicate that this system performs effectively at the required scale \citedsp{DMTN-028}.
+
+Due to finite bandwidth out of the LDF, only selected community brokers will receive the full \texttt{Alert} stream.
+Science users may access LSST alerts through a community broker, or through the mini-broker if they have data access rights (\S \ref{sec:data_rights}).
+
+
+\subsubsection{The LSST mini-broker}\label{sec:mini-broker}
+
+The LSST mini-broker provides a simple filtering service for real-time access to a subset of the alert stream.
+Users can upload simple filters through the Science Platform (\S \ref{sec:LSP}) that act only on the contents of the alert packet and receive a real-time stream of alerts which pass their filter.
+This capability is expected to be useful for science cases too specific to be well-served by community brokers.
+The mini-broker is required to support 100 simultaneous users; limits on runtime and bandwidth (support for transmission of up to 20 full-sized alerts per visit per filter is required) will be imposed to maintain performance.
+The mini-broker will support a version of the \texttt{VOEvent} standard\footnote{\url{http://www.ivoa.net/documents/VOEvent/}} that is current at the time of LSST operations.
+
+\subsubsection{Forced Photometry}\label{sec:AGP_force}
+
+Measurements of \texttt{DIAObjects} that are below the ${\rm SNR} > 5$ threshold are available through ``forced photometry'': flux is measured at a previously-known position.
+Forced photometry is performed on difference images in two ways; neither contributes to alerts, but are available to users through the Science Platform.
+First, during the real-time DIA, forced photometry is performed on every difference image at the locations of all previously-known {\tt DIAObjects} detected in the past 12 months. 
+The resulting measurements are stored in the Prompt Products Database (\S \ref{sec:ppdb}).
+Second, at the end of the night, ``precovery'' forced photometry will be performed for all \textit{new} \texttt{DIAObjects} on every difference image from the past 30 days.
+These results are also stored in the Prompt Products database and will be available within 24 hours.
+ 
+Additionally, a service shall be provided to users to obtain full-survey precovery for a limited number of {\tt DIAObjects}, also within 24 hours (DMS-REQ-0341, \citeds{LSE-61}).
+This service will be made available through the Science Platform.
+
+\subsubsection{The LSST Science Platform} \label{sec:LSP}
+
+The LSST Science Platform (LSP) provides access to the proprietary data products (e.g., \S \ref{sec:products}--\ref{sec:alertdb}) held in the DAC.
+The Science Platform is described in full in \citeds{LSE-319} and \citeds{LDM-554}.
+It provides three means of accessing data: a web-based ``Portal'' for visual examination and querying of the LSST images and catalogs; 
+an interactive ``Notebook'' environment with associated computing allocations for running code close to the data; 
+and an Application Programming Interface (API) for programmatic access to LSST data using Virtual Observatory standards.
+
+
+\subsection{Data Products}
+\subsubsection{Alert Packets}\label{sec:packets}
 
 The contents of an {\tt Alert} packet are fully described in Section 3.5.1 of \citeds{LSE-163}. We reproduce the list of included data here:
 \renewcommand{\labelenumi}{\Roman{enumi}.}
@@ -72,65 +114,27 @@ The full list of parameters that are measured and included in the {\tt DIASource
 The only trigger for an {\tt Alert} is the detection of a source in a difference image with ${\rm SNR} > 5$. 
 Thus, objects that become saturated or return to the same brightness as in the template image will not generate an {\tt Alert}, for example.
 
-\subsection{Alert Distribution} \label{sec:alert_distribution}
+\subsubsection{Processed Images} \label{sec:products}
 
-\texttt{Alert} packets will be queued for distribution to community brokers (\S \ref{sec:community_brokers}) and the LSST mini-broker (\S \ref{sec:mini-broker}). 
-LSST is prototyping  a bulk transport system built on the open-source distributed queue system Apache Kafka\footnote{\url{http://kafka.apache.org/}}, with Apache Avro\footnote{\url{http://avro.apache.org/}} used as a binary serialization format.
-Initial tests indicate that this system performs effectively at the required scale \citedsp{DMTN-028}.
-
-Due to finite bandwidth out of the LDF, only selected community brokers will receive the full \texttt{Alert} stream.
-Science users may access LSST alerts through a community broker, or through the mini-broker if they have data access rights (\S \ref{sec:data_rights}).
-
-
-\subsection{The LSST mini-broker}\label{sec:mini-broker}
-
-The LSST mini-broker provides a simple filtering service for real-time access to a subset of the alert stream.
-Users can upload simple filters through the Science Platform (\S \ref{sec:LSP}) that act only on the contents of the alert packet and receive a real-time stream of alerts which pass their filter.
-This capability is expected to be useful for science cases too specific to be well-served by community brokers.
-The mini-broker is required to support 100 simultaneous users; limits on runtime and bandwidth (support for transmission of up to 20 full-sized alerts per visit per filter is required) will be imposed to maintain performance.
-The mini-broker will support a version of the \texttt{VOEvent} standard\footnote{\url{http://www.ivoa.net/documents/VOEvent/}} that is current at the time of LSST operations.
-
-\subsection{Forced Photometry}\label{sec:AGP_force}
-
-Measurements of \textit{DIAObjects} that are below the ${\rm SNR} > 5$ threshold are available through ``forced photometry'': flux is measured at a previously-known position.
-Forced photometry is performed on difference images in two ways; neither contributes to \texttt{Alerts}, but are available to users through the Science Platform.
-First, during the real-time DIA, forced photometry is performed on every difference image at the locations of all previously-known {\tt DIAObjects} detected in the past 12 months. 
-The resulting measurements are stored in the Prompt Products Database (\S \ref{sec:ppdb}).
-Second, at the end of the night, ``precovery'' forced photometry will be performed for all \textit{new} \texttt{DIAObjects} on every difference image from the past 30 days.
-These results are also stored in the Prompt Products database and will be available within 24 hours.
- 
-Additionally, a service shall be provided to users to obtain full-survey precovery for a limited number of {\tt DIAObjects}, also within 24 hours (DMS-REQ-0341, \citeds{LSE-61}).
-This service will be made available through the Science Platform.
-
-\subsection{The LSST Science Platform} \label{sec:LSP}
-
-The LSST Science Platform (LSP) provides access to the proprietary data products (e.g., \S \ref{sec:products}--\ref{sec:alertdb}) held in the DAC.
-The Science Platform is described in full in \citeds{LSE-319} and \citeds{LDM-554}.
-It provides three means of accessing data: a web-based ``Portal'' for visual examination and querying of the LSST images and catalogs; 
-an interactive ``Notebook'' environment with associated computing allocations for running code close to the data; 
-and an Application Programming Interface (API) for programmatic access to LSST data using Virtual Observatory standards.
-
-\subsection{Processed Images} \label{sec:products}
-
-Processed visit images (PVIs) and difference images produced by the prompt processing pipeline will be available in the DAC within 24 hours, and potentially much sooner.
+Processed visit images (PVIs) and difference images produced by the prompt processing pipeline will be available in the Science Platform within 24 hours, and potentially much sooner.
 They are held on disk for 30 days to enable the precovery forced photometry service (\S \ref{sec:AGP_force}).
 PVIs for older visits can be regenerated on-demand.
 
-\subsection{Prompt Products Database} \label{sec:ppdb}
+\subsubsection{Prompt Products Database} \label{sec:ppdb}
 
 The \texttt{DIAObject}, \texttt{DIASource}, and \texttt{SSObject} catalogs created by the Alert Generation pipelines are held in a Prompt Products Database along with the outputs of the Forced Photometry.
 This database is queryable through any of the aspects of the Science Platform.
 
 
-\subsection{Data Release Products} \label{sec:drp}
+\subsubsection{Data Release Products} \label{sec:drp}
 
 Annual releases of all the LSST data will include processed and stacked images, catalogs of {\tt Sources}, {\tt ForcedSources}, and {\tt Objects} from measurements on the stacked and individual images, as well as calibration information.
 It will also include a  reprocessing of all images with the latest DIA codes and full-survey versions of {\tt DIASource} and {\tt DIAObject} catalogs -- e.g., the variability characterization parameters are calculated from the entire survey to date.
 All of these products are queryable through the Science Platform.
 
-\subsection{Alert Database} \label{sec:alertdb}
+\subsubsection{Alert Database} \label{sec:alertdb}
 
-All {\tt Alerts} will be stored in their full original form in a queryable archive.
+All alerts will be stored in their full original form in an archive hosted in the DAC.
 This archive is expected to be of most use for testing broker filters or for studies that need to emulate real-time identification of transients from the alert packets.
 Users who simply wish to work with large samples of lightcurves will likely prefer to query the \texttt{DIAObject} and \texttt{DIASource} or \texttt{Object} and \texttt{ForceSource} tables directly.
 

@@ -14,8 +14,8 @@ Instead, the LSST {\tt Alert} Stream will be delivered to a to-be-determined set
 An institution is not required to hold data rights in order to host a broker.
 Brokers may share (or not share) the contents of {\tt Alert} packets with whomever they choose,
 although the broker selection process (\S \ref{sec:community_brokers}) will prioritize selection of brokers that will provide world-public access.
-Brokers will not be prohibited from storing {\tt Alerts} and making them available at later times;
-the {\tt Alert} packets themselves are world-public indefinitely, and thus aggregations of public products are also permitted.
+Brokers will not be prohibited from storing alerts and making them available at later times;
+the alert packets themselves are world-public indefinitely, and thus aggregations of public products are also permitted.
 
 Essentially all other LSST data products and services are proprietary, including raw and processed images, the resulting catalogs and databases, and access to the LSST DAC, Science Platform, and mini-broker.
 
@@ -24,21 +24,21 @@ The broker would then be responsible for ensuring access to the proprietary data
 Any \textit{derived} data products that are generated from proprietary data are also proprietary until published, after which they are considered public. 
 DAPOL-620 defines derived data products as data that cannot be used to recreate any proprietary LSST data products.
 
-For example, a community broker could use DAC APIs to obtain the proprietary full-history forced-photometry light curve for a \texttt{DIAObject} identified by a public {\tt Alert},
+For example, a community broker could use Science Platform APIs to obtain the proprietary full-history forced-photometry light curve for a \texttt{DIAObject} identified by a public {\tt Alert},
 and then use this information to construct a classification probability that represents the likelihood the object is a tidal disruption event.
 The classification probability would, under the currently proposed data rights policies, be classified as a derived data product that is proprietary until published. The light curve itself remains proprietary.
 
-Full LSST Users (DAPOL-080) will have access to the mini-broker in the LSST DAC for filtering the alert stream.
+Full LSST Users (DAPOL-080) will have access to the mini-broker hosted in the LSST DAC for filtering the alert stream.
 Since the alerts themselves are world public, a Full LSST User who uses the mini-broker to process the alert stream can export filtered alert packets (or any subset of their contents) and share them freely.
-Full LSST Users may use other DAC services to query and process proprietary data products.
+Full LSST Users may use other Science Platform services to query and process proprietary data products.
 
 For example, a user might identify a \texttt{DIAObject} of interest from a mini-broker filter, query the Prompt Products Database to retrieve the precovery forced photometry, and then run user-generated processing on the Processed Visit Images.
 These proprietary products must not be distributed to individuals without data rights.
 As for community brokers, if a user generates derived data products (such as a classification probability derived from a fit to the forced photometry lightcurve), these also remain proprietary until published.
 However, exceptions for the sharing of derived data products in advance of publication are described by DAPOL-720: in short, instances in which sharing uniquely enables a publication or preserves the value of data rights.
 
-As an example, we consider a Full LSST user who is searching for supernovae using the mini-broker.
+As an example, we consider a Full LSST user who is searching for supernovae using the mini-broker and then performing lightcurve fits using the forced photometry lightcurve.
 The LSST user wants to share a target with a collaborator who does not have data rights so that the collaborator may obtain a spectrum.
-This is justified under DAPOL-720 if the spectrum will uniquely enable a publication (e.g., supernova data do not typically yield a publishable unit without spectroscopic classification).
-The LSST user may send their collaborator the sky position and time the LSST detections (public from the \texttt{Alert} packet), the alert packet cutout images (public from the \texttt{Alert} packet), and their assessment that the target is a likely supernova Ia (i.e., the derived data product).
-They may not share a larger cutout from the Processed Visit Image to use as a finder chart nor the forced photometry light-curve they used to derive the supernova classification (proprietary data products).
+This is justified under DAPOL-720 if the spectrum will uniquely enable a single-object publication (e.g., supernova data do not typically yield a publishable unit without spectroscopic classification).
+The LSST user may send their collaborator the sky position and time of the LSST detections (public from the \texttt{Alert} packet), the alert packet cutout images (public from the \texttt{Alert} packet), and their assessment that the target is a likely supernova (i.e., the derived data product required to enable the publication).
+They may not share the forced photometry light-curve they used to derive the supernova classification (proprietary data products).
