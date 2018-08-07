@@ -68,9 +68,12 @@ Science users may access LSST alerts through a community broker, or through the 
 \subsubsection{The LSST mini-broker}\label{sec:mini-broker}
 
 The LSST mini-broker provides a simple filtering service for real-time access to a subset of the alert stream.
-Users can upload simple filters through the Science Platform (\S \ref{sec:LSP}) that act only on the contents of the alert packet and receive a real-time stream of alerts which pass their filter.
-This capability is expected to be useful for science cases too specific to be well-served by community brokers.
-The mini-broker is required to support 100 simultaneous users; limits on runtime and bandwidth (support for transmission of up to 20 full-sized alerts per visit per filter is required) will be imposed to maintain performance.
+Users can upload simple filters through the Science Platform (\S \ref{sec:LSP}) that act only on the contents of the alert packet and receive on their own computer a real-time stream of alerts which pass their filter.
+This capability is expected to be useful for science cases requiring real-time notification that may be too specific to be well-served by community brokers.
+The mini-broker is required to support 100 simultaneous users; limits on runtime and bandwidth (support for transmission of up to 20 full-sized alerts per visit per filter is required) will be imposed to maintain performance
+\footnote{The requirement on the number of simultaneously connected users and number of passed alerts is largely driven by outbound bandwidth limitations from the DAC. 
+We are investigating approaches that would support larger numbers of active filters, perhaps by directing the filtered stream output to an endpoint within the DAC itself.
+Users with data rights that do not require real-time notification can also programatically query the Prompt Products Database to identify \texttt{DIAObjects} or \texttt{SSObjects} of interest without using the mini-broker.}.
 The mini-broker will support a version of the \texttt{VOEvent} standard\footnote{\url{http://www.ivoa.net/documents/VOEvent/}} that is current at the time of LSST operations.
 
 \subsubsection{Forced Photometry}\label{sec:AGP_force}
