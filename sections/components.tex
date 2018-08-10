@@ -18,7 +18,7 @@ The LDF hosts a variety of computational services, including the Prompt Processi
 The LDF also hosts a Data Access Center (DAC) that provides access to proprietary data products (\S \ref{sec:data_rights}) through the LSST Science Platform (\S \ref{sec:LSP}).
 The LDF also hosts the alert stream feeds to community brokers (\S \ref{sec:alert_distribution}).
 
-A satellite DAC will be located in Chile.  
+An additional DAC will be located in Chile.  
 Its capabilities are described in \citeds{LDM-572}.
 It will host a copy of the raw data and processed data products and run a version of the Science Platform.
 
@@ -81,9 +81,10 @@ Using the Science Platform (\S \ref{sec:LSP}),
 users can upload simple filters (filters which only use information within the alert packet) and receive on their own computer a real-time stream of alerts which pass their filter.
 This capability is expected to be useful for science cases requiring real-time notification that may be too specific to be well-served by community brokers.
 The mini-broker is required to support 100 simultaneous users; limits on resource usage and bandwidth (support for transmission of up to 20 full-sized alerts per visit per filter is required) will be imposed to maintain performance\footnote{
-The requirement on the number of simultaneously connected users and number of passed alerts is largely driven by outbound bandwidth limitations from the DAC. 
-We are investigating approaches that would support larger numbers of active filters, perhaps by directing the filtered stream output to an endpoint within the DAC itself.
+The requirement on the number of simultaneously connected users and number of passed alerts is largely driven by outbound bandwidth limitations from the DAC at NCSA. 
+We are investigating approaches that would support larger numbers of active filters.
 Users with data rights that do not require real-time notification can also programatically query the Prompt Products Database to identify \texttt{DIAObjects} or \texttt{SSObjects} of interest without using the mini-broker.}.
+If necessary, a TAC-like process may be used to allocate mini-broker resources \citedsp{LSE-163}.
 The mini-broker will support a version of the \texttt{VOEvent} standard\footnote{\url{http://www.ivoa.net/documents/VOEvent/}} that is current at the time of LSST operations.
 
 \subsubsection{Forced Photometry}\label{sec:AGP_force}
@@ -100,7 +101,7 @@ This service will be made available through the Science Platform.
 
 \subsubsection{The LSST Science Platform} \label{sec:LSP}
 
-The LSST Science Platform (LSP) provides access to the proprietary data products (e.g., \S \ref{sec:products}--\ref{sec:alertdb}) held in the DAC.
+The LSST Science Platform (LSP) provides access to the proprietary data products (e.g., \S \ref{sec:products}--\ref{sec:alertdb}) held in the DACs.
 The Science Platform is described in full in \citeds{LSE-319} and \citeds{LDM-554}.
 It provides three means of accessing data: a web-based ``Portal'' for visual examination and querying of the LSST images and catalogs; 
 an interactive ``Notebook'' environment with associated computing allocations for running code close to the data; 
@@ -147,7 +148,7 @@ All of these products are queryable through the Science Platform.
 
 \subsubsection{Alert Database} \label{sec:alertdb}
 
-All alerts will be stored in their full original form in an archive hosted in the DAC.
+All alerts will be stored in their full original form in an archive hosted in the DACs.
 This archive is expected to be of most use for testing broker filters or for studies that need to emulate real-time identification of transients from the alert packets.
 Users who simply wish to work with large samples of lightcurves will likely prefer to query the \texttt{DIAObject} and \texttt{DIASource} or \texttt{Object} and \texttt{ForceSource} tables directly.
 
