@@ -20,7 +20,7 @@ the alert packets themselves are world-public indefinitely, and thus aggregation
 Essentially all other LSST data products and services are proprietary, including raw and processed images, the resulting catalogs and databases, and access to the LSST DAC, Science Platform, and mini-broker.
 
 Brokers hosted by institutions with LSST data rights and data access (DAPOL-040) may access proprietary LSST data products, such as through API interfaces exposed by the LSST Science Platform (\S \ref{sec:LSP}).
-The broker would then be responsible for ensuring access to the proprietary data products is restricted to data rights holders (DAPOL-020).
+The broker would then be responsible for ensuring that access to the proprietary data products is restricted to data rights holders (DAPOL-020).
 Any \textit{derived} data products that are generated from proprietary data are also proprietary until published, after which they are considered public. 
 DAPOL-620 defines derived data products as data that cannot be used to recreate any proprietary LSST data products.
 
@@ -40,5 +40,8 @@ However, exceptions for the sharing of derived data products in advance of publi
 As an example, we consider a Full LSST user who is searching for supernovae using the mini-broker and then performing lightcurve fits using the forced photometry lightcurve.
 The LSST user wants to share a target with a collaborator who does not have data rights so that the collaborator may obtain a spectrum.
 This is justified under DAPOL-720 if the spectrum will uniquely enable a single-object publication (e.g., supernova data do not typically yield a publishable unit without spectroscopic classification).
-The LSST user may send their collaborator the sky position and time of the LSST detections (public from the alert packet), the alert packet cutout images (public from the alert packet), and their assessment that the target is a likely supernova (the derived data product which requres sharing to enable the publication).
-They may not share the forced photometry light-curve they used to derive the supernova classification (proprietary data products).
+The LSST user may send their collaborator the sky position and time of the LSST detections (public from the alert packet), the alert packet cutout images (public from the alert packet), and their assessment that the target is a likely supernova (the derived data product which requires sharing to enable the publication).
+They may not share the forced photometry light-curve they used to derive the supernova classification (proprietary data products not necessary to obtain the spectrum).
+
+In exchange for the spectrum, the collaborator may be granted co-authorship on the resulting publication.
+The collaborator may review the relevant proprietary LSST data to verify the scientific conclusions of the paper but not undertake further scientific analysis on the proprietary products (DAPOL-760).

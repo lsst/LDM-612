@@ -1,13 +1,13 @@
 \section{Introduction}\label{sec:introduction}
 
-LSST will discover large numbers of astrophysical objects that move, change, or appear.
+LSST will discover large numbers of astrophysical objects that move across the sky, change in brightness, or appear as transients.
 Because of their intrinsic temporal variability, full scientific exploitation of many classes of these events requires rapid discovery and additional follow-up observations.
-Accordingly, LSST's real-time Prompt Processing pipelines will identify such detections using image differencing and report them using world-public \textit{alerts} issued within 60 seconds of the shutter closure.
+Accordingly, LSST's real-time Prompt Processing pipelines will identify such detections using image differencing and report them using world-public \textit{alerts} issued within 60 seconds of the shutter closure after each visit.
 
 These alert packets will contain not only the information about the most recent detection but also a historical lightcurve, cutout images, timeseries features, and other contextual information.
 An LSST science user will be able to use the contents of a single alert packet and make a rapid but informed decision about whether the event is relevant to their scientific goals.
-LSST expects to produce about ten million of these alerts nightly.
-The resulting \textit{alert stream} will be large---more than 1\,TB nightly---but will contain all classes of astrophysical events, from the youngest supernovae to the most distant RR Lyrae to the slowest-moving Trans-Neptunian Objects.
+LSST expects to produce about ten million of these alerts nightly\footnote{Transients in the alert stream are required to be 90\% complete and 95\% pure at 6$\sigma$ \citeds{LSE-30}, so less than 5\% of the alert stream will consist of false positives.}.
+The resulting \textit{alert stream} will be large---more than 1\,TB nightly---but will contain all classes of astrophysical events, from the youngest supernovae to the most distant RR Lyrae to the slowest-moving Trans-Neptunian Objects to the most unexpected new phenomena.
 The task for the scientist is to identify the small subset of events of interest in the larger alert stream.
 
 To do so, astronomers will rely on third party \textit{community brokers}, software systems that receive the full LSST alert stream and add additional information to it.
