@@ -19,29 +19,6 @@ the alert packets themselves are world-public indefinitely, and thus aggregation
 
 Essentially all other LSST data products and services are proprietary, including raw and processed images, the resulting catalogs and databases, and access to the LSST DAC, Science Platform, and mini-broker.
 
-Brokers hosted by institutions with LSST data rights and data access (DAPOL-040) may access proprietary LSST data products, such as through API interfaces exposed by the LSST Science Platform (\S \ref{sec:LSP}).
+Brokers developed by scientists with LSST data rights and data access (DAPOL-040) may access proprietary LSST data products, such as through API interfaces exposed by the LSST Science Platform (\S \ref{sec:LSP}).
 The broker would then be responsible for ensuring that access to the proprietary data products is restricted to data rights holders (DAPOL-020).
-Any \textit{derived} data products that are generated from proprietary data are also proprietary until published, after which they are considered public. 
-DAPOL-620 defines derived data products as data that cannot be used to recreate any proprietary LSST data products.
-
-For example, a community broker could use Science Platform APIs to obtain the proprietary full-history forced-photometry light curve for a \texttt{DIAObject} identified by a public alert,
-and then use this information to construct a classification probability that represents the likelihood the object is a tidal disruption event.
-The classification probability would, under the currently proposed data rights policies, be classified as a derived data product that is proprietary until published. The light curve itself remains proprietary.
-
-Full LSST Users (DAPOL-080) will have access to the mini-broker hosted in the LSST DAC for filtering the alert stream.
-Since the alerts themselves are world public, a Full LSST User who uses the mini-broker to process the alert stream can export filtered alert packets (or any subset of their contents) and share them freely.
-Full LSST Users may use other Science Platform services to query and process proprietary data products.
-
-For example, a user might identify a \texttt{DIAObject} of interest from a mini-broker filter, query the Prompt Products Database to retrieve the precovery forced photometry, and then run user-generated processing on the Processed Visit Images.
-These proprietary products must not be distributed to individuals without data rights.
-As for community brokers, if a user generates derived data products (such as a classification probability derived from a fit to the forced photometry lightcurve), these also remain proprietary until published.
-However, exceptions for the sharing of derived data products in advance of publication are described by DAPOL-720: in short, instances in which sharing uniquely enables a publication or preserves the value of data rights.
-
-As an example, we consider a Full LSST user who is searching for supernovae using the mini-broker and then performing lightcurve fits using the forced photometry lightcurve.
-The LSST user wants to share a target with a collaborator who does not have data rights so that the collaborator may obtain a spectrum.
-This is justified under DAPOL-720 if the spectrum will uniquely enable a single-object publication (e.g., supernova data do not typically yield a publishable unit without spectroscopic classification).
-The LSST user may send their collaborator the sky position and time of the LSST detections (public from the alert packet), the alert packet cutout images (public from the alert packet), and their assessment that the target is a likely supernova (the derived data product which requires sharing to enable the publication).
-They may not share the forced photometry light-curve they used to derive the supernova classification (proprietary data products not necessary to obtain the spectrum).
-
-In exchange for the spectrum, the collaborator may be granted co-authorship on the resulting publication.
-The collaborator may review the relevant proprietary LSST data to verify the scientific conclusions of the paper but not undertake further scientific analysis on the proprietary products (DAPOL-760).
+Any \textit{derived} data products that are generated from proprietary data are also proprietary until published.
