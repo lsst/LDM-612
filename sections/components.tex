@@ -72,7 +72,10 @@ Initial tests indicate that this system performs effectively at the required sca
 
 Due to finite bandwidth out of the LDF, only selected community brokers will receive the full alert stream.
 Science users may access LSST alerts through a community broker, or through the mini-broker if they have data access rights (\S \ref{sec:data_rights}).
-
+An allocation of 10\,Gbps is baselined for alert stream transfer from the LDF.
+With an estimated packet size of 82\,KB and 10,000 alerts per visit, about 7 brokers can receive the full stream if 5\,seconds of the 60\,second latency budget is devoted to outbound data transfer.
+The selection process described in \S \ref{sec:community_brokers} is most appropriate for this number of streams.
+If only one or two full streams could be supported more explicit requirements on the selected brokers would be needed; if tens of full streams could be supported a simpler selection process could be used. 
 
 \subsubsection{The LSST mini-broker}\label{sec:mini-broker}
 
