@@ -119,7 +119,7 @@ The contents of an {\tt Alert} packet are fully described in Section 3.5.1 of \c
 \begin{enumerate}
 \item an ID uniquely identifying the {\tt Alert}
 \item the prompt products database ID
-\item the database record of the {\tt DIASource} that triggered the {\tt Alert}
+\item the database record of the {\tt DIASource} that triggered the {\tt Alert}, as well as the \texttt{filterName} and \texttt{programId} of the corresponding \texttt{Visit}
 \item the entire associated {\tt DIAObject} or {\tt SSObject} record from the Prompt Products Database, which include a variety of variability metrics computed on the updated \texttt{DIASource} lightcurve
 \item the previous 12 months of associated {\tt DIASource} records from the Prompt Products Database
 \item matching {\tt Object} IDs from the latest Data Release, if they exist, and 12 months of their {\tt DIASource} records
