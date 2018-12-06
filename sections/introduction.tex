@@ -5,20 +5,18 @@ Because of their intrinsic temporal variability, full scientific exploitation of
 Accordingly, LSST's real-time Prompt Processing pipelines will identify such detections using image differencing and report them using world-public \textit{alerts} issued within 60 seconds of the shutter closure after each visit.
 
 These alert packets will contain not only the information about the most recent detection but also a historical lightcurve, cutout images, timeseries features, and other contextual information.
-An LSST science user will be able to use the contents of a single alert packet \oldtext{and} \newtext{to} make a \oldtext{rapid but informed decision} \newtext{decision that is both rapid and informed}  about whether the event is relevant to their scientific goals.
+An LSST science user will be able to use the contents of a single alert packet to make a decision that is both rapid and informed about whether the event is relevant to their scientific goals.
 LSST expects to produce about ten million of these alerts nightly\footnote{Transients in the alert stream are required to be 90\% complete and 95\% pure at 6$\sigma$ \citeds{LSE-30}, so less than 5\% of the alert stream will consist of false positives.}.
 The resulting \textit{alert stream} will be large---more than 1\,TB nightly---but will contain all classes of astrophysical events, from the youngest supernovae to the most distant RR Lyrae to the slowest-moving Trans-Neptunian Objects to the most unexpected new phenomena.
 The task for the scientist is to identify the small subset of events of interest in the larger alert stream.
 
-\marginpar{'it' here to me implies the 'alert stream' - but  users will not add to the alert stream itself, rather,  users will use the contents of the alerts, made accessible by community brokers to derive new additional information to inform follow-up}
-\oldtext{To do so, astronomers will rely on third party \textit{community brokers}, software systems that receive the full LSST alert stream and add additional information to it.} 
-\newtext{To do so, astronomers will rely on third party \textit{community brokers}, software systems that receive the full LSST alert stream, to derive additional information to refine the subset of events of interest and better inform follow-up campaigns.}
+To do so, astronomers will rely on third party \textit{community brokers}, software systems that receive the full LSST alert stream and provide additional information to refine the selection of events of interest.
 
 Community brokers may crossmatch the LSST stream to multiwavelength catalogs, join LSST alerts with those from other surveys, provide machine-learned classifications of events, and/or offer user filters to winnow the stream.
 LSST will itself offer a simple filtering service, the ``mini-broker,'' that will apply user-supplied filters to the alert stream.
 Individual scientists will receive alerts through one or more of these services.
 
-The large volume of the alert stream and the finite bandwidth from the LSST Data Facility \oldtext{necessitates} \newtext{necessitate} a proposal process to select community brokers to receive the full stream.
+The large volume of the alert stream and the finite bandwidth from the LSST Data Facility necessitate a proposal process to select community brokers to receive the full stream.
 This document outlines the process, criteria, and timeline by which LSST will choose community brokers.
 To provide context, we also summarize the major features of the LSST Alert Production systems as well as relevant data rights concerns.
 

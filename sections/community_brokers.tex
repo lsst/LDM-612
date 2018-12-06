@@ -67,14 +67,14 @@ At minimum, this requires:
 	\item Petabytes of disk capacity
 	\item Databases capable of handling billions of sources
 	\item Compute resources to handle sophisticated classification and filtering tasks in real time at scale
-	\item \oldtext{Appropriate personnel to develop and maintain the service} \newtext{Appropriate personnel and sufficient effort to develop the required software and to maintain and operate the service}
-	\item Institutional support to ensure the longevity and stability of the service \newtext{and software}.
+	\item Appropriate personnel and sufficient effort to develop the required software and to maintain and operate the service
+	\item Institutional support to ensure the longevity and stability of the service and software.
 	\item Discussion of funding sources to support broker development and operations.
 \end{itemize}
 
 \subsection{Evaluation of Community Broker Proposals} \label{sec:evaluation}
 
-The broker selection panel will evaluate proposals with a primary goal of maximizing the scientific \oldtext{utilization} \newtext{exploitation} of LSST---recognizing that many of LSST's scientific returns are likely to be unanticipated.
+The broker selection panel will evaluate proposals with a primary goal of maximizing the scientific exploitation of LSST---recognizing that many of LSST's scientific returns are likely to be unanticipated.
 
 The panel will evaluate broker proposals that demonstrate appropriate technical resources (\S \ref{sec:resources}) using the following evaluation criteria:
 
@@ -117,8 +117,8 @@ The panel will consider the applicability of any existing agreements, if relevan
 
 \subsection{Determining the Number of Community Brokers} \label{sec:numbrokers}
 
-Initial sizing estimates indicated that only four full streams could be provided from the LSST Data Facility due to network bandwidth limitations.  
-Current capacity projections indicate a larger number may be possible, but with some uncertainty.
+Early sizing estimates indicated that only four full streams could be provided from the LSST Data Facility due to network bandwidth limitations.  
+Current capacity projections indicate a larger number may be possible (\S \ref{sec:alert_distribution}), but with some uncertainty.
 The available capacity will depend on:
 
 \begin{itemize}
@@ -143,38 +143,40 @@ Additionally, status information will be available during operations to diagnose
 
 \subsection{Timeline}
 
-\newtext{The timeline presented below is the current best estimate based on the LSST project schedule and is subject to revision.}
-\textbf{ERIC: add estimates of the expected quarter to the timeline. }
+The calendar-year timeline presented below is the current best estimate based on the LSST project schedule and is subject to revision.
+\newtext{
 {
 	\renewcommand\labelenumi{\textbf{\theenumi}}
 \begin{enumerate}
   \setcounter{enumi}{2017}
 	\item \begin{itemize} % 2018
-		\item Plans and Policies for LSST Alert Distribution document issued
+		\item \textit{Q4} Plans and Policies for LSST Alert Distribution document issued
 	\end{itemize}
 	\item \begin{itemize}% 2019
-		\item Issue call for Letters of Intent (LOI)
-		\item Document bulk transport format and interface
-		\item \newtext{Letters of intent due (ERIC: move this to the appropriate place w.r.t the other items. }
-		\item Set up test alert stream with sample precursor data
-		\item Invite full proposals for community brokers from selected LOIs
+		\item \textit{Q1} Issue call for Letters of Intent (LOI)
+		\item \textit{Q2} Letters of intent due 
+		\item \textit{Q3} Document bulk transport format and interface
+		\item \textit{Q3} Set up test alert stream with sample precursor data
+		\item \textit{Q4} Invite full proposals for community brokers from selected LOIs
 		\end{itemize}
 	\item \begin{itemize} %2020
-		\item Broker proposals due
-		\item Produce sample commissioning alerts with ComCam \textit{with substantial latency}
+		\item \textit{Q3} Broker proposals due
+		\item \textit{Q4} Produce sample commissioning alerts with ComCam \textit{with substantial latency}
 		\end{itemize}
 	\item \begin{itemize} %2021
-			\item Finalize number of full streams
-			\item Selection of community brokers for early operations
-			\item Produce sample commissioning alerts with LSSTCam \textit{with substantial latency}
+		\item \textit{Q1} Finalize number of full streams
+		\item \textit{Q2} Selection of community brokers for early operations
+		\item \textit{Q3} Produce sample commissioning alerts with LSSTCam \textit{with substantial latency}
+		\item \textit{Q4} Integrate selected brokers with the LSST Alert System
 		\end{itemize}
 
 	\item \begin{itemize} %2022
-			\item Integrate selected brokers with the LSST Alert System
-			\item Begin full LSST operations
+		\item \textit{Q1--Q3 Schedule contingency} 
+		\item \textit{Q4} Begin full LSST operations
 	\end{itemize}
 
 \end{enumerate}
+}
 }
 
 \newtext{The production of sample commissioning alerts with ComCam is dependent on the ComCam commissioning schedule and progress; any delays in ComCam will have a knock-on effect on the Broker development.} 
