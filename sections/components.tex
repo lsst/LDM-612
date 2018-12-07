@@ -68,14 +68,14 @@ Future LSST detections of the new \texttt{SSObject} will produce alerts attribut
 
 \subsubsection{Alert Distribution} \label{sec:alert_distribution}
 
-Alert packets (\S \ref{sec:packets}) will be queued for distribution to community brokers (\S \ref{sec:community_brokers}) and the LSST mini-broker (\S \ref{sec:mini-broker}). 
+Alert packets (\S \ref{sec:packets}) will be queued for distribution to community brokers (\S \ref{sec:community_brokers}) and the LSST alert filtering service (\S \ref{sec:filtering_service}). 
 LSST is prototyping  a bulk transport system built on the open-source distributed queue system Apache Kafka\footnote{\url{http://kafka.apache.org/}}, with Apache Avro\footnote{\url{http://avro.apache.org/}} used as a binary serialization format.
 Initial tests indicate that this system performs effectively at the required scale \citedsp{DMTN-028}.
 
 
 Due to the finite bandwidth out of the LDF, only a limited number of selected community brokers will receive the full alert stream.
 It will not be possible for individual science users to subscribe directly to the full LSST alert stream. 
-Rather, science users may access LSST alerts through a community broker, or through the mini-broker (\S \ref{sec:mini-broker}) if they have data access rights (\S \ref{sec:data_rights}).
+Rather, science users may access LSST alerts through a community broker, or through the alert filtering service (\S \ref{sec:filtering_service}) if they have data access rights (\S \ref{sec:data_rights}).
 An allocation of 10\,Gbps is baselined for alert stream transfer from the LDF, with an estimated packet size of 82\,KB and up to 10,000 alerts per visit.
 For illustration, based on these numbers up to 7 brokers could receive the full stream if 5\,seconds is budgeted for outbound data transfer.
 The selection process described in \S \ref{sec:community_brokers} is most appropriate for this number of streams, 
@@ -83,18 +83,18 @@ If only one or two full streams could be supported more explicit requirements on
 The eventual number of selected community brokers (\S \ref{sec:numbrokers}) is still to be determined, as it depends on several quantities including available network capacity, packet size, number of alerts per visit, and the rate of alert distribution.
 
 
-\subsubsection{The LSST mini-broker}\label{sec:mini-broker}
+\subsubsection{The LSST Alert Filtering Service}\label{sec:filtering_service}
 
-The LSST mini-broker provides a simple filtering service for real-time access to a subset of the alert stream.
+The LSST alert filtering service provides a means of real-time access to a subset of the alert stream.
 Using the Science Platform (\S \ref{sec:LSP}),
 users can upload simple filters (filters which only use information within the alert packet) and receive on their own computer a real-time stream of alerts which pass their filter.
 This capability is expected to be useful for science cases requiring real-time notification that may be too specific to be well-served by community brokers.
-The mini-broker is required to support 100 simultaneous users; limits on resource usage and bandwidth (support for transmission of up to 20 full-sized alerts per visit per filter is required) will be imposed to maintain performance\footnote{
+The alert filtering service is required to support 100 simultaneous users; limits on resource usage and bandwidth (support for transmission of up to 20 full-sized alerts per visit per filter is required) will be imposed to maintain performance\footnote{
 The requirement on the number of simultaneously connected users and number of passed alerts is largely driven by outbound bandwidth limitations from the DAC at NCSA. 
 We are investigating approaches that would support larger numbers of active filters.
-Users with data rights that do not require real-time notification can also programatically query the Prompt Products Database to identify \texttt{DIAObjects} or \texttt{SSObjects} of interest without using the mini-broker.}.
-If necessary, a TAC-like process may be used to allocate mini-broker resources \citedsp{LSE-163}.
-The mini-broker will support a version of the \texttt{VOEvent} standard\footnote{\url{http://www.ivoa.net/documents/VOEvent/}} that is current at the time of LSST operations.
+Users with data rights that do not require real-time notification can also programatically query the Prompt Products Database to identify \texttt{DIAObjects} or \texttt{SSObjects} of interest without using the LSST alert filtering service.}.
+If necessary, a TAC-like process may be used to allocate filtering service resources \citedsp{LSE-163}.
+The LSST alert filtering service will support a version of the \texttt{VOEvent} standard\footnote{\url{http://www.ivoa.net/documents/VOEvent/}} that is current at the time of LSST operations.
 
 \subsubsection{Forced Photometry}\label{sec:AGP_force}
 
