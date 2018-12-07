@@ -12,9 +12,10 @@ All subsequent data processing leading to alerts occurs in the LDF.
 
 \subsubsection{The LSST Data Facility and Data Access Centers} \label{sec:LDF}
 
-The LSST Data Facility (LDF) provides the primary site for LSST data processing and data access.
-\citeds{LDM-230} describes the concept of operations for the LDF.
+\citeds{LDM-230} describes the concept of operations for the LSST Data Facility.
 The LDF hosts a variety of computational services, including the Prompt Processing services that run the Alert Production pipelines (\S \ref{sec:AP}) and the Batch Production services that run the annual Data Release Processing (\S \ref{sec:drp}). 
+All Prompt Processing and Alert Production runs at the LDF;
+Data Release Processing is split between the LDF and the CC-IN2P3 in France.
 The LDF also hosts a Data Access Center (DAC) that provides access to proprietary data products (\S \ref{sec:data_rights}) through the LSST Science Platform (\S \ref{sec:LSP}).
 The LDF also hosts the alert stream feeds to community brokers (\S \ref{sec:alert_distribution}).
 
@@ -28,12 +29,12 @@ It will host a copy of the raw data and processed data products and run a versio
 
 The LSST Data Management (DM) Alert Production (AP) pipeline processes data during the night and generates alerts.
 It is described in \citeds{LSE-163}, with detailed descriptions of its algorithmic components provided in \citeds{LDM-151}.
-The basic modules include single-frame image processing (e.g., instrument signature removal, photometric and astrometric calibration), difference imaging analysis (DIA; the subtraction of the new visit image and a coadded template image constructed from the last Data Release), and source detection, association, and measurement \citedsp{LSE-163}.
+The basic modules include single-frame image processing (e.g., instrument signature removal, photometric and astrometric calibration), difference image analysis (DIA; the subtraction of the new visit image from a coadded template image constructed from the most recent Data Release), and source detection, association, and measurement \citedsp{LSE-163}.
 The AP pipeline will process all standard and alternative standard visits, whether obtained as part of the main wide-fast-deep survey or a Special Program \citedsp{DMTN-065} and generate alerts within the required 60 seconds after the shutter closes (DMS-REQ-0004, \citeds{LSE-61})\footnote{
 The AP pipeline may also be able to process non-standard visits with longer or shorter exposure times provided that, e.g., the visit image can be successfully PSF-matched and differenced with a template image.
 Alert generation in crowded fields may produce more than the maximum of 10,000 alerts per visit required to be supported by DM; alert generation in this circumstance is still under study.
 }.  
-Due to the need for Data-Release-derived templates, Alert Production cannot run at full scale and full fidelity during commissioning and the first year of operations.
+Due to the need for Data-Release-derived templates, Alert Production cannot run at full scale and full fidelity during commissioning nor the first year of operations.  LSST DM is currently investigating options for Alert Production in year one.
 
 All sources in a difference image that have a signal-to-noise ratio ${\rm SNR}>5$ in positive or negative flux are considered ``detected" \texttt{DIASources}, are incorporated into the {\tt DIASource} catalog, and will cause an alert to be issued\footnote{
 There may be exceptions to this rule, such as the following two examples.
@@ -60,7 +61,8 @@ MOPS algorithms form tracklets from single-apparition \texttt{DIASources} taken 
 Newly identified moving objects are added to the {\tt SSObject} catalog.
 MOPS will interface with the Minor Planets Center (MPC) and will ingest all previously known or externally identified moving objects into the {\tt SSObjects} catalog, and use MPC astrometry in the orbital parameter fits.
 Users interested in newly-discovered asteroids will need to query the \texttt{SSObject} catalog or the MPC to identify them.
-While the \texttt{SSObject} catalog will associate past \texttt{DIAsources} with a new \texttt{SSObject} as far back is practical, revised alerts will not be issued.
+The first time a new \texttt{SSObject} is discovered, MOPS will associate past \texttt{DIAsources} with the new \texttt{SSObject} as far back as is practical.
+However, revised alerts will not be issued.
 Future LSST detections of the new \texttt{SSObject} will produce alerts attributed to the \texttt{SSObject}.
 
 
@@ -70,12 +72,16 @@ Alert packets (\S \ref{sec:packets}) will be queued for distribution to communit
 LSST is prototyping  a bulk transport system built on the open-source distributed queue system Apache Kafka\footnote{\url{http://kafka.apache.org/}}, with Apache Avro\footnote{\url{http://avro.apache.org/}} used as a binary serialization format.
 Initial tests indicate that this system performs effectively at the required scale \citedsp{DMTN-028}.
 
-Due to finite bandwidth out of the LDF, only selected community brokers will receive the full alert stream.
-Science users may access LSST alerts through a community broker, or through the mini-broker if they have data access rights (\S \ref{sec:data_rights}).
-An allocation of 10\,Gbps is baselined for alert stream transfer from the LDF.
-With an estimated packet size of 82\,KB and 10,000 alerts per visit, about 7 brokers can receive the full stream if 5\,seconds of the 60\,second latency budget is devoted to outbound data transfer.
-The selection process described in \S \ref{sec:community_brokers} is most appropriate for this number of streams.
+
+Due to the finite bandwidth out of the LDF, only a limited number of selected community brokers will receive the full alert stream.
+It will not be possible for individual science users to subscribe directly to the full LSST alert stream. 
+Rather, science users may access LSST alerts through a community broker, or through the mini-broker (\S \ref{sec:mini-broker}) if they have data access rights (\S \ref{sec:data_rights}).
+An allocation of 10\,Gbps is baselined for alert stream transfer from the LDF, with an estimated packet size of 82\,KB and up to 10,000 alerts per visit.
+For illustration, based on these numbers up to 7 brokers could receive the full stream if 5\,seconds is budgeted for outbound data transfer.
+The selection process described in \S \ref{sec:community_brokers} is most appropriate for this number of streams, 
 If only one or two full streams could be supported more explicit requirements on the selected brokers would be needed; if tens of full streams could be supported a simpler selection process could be used. 
+The eventual number of selected community brokers (\S \ref{sec:numbrokers}) is still to be determined, as it depends on several quantities including available network capacity, packet size, number of alerts per visit, and the rate of alert distribution.
+
 
 \subsubsection{The LSST mini-broker}\label{sec:mini-broker}
 
@@ -94,7 +100,7 @@ The mini-broker will support a version of the \texttt{VOEvent} standard\footnote
 
 Measurements of \texttt{DIAObjects} that are below the ${\rm SNR} > 5$ threshold are available through ``forced photometry'': flux is measured at a previously-known position.
 Forced photometry is performed on difference images in two ways; neither contributes to alerts, but are available to users through the Science Platform.
-First, during the real-time difference image analysis, forced photometry is performed on every difference image at the locations of all previously-known {\tt DIAObjects} detected in the past 12 months. 
+First, during the real-time difference image analysis, forced photometry is performed on every difference image at the locations of all previously-known {\tt DIAObjects} detected in a past interval to be determined.
 The resulting measurements are stored in the Prompt Products Database (\S \ref{sec:ppdb}).
 Second, at the end of the night, ``precovery'' forced photometry will be performed for all \textit{new} \texttt{DIAObjects} on every difference image from the past 30 days.
 These results are also stored in the Prompt Products database and will be available within 24 hours.
@@ -110,7 +116,6 @@ It provides three means of accessing data: a web-based ``Portal'' for visual exa
 an interactive ``Notebook'' environment with associated computing allocations for running code close to the data; 
 and an Application Programming Interface (API) for programmatic access to LSST data using Virtual Observatory standards.
 
-
 \subsection{Data Products}
 \subsubsection{Alert Packets}\label{sec:packets}
 
@@ -120,7 +125,8 @@ The contents of an {\tt Alert} packet are fully described in Section 3.5.1 of \c
 \item an ID uniquely identifying the {\tt Alert}
 \item the prompt products database ID
 \item the database record of the {\tt DIASource} that triggered the {\tt Alert}, as well as the \texttt{filterName} and \texttt{programId} of the corresponding \texttt{Visit}
-\item the entire associated {\tt DIAObject} or {\tt SSObject} record from the Prompt Products Database, which include a variety of variability metrics computed on the updated \texttt{DIASource} lightcurve
+\item the entire associated {\tt DIAObject} or {\tt SSObject} record from the Prompt Products Database, which include a variety of variability metrics computed on the 
+updated \texttt{DIASource} lightcurve.
 \item the previous 12 months of associated {\tt DIASource} records from the Prompt Products Database
 \item matching {\tt Object} IDs from the latest Data Release, if they exist, and 12 months of their {\tt DIASource} records
 \item postage stamps of the difference image and template at the {\tt DIASource} location
@@ -145,7 +151,7 @@ This database is queryable through any of the aspects of the Science Platform.
 
 \subsubsection{Data Release Products} \label{sec:drp}
 
-Annual\footnote{There will be an additional initial data release after the first six months of operations.}  releases of all the LSST data will include processed and stacked images, catalogs of {\tt Sources}, {\tt ForcedSources}, and {\tt Objects} from measurements on the stacked and individual images, as well as calibration information.
+Annual\footnote{There will be an additional initial data release containing data from the first six months of operations.}  releases of all the LSST data will include processed and stacked images, catalogs of {\tt Sources}, {\tt ForcedSources}, and {\tt Objects} from measurements on the stacked and individual images, as well as calibration information.
 It will also include a  reprocessing of all images with the latest pipelines and full-survey versions of {\tt DIASource} and {\tt DIAObject} catalogs---i.e., the variability characterization parameters are calculated from the entire survey to date.
 All of these products are queryable through the Science Platform.
 
