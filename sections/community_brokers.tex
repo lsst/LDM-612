@@ -52,7 +52,7 @@ The broker proposal process will have two stages:
 an initial open call for Letters of Intent (LOIs) from all interested parties, and a subsequent full proposal call solicited from invited LOI writers.
 This two-stage process ensures those writing full proposals have a reasonable chance at selection and provides an opportunity for early feedback.
 An invitation to submit a full proposal may also be valuable to proposers in obtaining relevant funding.
-No direct financial support is available from the LSST Project.
+No financial support is available from the LSST Project.
 
 LOIs will be evaluated using the same criteria as the full proposals (\S \ref{sec:resources}--\ref{sec:evaluation}), with recognition that the proposed brokers may be in the conceptual or early design stage at the time of the LOI.
 
@@ -154,6 +154,7 @@ The calendar-year timeline presented below is the current best estimate based on
 	\item \begin{itemize}% 2019
 		\item \textit{Q1} Issue call for Letters of Intent (LOI)
 		\item \textit{Q2} Letters of intent due 
+		\item \textit{June} Broker development workshop (invited LOI writers)
 		\item \textit{Q3} Document bulk transport format and interface
 		\item \textit{Q3} Set up test alert stream with sample precursor data
 		\item \textit{Q4} Invite full proposals for community brokers from selected LOIs
@@ -161,24 +162,26 @@ The calendar-year timeline presented below is the current best estimate based on
 	\item \begin{itemize} %2020
 		\item \textit{Q2} Broker proposals due
 		\item \textit{Q3} Provisional broker selections made
-		\item \textit{Q4} Produce sample commissioning alerts with ComCam \textit{with substantial latency}
 		\end{itemize}
-	\item \begin{itemize} %2021
-		\item \textit{Q1} Finalize number of full streams;
-		selection of community brokers for early operations
-		\item \textit{Q3} Produce sample commissioning alerts with LSSTCam \textit{with substantial latency}
-		\item \textit{Q4} Integrate selected brokers with the LSST Alert System
-		\end{itemize}
-
-	\item \begin{itemize} %2022
-		\item \textit{Q1--Q3 Schedule contingency} 
-		\item \textit{Q4} Begin full LSST operations
-	\end{itemize}
-
 \end{enumerate}
 }
 
-The production of sample commissioning alerts with ComCam is dependent on the ComCam commissioning schedule and progress; any delays in ComCam will have a knock-on effect in finalizing the number of full streams and hence in finalizing the provisional broker selections.
+Subsequent steps depend on major commissioning milestones and will shift according to the evolving commissioning schedule.
+Alerts are provided during commissioning to enable engineering tests of broker interfaces.
+
+\begin{itemize}
+	\item \textbf{Sustained observing with ComCam} \textit{currently Q4 2020}
+		\begin{itemize}
+			\item \textit{$+$3 months} Produce sample commissioning alerts with ComCam \textit{with substantial latency}
+			\item \textit{$+$6 months} Finalize number of full streams; select community brokers for early operations
+			\item \textit{$+$1 year} Integrate selected brokers with the LSST Alert System
+		\end{itemize}
+	\item \textbf{LSSTCam Commissioning Mini-Surveys} \textit{currently Q3 2021}
+		\begin{itemize}
+			\item \textit{$+$1 months} Produce sample commissioning alerts with LSSTCam \textit{with substantial latency}
+		\end{itemize}
+	\item \textbf{Full LSST operations} \textit{currently Q4 2022}
+\end{itemize}
 
 It is reasonable to expect periodic review of broker performance and usage during LSST Operations.
 Broker selections could be revisited or new brokers added due to changes in LSST survey or pipeline performance, broker performance or usage, or community science priorities.

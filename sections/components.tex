@@ -6,7 +6,7 @@ In this section we provide a high-level overview of the LSST Alert Production pr
 
 \subsubsection{Data Acquisition, Transfer, and Processing}
 
-LSST will survey the sky repeatedly using standard or alternative standard visits ($2\times15$\,second exposures in a single band or $1\times30$\,second exposure, respectively).  
+LSST will survey the sky repeatedly using standard or alternative standard visits (currently baselined as $2\times15$\,second exposures in a single band or $1\times30$\,second exposure, respectively).  
 Immediately after the camera shutter closes, the images will be transferred via fiber networks to the LSST Data Facility (LDF; \S \ref{sec:LDF}) at the National Center for Supercomputing Applications (NCSA) in Illinois.
 All subsequent data processing leading to alerts occurs in the LDF.
 
@@ -139,7 +139,7 @@ Thus, objects that are saturated in the visit or template image, or objects that
 
 \subsubsection{Processed Images} \label{sec:products}
 
-Processed visit images (PVIs) and difference images produced by the prompt processing pipeline will be available in the Science Platform to users with data rights within 24 hours, and potentially much sooner.
+Processed visit images (PVIs) and difference images produced by the prompt processing pipeline will be available in the Science Platform to users with data rights within 24 hours.
 They are held on disk for 30 days to enable the precovery forced photometry service (\S \ref{sec:AGP_force}).
 PVIs for older visits can be regenerated on-demand.
 
