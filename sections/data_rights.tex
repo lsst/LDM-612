@@ -1,24 +1,13 @@
 \section{Data Rights to Alert Stream Components}\label{sec:data_rights}
 
 LSST data rights and data access policies are formally described in the LSST Data Rights Policy, which is in development at this writing.
-Here we summarize the aspects most relevant to the alert stream.
 The interested reader is advised to consult that document for details.
 In the case of any discrepancy between this document and the LSST Data Rights Policy document, the LSST Data Rights Policy document shall take precedence.
 
 LSST alert packets (\S \ref{sec:packets}) are a world-public data product.
-We use ``public" here in the sense that alert packets can be freely shared with anyone, by anyone, anywhere, worldwide.
-However, LSST is not committed to serving alert packets directly to individuals without data rights; thus, the term ``public? means ``shareable? and should not be misinterpreted as ``freely available.'"
+We use ``public'' here in the sense that alert packets can be freely shared with anyone, by anyone, anywhere, worldwide.
+However, LSST does not have the bandwidith to serve the full alert stream directly to individuals; thus, the term ``public'' means ``shareable'' and should not be misinterpreted as ``freely available.''
 
 Instead, the LSST alert stream will be delivered to a to-be-determined set of community brokers (Section \ref{sec:community_brokers}).
-An institution is not required to hold data rights in order to host a broker.
-Brokers may share (or not share) the contents of alert packets with whomever they choose, although the broker selection process (\S \ref{sec:community_brokers}) will prioritize selection of brokers that will provide world-public access.
-Brokers will not be prohibited from storing alerts and making them available at later times; the alert packets themselves are world-public indefinitely, and thus aggregations of public products are also permitted.
-
-All other LSST data products and services have a proprietary period of two years, after which they are public (shareable).
-This includes the raw and processed images, and the resulting catalogs and databases.
-Access to the LSST DAC, Science Platform, and alert filtering service is proprietary, and indefinitely limited to individuals with data rights and access.
-
-Brokers developed by scientists with LSST data rights and data access may access proprietary LSST data products, such as through API interfaces exposed by the LSST Science Platform  (\S \ref{sec:LSP}).
-The broker would then be responsible for ensuring that access to the proprietary data products is restricted to LSST data rights holders.
-
-If a Broker generates simple derived data products such as object classifications that are based in part on proprietary data, the classifications may also be shared publicly, but some limitations might apply (pending the full and final LSST data rights and access policies).
+Any institution worldwide may propose to host a broker.
+Brokers may share (or not share) the contents of alert packets with whomever they choose, although the broker selection process (\S \ref{sec:community_brokers}) will prioritize selection of brokers that will provide world-public access to their services.
