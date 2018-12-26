@@ -6,7 +6,9 @@ Accordingly, LSST's real-time Prompt Processing pipelines will identify such det
 
 These alert packets will contain not only the information about the most recent detection but also a historical lightcurve, cutout images, timeseries features, and other contextual information.
 An LSST science user will be able to use the contents of a single alert packet to make a decision that is both rapid and informed about whether the event is relevant to their scientific goals.
-LSST expects to produce up to about ten million of these alerts nightly\footnote{Transients in the alert stream are required to be 90\% complete and 95\% pure at 6$\sigma$ \citeds{LSE-30}, so less than 5\% of the alert stream will consist of false positives.}.
+LSST expects to produce up to about ten million of these alerts nightly\footnote{The LSST alert stream will contain essentially all DIASources detected at 5$\sigma$ in the difference image, including a currently unknown fraction of artifacts. 
+LSST will provide a threshold that may be used to filter transients in the alert stream to 90\% completeness and 95\% purity at 6$\sigma$ \citeds{LSE-30}, so less than 5\% of alerts filtered in this manner will be artifacts.
+By varying the cutoff spuriousness value users may adopt other tradeoffs between completeness and purity as well.}.
 The resulting \textit{alert stream} will be large---more than 1\,TB nightly---but will contain all classes of astrophysical events, from the youngest supernovae to the most distant RR Lyrae to the slowest-moving Trans-Neptunian Objects to the most unexpected new phenomena.
 The task for the scientist is to identify the small subset of events of interest in the larger alert stream.
 
