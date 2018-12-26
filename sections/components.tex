@@ -6,7 +6,7 @@ In this section we provide a high-level overview of the LSST Alert Production pr
 
 \subsubsection{Data Acquisition, Transfer, and Processing}
 
-LSST will survey the sky repeatedly using standard or alternative standard visits (currently baselined as $2\times15$\,second exposures in a single band or $1\times30$\,second exposure, respectively).  
+LSST will survey the sky repeatedly using standard or alternative standard visits (currently baselined as $2\times15$\,second exposures in a single band or a single 30\,second exposure, respectively).  
 Immediately after the camera shutter closes, the images will be transferred via fiber networks to the LSST Data Facility (LDF; \S \ref{sec:LDF}) at the National Center for Supercomputing Applications (NCSA) in Illinois.
 All subsequent data processing leading to alerts occurs in the LDF.
 
@@ -53,11 +53,11 @@ At this point, the {\tt DIASource} will be used to create an alert packet (\S \r
 
 After the completion of a night of observing,
 the LSST Moving Objects Processing System (MOPS; \citeds{LDM-156}) will attempt to identify \textit{new} \texttt{SSObjects} using the updated Prompt Products Database (\S \ref{sec:ppdb}).
-MOPS algorithms form tracklets from single-apparition \texttt{DIASources} taken during one night, generate tracks between nights, and fit orbits to identify and characterize moving objects.
+MOPS algorithms form tracklets from pairs of single-apparition \texttt{DIASources} taken during one night, generate tracks between nights, and fit orbits to identify and characterize moving objects.
 Newly identified moving objects are added to the {\tt SSObject} catalog.
 MOPS will interface with the Minor Planets Center (MPC) and will ingest all previously known or externally identified moving objects into the {\tt SSObjects} catalog, and use MPC astrometry in the orbital parameter fits.
 Users interested in newly-discovered asteroids will need to query the \texttt{SSObject} catalog or the MPC to identify them.
-The first time a new \texttt{SSObject} is discovered, MOPS will associate past \texttt{DIAsources} with the new \texttt{SSObject} as far back as is practical.
+The first time a new \texttt{SSObject} is discovered, MOPS will associate past \texttt{DIAsources} with the new \texttt{SSObject} as far back as is practical from the accuracy of the orbit.
 However, revised alerts will not be issued.
 Future LSST detections of the new \texttt{SSObject} will produce alerts attributed to the \texttt{SSObject}.
 
@@ -69,14 +69,14 @@ LSST is prototyping  a bulk transport system built on the open-source distribute
 Initial tests indicate that this system performs effectively at the required scale \citedsp{DMTN-028}.
 
 
-Due to the finite bandwidth out of the LDF, only a limited number of selected community brokers will receive the full alert stream.
+An allocation of 10\,Gbps is baselined for alert stream transfer from the LDF, with an estimated packet size of 82\,KB and up to 10,000 alerts per visit.
+Due to the finite bandwidth out of the LDF, only a limited number of selected community brokers can receive the full alert stream.
 It will not be possible for individual science users to subscribe directly to the full LSST alert stream. 
 Rather, science users may access LSST alerts through a community broker, or through the alert filtering service (\S \ref{sec:filtering_service}) if they have data access rights (\S \ref{sec:data_rights}).
-An allocation of 10\,Gbps is baselined for alert stream transfer from the LDF, with an estimated packet size of 82\,KB and up to 10,000 alerts per visit.
 For illustration, based on these numbers up to 7 brokers could receive the full stream if 5\,seconds is budgeted for outbound data transfer.
-The selection process described in \S \ref{sec:community_brokers} is most appropriate for this number of streams, 
-If only one or two full streams could be supported more explicit requirements on the selected brokers would be needed; if tens of full streams could be supported a simpler selection process could be used. 
 The eventual number of selected community brokers (\S \ref{sec:numbrokers}) is still to be determined, as it depends on several quantities including available network capacity, packet size, number of alerts per visit, and the rate of alert distribution.
+The broker selection process described in \S \ref{sec:community_brokers} is most appropriate for the current estimate. 
+If only one or two full streams could be supported more explicit requirements on the selected brokers would be needed; if tens of full streams could be supported a simpler selection process could be used. 
 
 
 \subsubsection{The LSST Alert Filtering Service}\label{sec:filtering_service}
@@ -85,7 +85,7 @@ The LSST alert filtering service provides a means of real-time access to a subse
 Using the Science Platform (\S \ref{sec:LSP}),
 users can upload simple filters (filters which only use information within the alert packet) and receive on their own computer a real-time stream of alerts which pass their filter.
 This capability is expected to be useful for science cases requiring real-time notification that may be too specific to be well-served by community brokers.
-The alert filtering service is required to support 100 simultaneous users; limits on resource usage and bandwidth (support for transmission of up to 20 full-sized alerts per visit per filter is required) will be imposed to maintain performance\footnote{
+The alert filtering service is required to support a minimum of 100 simultaneous users; limits on resource usage and bandwidth (support for transmission of up to 20 full-sized alerts per visit per filter is required) will be imposed to maintain performance\footnote{
 The requirement on the number of simultaneously connected users and number of passed alerts is largely driven by outbound bandwidth limitations from the DAC at NCSA. 
 We are investigating approaches that would support larger numbers of active filters.
 Users with data rights that do not require real-time notification can also programatically query the Prompt Products Database to identify \texttt{DIAObjects} or \texttt{SSObjects} of interest without using the LSST alert filtering service.}.
@@ -97,11 +97,11 @@ The LSST alert filtering service will support a version of the \texttt{VOEvent} 
 Measurements of \texttt{DIAObjects} that are below the ${\rm SNR} > 5$ threshold are available through ``forced photometry'': flux is measured at a previously-known position.
 Forced photometry is performed on difference images in two ways; neither contributes to alerts, but are available to users through the Science Platform.
 First, during the real-time difference image analysis, forced photometry is performed on every difference image at the locations of all previously-known {\tt DIAObjects} detected in a past interval to be determined.
-The resulting measurements are stored in the Prompt Products Database (\S \ref{sec:ppdb}).
+The resulting measurements are stored in the Prompt Products Database (\S \ref{sec:ppdb}) and are queryable within 24 hours.
 Second, at the end of the night, ``precovery'' forced photometry will be performed for all \textit{new} \texttt{DIAObjects} on every difference image from the past 30 days.
 These results are also stored in the Prompt Products database and will be available within 24 hours.
  
-Additionally, a service shall be provided to users to obtain full-survey precovery for a limited number of {\tt DIAObjects}, also within 24 hours (DMS-REQ-0341, \citeds{LSE-61}).
+Additionally, a service shall be provided to users to obtain full-survey precovery for a limited number of user-specified {\tt DIAObjects}, also within 24 hours (DMS-REQ-0341, \citeds{LSE-61}).
 This service will be made available through the Science Platform.
 
 \subsubsection{The LSST Science Platform} \label{sec:LSP}
@@ -131,7 +131,13 @@ updated \texttt{DIASource} lightcurve.
 The full list of parameters that are measured and included in the {\tt DIASource} and {\tt DIAObject} records are provided in Tables 1 and 2 of \citeds{LSE-163}, respectively.
 %The average size of an {\tt Alert} packet will be {\bf XXX?} kilobytes and {\bf XXX?} \% of this is the postage stamp.
 The only trigger for an {\tt Alert} is the detection of a source in a difference image with ${\rm SNR} > 5$. 
-Thus, objects that are saturated in the visit or template image, or objects that are the same brightness as in the visit and template images will not generate an {\tt Alert}.
+Thus, objects that are saturated in the visit or template image, or objects that are the same brightness in both the visit and template images will not generate an {\tt Alert}.
+Imperfect subtractions may create artifacts with ${\rm SNR} > 5$; 
+these will generally lead to an \texttt{Alert}, subject to overall capacity limits.
+A machine-learned spuriousness score will be provided for each \texttt{DIASource} triggering an \texttt{Alert}, so users may filter the stream for greater completeness or purity depending on their scientific needs.
+The spuriousness classifier is required to achieve 
+90\% completeness and 95\% purity at 6$\sigma$ \citedsp{LSE-30} at a threshold spuriousness value.
+
 
 \subsubsection{Processed Images} \label{sec:products}
 
