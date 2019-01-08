@@ -29,7 +29,7 @@ It will host a copy of the raw data and processed data products and run a versio
 
 LSST Data Management (DM) Alert Production (AP) processes data during the night and generates alerts.
 It is described in \citeds{LSE-163}, with detailed descriptions of its constituent pipelines and algorithmic components provided in \citeds{LDM-151}.
-The basic modules include single-frame image processing (e.g., instrument signature removal, photometric and astrometric calibration), difference image analysis (DIA; the subtraction of the new visit image from a coadded template image constructed from the most recent Data Release), and source detection, association, and measurement \citedsp{LSE-163}.
+The basic modules include single-frame image processing (e.g., instrument signature removal, photometric and astrometric calibration), difference image analysis (DIA; the subtraction of a coadded template image constructed from the most recent Data Release from the new visit image), and source detection, association, and measurement \citedsp{LSE-163}.
 AP will process all standard and alternative standard visits, whether obtained as part of the main wide-fast-deep survey or a Special Program \citedsp{DMTN-065} and generate alerts within the required 60 seconds after the shutter closes (DMS-REQ-0004, \citeds{LSE-61})\footnote{
 AP may also be able to process non-standard visits with longer or shorter exposure times provided that, e.g., the visit image can be successfully PSF-matched and differenced with a template image.
 Alert generation in crowded fields may produce more than the maximum of 10,000 alerts per visit required to be supported by DM; alert generation in this circumstance is still under study.
