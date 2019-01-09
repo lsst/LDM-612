@@ -34,20 +34,31 @@
 
 \title{Plans and Policies for LSST Alert Distribution}
 \author{
-Eric C. Bellm, Robert Blum, Melissa L.~Graham, \v{Z}eljko Ivezi\'{c}, William O'Mullane, Maria T.~Patterson,  and Beth Willman
-     \emph{for the LSST Project}
+Eric~Bellm,
+Robert~Blum,
+Melissa~Graham,
+Leanne~Guy,
+\v{Z}eljko~Ivezi\'{c},
+William~O'Mullane,
+Maria~Patterson,
+John~Swinbank,
+and Beth~Willman
+\emph{for the LSST Project}
 }
 
-\setDocRef{LDM-612}
-\setDocCurator{E.C.~Bellm}
-\date{\today}
+\input{meta}
+\setDocRef{\lsstDocType-\lsstDocNum}
+\setDocCurator{E.~Bellm}
+\setDocDate{\vcsdate}
+\setDocUpstreamVersion{\vcsrevision}
+\setDocUpstreamLocation{\url{https://github.com/lsst/LDM-612}}
 
 \setDocAbstract{%
 A major product of the nightly processing of LSST images is a world-public stream of alerts from transient, variable, and moving sources.
 Science users will access these alerts through community brokers or through a simple filtering service provided by LSST.
 This document provides a guide to the plans and policies for the alert distribution system to aid science users, broker developers, funding agencies, and LSST Project personnel.
 It describes the components of the alert distribution system and the data rights required to access specific scientific products.
-It provides guidelines for organizations developing community brokers 
+It provides guidelines for organizations developing community brokers
 and describes the planned capabilities of the LSST simple alert filtering service and Science Platform to aid science users in planning for LSST science.
 }
 
@@ -56,7 +67,8 @@ and describes the planned capabilities of the LSST simple alert filtering servic
 %
 % OLDEST FIRST: VERSION, DATE, DESCRIPTION, OWNER NAME
 \setDocChangeRecord{%
-\addtohist{1}{2018-12-13}{Initial version}{Eric Bellm}
+\addtohist{}{2018-12-26}{Initial draft version}{Eric Bellm}
+\addtohist{1.0}{2019-01-08}{Approved in \jira{RFC-556}.}{Approver: W.~O'Mullane}
 }
 
 

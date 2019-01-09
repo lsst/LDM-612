@@ -32,11 +32,9 @@ meta.tex: Makefile .FORCE
 	/bin/echo '\newcommand{\vcsrevision}{$(GITVERSION)$(GITDIRTY)}' >>$@
 	/bin/echo '\newcommand{\vcsdate}{$(GITDATE)}' >>$@
 
-tex=$(filter-out $(wildcard *acronyms.tex) , $(wildcard *.tex sections/*tex))  
+tex=$(filter-out $(wildcard *acronyms.tex) , $(wildcard *.tex sections/*tex))
 
 
 #The generateAcronyms.py  script is in lsst-texmf/bin - put that in the path
 acronyms.tex :$(tex) myacronyms.txt
 	generateAcronyms.py   $(tex)
-
-
