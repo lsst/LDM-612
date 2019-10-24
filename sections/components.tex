@@ -35,7 +35,7 @@ AP will process all standard and alternative standard visits, whether obtained a
 AP may also be able to process non-standard visits with longer or shorter exposure times provided that, e.g., the visit image can be successfully PSF-matched and differenced with a template image.
 Alert generation in crowded fields may produce more than the maximum of 10,000 alerts per visit required to be supported by DM; alert generation in this circumstance is still under study.
 }.
-Due to the need for Data Release Production-derived templates, Alert Production cannot run at full scale and full fidelity during commissioning nor the first year of operations.  LSST DM is currently investigating options for Alert Production in year one.
+Due to the need for Data Release Production-derived templates, Alert Production cannot run at full scale and full fidelity during commissioning nor the first year of operations.  LSST DM is currently investigating options for Alert Production in year one \newtext{\citedsp{DMTN-107}}.
 
 All sources in a difference image that have a signal-to-noise ratio ${\rm SNR}>5$ in positive or negative flux are considered ``detected" \texttt{DIASources}, are incorporated into the {\tt DIASource} catalog, and will cause an alert to be issued\footnote{
 There may be exceptions to this rule, such as the following two examples.
@@ -66,7 +66,7 @@ Future LSST detections of the new \texttt{SSObject} will produce alerts attribut
 \subsubsection{Alert Distribution} \label{sec:alert_distribution}
 
 Alert packets (\S \ref{sec:packets}) will be queued for distribution to community brokers (\S \ref{sec:community_brokers}) and the LSST alert filtering service (\S \ref{sec:filtering_service}).
-LSST is prototyping  a bulk transport system built on the open-source distributed queue system Apache Kafka\footnote{\url{http://kafka.apache.org/}}, with Apache Avro\footnote{\url{http://avro.apache.org/}} used as a binary serialization format.
+LSST is prototyping  a bulk transport system built on the open-source distributed queue system Apache Kafka\footnote{\url{http://kafka.apache.org/}}, with Apache Avro\footnote{\url{http://avro.apache.org/}} used as a binary serialization format \newtext{\citedsp{DMTN-093}}.
 Initial tests indicate that this system performs effectively at the required scale \citedsp{DMTN-028}.
 
 
@@ -74,10 +74,11 @@ An allocation of 10\,Gbps is baselined for alert stream transfer from the LDF, w
 Due to the finite bandwidth out of the LDF, only a limited number of selected community brokers can receive the full alert stream.
 It will not be possible for individual science users to subscribe directly to the full LSST alert stream.
 Rather, science users may access LSST alerts through a community broker, or through the alert filtering service (\S \ref{sec:filtering_service}) if they have data access rights (\S \ref{sec:data_rights}).
-For illustration, based on these numbers up to 7 brokers could receive the full stream if 5\,seconds is budgeted for outbound data transfer.
+\oldtext{For illustration, based on these numbers up to 7 brokers could receive the full stream if 5\,seconds is budgeted for outbound data transfer.}
 The eventual number of selected community brokers (\S \ref{sec:numbrokers}) is still to be determined, as it depends on several quantities including available network capacity, packet size, number of alerts per visit, and the rate of alert distribution.
-The broker selection process described in \S \ref{sec:community_brokers} is most appropriate for the current estimate.
-If only one or two full streams could be supported more explicit requirements on the selected brokers would be needed; if tens of full streams could be supported a simpler selection process could be used.
+\newtext{A minimum of five full streams is required to be supported \citedsp{LSE-61}.}
+\oldtext{The broker selection process described in \S \ref{sec:community_brokers} is most appropriate for the current estimate.
+If only one or two full streams could be supported more explicit requirements on the selected brokers would be needed; if tens of full streams could be supported a simpler selection process could be used.}
 
 
 \subsubsection{The LSST Alert Filtering Service}\label{sec:filtering_service}
