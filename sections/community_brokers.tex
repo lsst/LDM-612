@@ -8,8 +8,8 @@ By receiving the LSST alert stream, adding value, and redistributing it to the s
 We envision that community brokers, individually or jointly, may provide a variety of functions.  These may include, but are not limited to:
 
 \begin{itemize}
-	\item redistributing alert packets
-	\item filtering alerts
+	\item redistributing alert packets \newtext{to a defined or world-wide community}
+	\item filtering alerts \newtext{for specific science goals or to remove potentially spurious alerts\footnote{trading completeness for purity}}
 	\item cross-correlating LSST alerts with other static catalogs or alert streams
 	\item classifying events scientifically
 	\item providing user interfaces to the data
@@ -27,19 +27,21 @@ For simplicity, we will here refer to any system that connects directly to the L
 
 Because of the large data volume of the alert stream (several TB per night), finite bandwidth from the LSST datacenter prevents sending a full copy of the alert stream to all interested parties.
 Additionally, we anticipate that community brokers will require some level of support from the LSST operations team.
-Accordingly, LSST will conduct an open proposal process in order to select brokers with sufficient technical capability to enable valuable and reliable scientific returns.
+Accordingly, LSST \oldtext{will}\newtext{is} conduct\newtext{ing} an open proposal process in order to select brokers with sufficient technical capability to enable valuable and reliable scientific returns.
 
 We believe the scientific community will be best served by a rich broker ecosystem offering diverse capabilities.
-Any institution worldwide may submit a Letter of Intent (\S \ref{sec:LOIs}), and if invited, a full proposal.
-Demonstration of appropriate technical and personnel resources to support the proposed goals will be the minimum requirement to be considered.
+Any institution worldwide \oldtext{may}\newtext{was allowed to} submit a Letter of Intent (\S \ref{sec:LOIs}), and if invited, a full proposal.
+Demonstration of appropriate technical and personnel resources to support the proposed goals \oldtext{will be}\newtext{were} the minimum requirement to be considered.
 
-Recognizing that different science goals may benefit from different technical approaches, and that proposing institutions may have a range of strengths and experience, the proposal solicitation will not place any explicit functional requirements on proposed brokers.
+Recognizing that different science goals may benefit from different technical approaches, and that proposing institutions may have a range of strengths and experience, the proposal solicitation \oldtext{will}\newtext{does} not place any explicit functional requirements on proposed brokers.
 Thus a proposed broker is not \textit{required} to consume the whole stream, to redistribute the full stream, to operate for the full ten-year survey, or to make its products world-public, for example.
 However, given the small and finite number of brokers to be selected (\S \ref{sec:numbrokers}) and the evaluation criteria (\S \ref{sec:evaluation}), proposals offering to do so will be more likely to be selected.
 The selection committee will evaluate the proposals holistically, weighing the unique capabilities proposed in order to maximize the scientific output of LSST.
 
-While we expect the evaluation process to favor proposals that receive the full alert stream, brokers may propose to receive only a filtered subset of events (or a subset of the alert packet contents).
-We anticipate that this facility would be provided by the same technology underlying the LSST alert filtering service, potentially with less restrictive requirements than are placed on user-provided filters.
+While we expect the evaluation process to favor proposals that receive the full alert stream, brokers may propose to receive only a filtered subset of events (or a subset of the alert packet contents) \newtext{from LSST}.
+We anticipate that this \oldtext{facility}\newtext{capability} would be provided by the same technology underlying the LSST alert filtering service, potentially with less restrictive requirements than are placed on user-provided filters.
+\newtext{Some broker services, particularly those processing only a small subset of alerts, may elect to receive alerts from other community brokers rather than from the LDF directly.
+Brokers requesting direct access to the alert stream who agree to forward alerts to downstream services will be favored in the selection process.}
 
 \subsection{The Broker Selection Panel}
 
@@ -55,7 +57,7 @@ An invitation to submit a full proposal may also be valuable to proposers in obt
 No financial support is available from the LSST Project.
 The LOI call \oldtext{is}\newtext{was} issued in \citeds{LDM-682}.
 
-LOIs \oldtext{will be}\newtext{were} evaluated using the same criteria as the full proposals (\S \ref{sec:resources}--\ref{sec:evaluation}), with recognition that the proposed brokers may be in the conceptual or early design stage at the time of the LOI.
+LOIs \oldtext{will be}\newtext{were} evaluated using the same criteria as the full proposals (\S \ref{sec:resources}--\ref{sec:evaluation}), with recognition that the proposed brokers may \oldtext{be}\newtext{have been} in the conceptual or early design stage at the time of the LOI.
 
 \subsection{Call for Proposals} \label{sec:CfP}
 
@@ -75,7 +77,7 @@ At minimum, this requires:
 	\item Databases capable of handling billions of sources
 	\item Compute resources to handle sophisticated classification and filtering tasks in real time at scale
 	\item Appropriate personnel and sufficient effort to develop the required software and to maintain and operate the service
-	\item Institutional support to ensure the longevity and stability of the service and software.
+	\item Institutional support to ensure the longevity and stability of the service and software.  \newtext{By default selected brokers will be expected to plan to operate for the full ten-year survey.}
 	\item Discussion of funding sources to support broker development and operations.
 \end{itemize}
 
@@ -94,7 +96,7 @@ The panel will prioritize proposals that require or take advantage of the unique
 \subsubsection{Availability to the World Community}
 
 Because community brokers are the means by which scientists without LSST data rights may access the public contents of the alert packets, the panel will prefer proposals that make their products and services world-public.
-\newtext{At least one broker that provides public access to alerts will be selected.}
+\newtext{At least one broker that provides world-public access to alerts will be selected.}
 
 \subsubsection{Scientific Validity}
 
@@ -149,7 +151,7 @@ Broker selections may be changed or additional new brokers added due to changes 
 
 \subsection{Resources for Proposers}
 
-To aid in broker development and testing, at the time of the full broker proposal solicitation LSST will make available pre-packaged alert streams for precursor and/or simulated datasets generated by the LSST Alert Production pipelines and distributed with the expected formats and protocols.
+To aid in broker development and testing, \oldtext{at the time of the full broker proposal solicitation} LSST will make available pre-packaged alert streams for precursor and/or simulated datasets generated by the LSST Alert Production pipelines and distributed with the expected formats and protocols.
 
 \subsection{Resources for Selected Brokers}
 
@@ -171,19 +173,21 @@ The calendar-year timeline presented below is the current best estimate based on
 		\item \textit{Q1} Issue call for Letters of Intent (LOI)
 		\item \textit{Q2} Letters of intent due
 		\item \textit{June} Broker development workshop (invited LOI writers)
-		\item \textit{Q3} Document bulk transport format and interface
-		\item \textit{Q3} Set up test alert stream with sample precursor data
-		\item \textit{Q4} Invite full proposals for community brokers from selected LOIs
+		\item \oldtext{\textit{Q3} Document bulk transport format and interface}
+		\item \oldtext{\textit{Q3} Set up test alert stream with sample precursor data}
+		\item \textit{Q4} \newtext{Revise this document.} Invite full proposals for community brokers from selected LOIs
 		\end{itemize}
 	\item \begin{itemize} %2020
-		\item \textit{Q2} Broker proposals due
+		\item \newtext{\textit{Q1} Document bulk transport format and interface. Distribute alert stream test software.}
+		\item \oldtext{\textit{Q3}}\newtext{June 15} Broker proposals due
 		\item \textit{Q3} Provisional broker selections made
 		\end{itemize}
 \end{enumerate}
 }
 
-Subsequent steps depend on major commissioning milestones and will shift according to the evolving commissioning schedule.
+Subsequent steps depend on major commissioning milestones and will shift according to the evolving commissioning schedule\footnote{\newtext{See \url{https://www.lsst.org/about/project-status}.}}.
 Alerts are provided during commissioning to enable engineering tests of broker interfaces.
+\newtext{Data Release Scenarios are described in \citeds{LSO-011}.}
 
 \oldtext{
 \begin{itemize}
@@ -200,5 +204,3 @@ Alerts are provided during commissioning to enable engineering tests of broker i
 	\item \textbf{Full LSST operations} \textit{currently Q4 2022}
 \end{itemize}
 }
-
-\newtext{\textbf{updated timeline with estimates of DPs, commissioning,  LOY1 ...  Cite LSO-011.}}
