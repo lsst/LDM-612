@@ -8,8 +8,9 @@ Key numbers for Alert Production are summarized in \citeds{DMTN-102}.
 \subsubsection{Data Acquisition, Transfer, and Processing}
 
 LSST will survey the sky repeatedly using standard or \newtext{``}alternative standard\newtext{''} visits (currently baselined as $2\times15$\,second exposures in a single band or a single 30\,second exposure, respectively).
-Immediately after the camera shutter closes, the images will be transferred via fiber networks to the LSST Data Facility (LDF; \S \ref{sec:LDF}) at the National Center for Supercomputing Applications (NCSA) in Illinois.
+Immediately after the camera \oldtext{shutter closes}\newtext{reads out}, the images will be transferred via fiber networks to the LSST Data Facility (LDF; \S \ref{sec:LDF}) at the National Center for Supercomputing Applications (NCSA) in Illinois.
 All subsequent data processing leading to alerts occurs in the LDF.
+\newtext{Alerts will be distributed from the LDF within 60 seconds of the camera readout completing.}
 
 \subsubsection{The LSST Data Facility and Data Access Centers} \label{sec:LDF}
 
@@ -31,11 +32,11 @@ It will host a copy of the raw data and processed data products and run a versio
 LSST Data Management (DM) Alert Production (AP) processes data during the night and generates alerts \newtext{in close to real-time}.
 It is described in \citeds{LSE-163}, with detailed descriptions of its constituent pipelines and algorithmic components provided in \citeds{LDM-151}.
 The basic modules include single-frame image processing (e.g., instrument signature removal, photometric and astrometric calibration), difference image analysis (DIA; the subtraction of a coadded template image constructed from the most recent Data Release from the new visit image), and source detection, association, and measurement \citedsp{LSE-163}.
-AP will process all standard and alternative standard visits, whether obtained as part of the main wide-fast-deep survey or a Special Program \citedsp{DMTN-065} and generate alerts within the required 60 seconds after the shutter closes (DMS-REQ-0004, \citeds{LSE-61})\footnote{
+AP will process all standard and alternative standard visits, whether obtained as part of the main wide-fast-deep survey or a Special Program \citedsp{DMTN-065} and generate alerts within the required 60 seconds after the \oldtext{shutter closes}\newtext{camera readout completes} (DMS-REQ-0004, \citeds{LSE-61})\footnote{
 AP may also be able to process non-standard visits with longer or shorter exposure times provided that, e.g., the visit image can be successfully PSF-matched and differenced with a template image.
 Alert generation in crowded fields may produce more than the maximum of 10,000 alerts per visit required to be supported by DM; alert generation in this circumstance is still under study.
 }.
-Due to the need for Data Release Production-derived templates, Alert Production cannot run at full scale and full fidelity during commissioning nor the first year of operations.  LSST DM is currently investigating options for Alert Production in year one \newtext{\citedsp{DMTN-107}}.
+Due to the need for Data Release Production-derived templates, Alert Production cannot run at full scale and full fidelity during neither commissioning nor the first year of operations.  LSST DM is currently investigating options for Alert Production in year one \newtext{\citedsp{DMTN-107}}.
 %LSE-459
 
 All sources in a difference image that have a signal-to-noise ratio ${\rm SNR}>5$ in positive or negative flux are considered ``detected" \texttt{DIASources}, are incorporated into the {\tt DIASource} catalog, and will cause an alert to be issued\footnote{
@@ -45,21 +46,21 @@ a to-be-developed spuriousness or real/bogus classifier \citedsp{LDM-151}, may n
 The limit on false positives is set by the requirement that the alert stream be 90\% complete at 95\% purity for \texttt{DIASources} of SNR $= 6$ \citeds{LSE-61}.
 (2) Sources with ${\rm SNR} < 5$ that meet other to-be-determined criteria, such as the likelihood of being a potentially hazardous asteroid, could produce alerts.}.
 Additionally some ${\rm SNR} < 5$ sources will be kept for diagnostic purposes, but will not lead to alerts.
-Source association and measurement occurs prior to alert generation: every {\tt DIASource} will have one unique match to a {\tt DIAObject} (stationary object) or known Solar System Object {\tt SSObject} (moving object; see Section \ref{sec:AGP_MOPS}).
+Source association and measurement occurs prior to alert generation: every {\tt DIASource} will have one unique match to a {\tt DIAObject} (stationary object) or known Solar System Object {\tt SSObject} (moving object; see Section \ref{sec:AGP_SSP}).
 The stationary source association algorithms will be probabilistic and incorporate motion models for parallax and proper motion \citedsp{LDM-151}.
 If no association is possible a new {\tt DIAObject} will be created.
 Source measurements including centroid, fluxes, shapes, and other characterization parameters (Table 1 of \citeds{LSE-163}) are made, and the time-evolving parameters of the {\tt DIAObject} such as the parallax, mean flux, and periodic/non-periodic light curve features, will be updated to include the new associated {\tt DIASource}.
 At this point, the {\tt DIASource} will be used to create an alert packet (\S \ref{sec:packets}), regardless of whether the \texttt{DIASource} is associated with a new \texttt{DIAObject}, a previously-existing \texttt{DIAObject}, or an \texttt{SSObject}.
 
-\subsubsection{Moving Objects Processing System}\label{sec:AGP_MOPS}
+\subsubsection{Solar System Processing}\label{sec:AGP_SSP}
 
 After the completion of a night of observing,
-the LSST Moving Objects Processing System (MOPS; \citeds{LDM-156}) will attempt to identify \textit{new} \texttt{SSObjects} using the updated Prompt Products Database (\S \ref{sec:ppdb}).
-MOPS algorithms form tracklets from pairs of single-apparition \texttt{DIASources} taken during one night, generate tracks between nights, and fit orbits to identify and characterize moving objects.
+LSST Solar System Processing (SSP; \citeds{LDM-156}) will attempt to identify \textit{new} \texttt{SSObjects} using the updated Prompt Products Database (\S \ref{sec:ppdb}).
+SSP algorithms form tracklets from pairs of single-apparition \texttt{DIASources} taken during one night, generate tracks between nights, and fit orbits to identify and characterize moving objects.
 Newly identified moving objects are added to the {\tt SSObject} catalog.
-MOPS will \oldtext{interface with}\newtext{report candidate moving objects to} the Minor Planets Center (MPC)\newtext{, where they will be publicly available;} will ingest all previously known or externally identified moving objects into the {\tt SSObjects} catalog\oldtext{,}\newtext{;} and will use MPC astrometry in the orbital parameter fits.
+SSP will \oldtext{interface with}\newtext{report candidate moving objects to} the Minor Planets Center (MPC)\newtext{, where they will be publicly available;} will ingest all previously known or externally identified moving objects into the {\tt SSObjects} catalog\oldtext{,}\newtext{;} and will use MPC astrometry in the orbital parameter fits.
 Users interested in newly-discovered asteroids will need to query the \texttt{SSObject} catalog or the MPC to identify them.
-The first time a new \texttt{SSObject} is discovered, MOPS will associate past \texttt{DIAsources} with the new \texttt{SSObject} as far back as is practical from the accuracy of the orbit.
+The first time a new \texttt{SSObject} is discovered, SSP will associate past \texttt{DIAsources} with the new \texttt{SSObject} as far back as is practical from the accuracy of the orbit.
 However, revised alerts will not be issued.
 Future LSST detections of the new \texttt{SSObject} will produce alerts attributed to the \texttt{SSObject}.
 

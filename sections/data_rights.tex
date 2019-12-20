@@ -1,6 +1,6 @@
 \section{Data Rights to Alert Stream Components}\label{sec:data_rights}
 
-LSST data rights and data access policies are formally described in the LSST Data Rights Policy document, \newtext{LDO-013}\oldtext{, which is in development at this writing}.
+LSST data rights and data access policies are formally described in the LSST Data Rights Policy document, \newtext{\citeds{LDO-13}}\oldtext{, which is in development at this writing}.
 The interested reader is advised to consult that document for details.
 We summarize here for convenience those aspects of the policy that pertain to LSST alerts.
 In the case of any discrepancy between this document and the LSST Data Rights Policy document, the LSST Data Rights Policy document shall take precedence.
@@ -10,6 +10,10 @@ We use ``public'' here in the sense that alert packets can be freely shared with
 However, LSST does not have the bandwidth to serve the full alert stream directly to individuals; thus, the term ``public'' means ``shareable'' and should not be misinterpreted as ``freely available.''
 
 Instead, the LSST alert stream will be delivered to a to-be-determined set of community brokers (Section \ref{sec:community_brokers}).
-Any institution worldwide may propose to host a broker.
+\oldtext{Any institution worldwide may propose to host a broker.}
 Brokers may share (or not share) the contents of alert packets with whomever they choose, although the broker selection process (\S \ref{sec:community_brokers}) will prioritize selection of brokers that will provide world-public access to their services.
 \newtext{The contents of the \DIAObject, \DIASource, \DIAForcedSource, and \SSObject tables held in the PPDB are also public and may be freely shared, although the ability to access and query the PPDBs held in LSST DACs is restricted to data rights holders.}
+
+\newtext{Access to proprietary LSST data (e.g., recent LSST images or the current LSST data release) is restricted to data rights holders.  
+Brokers run by LSST data rights holders may facilitate access to these data for data rights holders but may not redistribute proprietary data. 
+Proprietary data may be used as part of alert classification; the alert classifications are a derived data product and may be made public.}
