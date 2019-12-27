@@ -6,8 +6,8 @@ Key numbers for Alert Production are summarized in \citeds{DMTN-102}.
 \subsection{Facilities}
 
 \subsubsection{Data Acquisition, Transfer, and Processing}
-
-LSST will survey the sky repeatedly using standard or \newtext{``}alternative standard\newtext{''} visits (currently baselined as $2\times15$\,second exposures in a single band or a single 30\,second exposure, respectively).
+ 
+LSST will survey the sky repeatedly using standard or \oldtext{alternative}\newtext{alternate} standard visits (currently baselined as $2\times15$\,second exposures in a single band or a single 30\,second exposure, respectively).
 Immediately after the camera \oldtext{shutter closes}\newtext{reads out}, the images will be transferred via fiber networks to the LSST Data Facility (LDF; \S \ref{sec:LDF}) at the National Center for Supercomputing Applications (NCSA) in Illinois.
 All subsequent data processing leading to alerts occurs in the LDF.
 \newtext{Alerts will be distributed from the LDF within 60 seconds of the camera readout completing.}
@@ -72,15 +72,17 @@ LSST is prototyping  a bulk transport system built on the open-source distribute
 Initial tests indicate that this system performs effectively at the required scale \citedsp{DMTN-028}.
 
 
-An allocation of 10\,Gbps is baselined for alert stream transfer from the LDF, with an estimated packet size of 82\,KB and up to 10,000 alerts per visit.
+\oldtext{An allocation of 10\,Gbps is baselined for alert stream transfer from the LDF, with an estimated packet size of 82\,KB and up to 10,000 alerts per visit.}
 Due to the finite bandwidth out of the LDF, only a limited number of selected community brokers can receive the full alert stream.
 It will not be possible for individual science users to subscribe directly to the full LSST alert stream.
 Rather, science users may access LSST alerts through a community broker, or through the alert filtering service (\S \ref{sec:filtering_service}) if they have data access rights (\S \ref{sec:data_rights}).
 \oldtext{For illustration, based on these numbers up to 7 brokers could receive the full stream if 5\,seconds is budgeted for outbound data transfer.}
 \newtext{A minimum of five full streams is required to be supported \citedsp{LSE-61}.}
-The eventual number of selected community brokers (\S \ref{sec:numbrokers}) is still to be determined, as it depends on several quantities including available network capacity, packet size, number of alerts per visit, and the rate of alert distribution.
+The eventual number of selected community brokers (\S \ref{sec:numbrokers}) is still to be determined, as it depends on several quantities including available network capacity, packet size \newtext{and contents}, number of alerts per visit, and the rate of alert distribution.
 \oldtext{The broker selection process described in \S \ref{sec:community_brokers} is most appropriate for the current estimate.
 If only one or two full streams could be supported more explicit requirements on the selected brokers would be needed; if tens of full streams could be supported a simpler selection process could be used.}
+\newtext{Current alert packets are estimated to be about 82\,KB \citedsp{DMTN-102}. 
+Options to reduce the packet size are under consideration; these include removing postage stamps, reducing or removing history, or including only a subset of the \DIASource or \DIAObject record contents.}.
 
 
 \subsubsection{The LSST Alert Filtering Service}\label{sec:filtering_service}
