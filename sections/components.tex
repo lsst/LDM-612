@@ -125,8 +125,9 @@ The contents of an {\tt Alert} packet are fully described in Section 3.5.1 of \c
 \item the database record of the {\tt DIASource} that triggered the {\tt Alert}, as well as the \texttt{filterName} and \texttt{programId} of the corresponding \texttt{Visit}
 \item the entire associated {\tt DIAObject} or {\tt SSObject} record from the Prompt Products Database, which include a variety of variability metrics computed on the
 updated \texttt{DIASource} lightcurve.
-\item the previous 12 months of associated {\tt DIASource} records from the Prompt Products Database
-\item matching {\tt Object} IDs from the latest Data Release, if they exist, and 12 months of their {\tt DIASource} records
+\item \newtext{Any \texttt{DIASource} and \texttt{DIAForcedSource} records that exist, and difference image noise estimates where they do not, taken from the previous 12 months.} 
+\oldtext{the previous 12 months of associated {\tt DIASource} records from the Prompt Products Database}
+\item \oldtext{matching {\tt Object} IDs from the latest Data Release, if they exist, and 12 months of their {\tt DIASource} records}
 \item postage stamps of the difference image and template at the {\tt DIASource} location
 \end{enumerate}
 
