@@ -8,7 +8,7 @@ Key numbers for Alert Production are summarized in \citeds{DMTN-102}.
 \subsubsection{Data Acquisition, Transfer, and Processing}
  
 LSST will survey the sky repeatedly using standard or alternate standard visits (currently baselined as $2\times15$\,second exposures in a single band or a single 30\,second exposure, respectively).
-Immediately after the camera reads out, the images will be transferred via fiber networks to the LSST Data Facility (LDF; \S \ref{sec:LDF}) at the National Center for Supercomputing Applications (NCSA) in Illinois.
+Immediately after the camera reads out, the images will be transferred via fiber networks to the LSST Data Facility (LDF; \S \ref{sec:LDF})\oldtext{ at the National Center for Supercomputing Applications (NCSA) in Illinois}.
 All subsequent data processing leading to alerts occurs in the LDF.
 Alerts will be distributed from the LDF within 60 seconds of the camera readout completing.
 
@@ -125,8 +125,9 @@ The contents of an {\tt Alert} packet are fully described in Section 3.5.1 of \c
 \item the database record of the {\tt DIASource} that triggered the {\tt Alert}, as well as the \texttt{filterName} and \texttt{programId} of the corresponding \texttt{Visit}
 \item the entire associated {\tt DIAObject} or {\tt SSObject} record from the Prompt Products Database, which include a variety of variability metrics computed on the
 updated \texttt{DIASource} lightcurve.
-\item the previous 12 months of associated {\tt DIASource} records from the Prompt Products Database
-\item matching {\tt Object} IDs from the latest Data Release, if they exist, and 12 months of their {\tt DIASource} records
+\item \newtext{Any \texttt{DIASource} and \texttt{DIAForcedSource} records that exist, and difference image noise estimates where they do not, taken from the previous 12 months.} 
+\oldtext{the previous 12 months of associated {\tt DIASource} records from the Prompt Products Database}
+\item \oldtext{matching {\tt Object} IDs from the latest Data Release, if they exist, and 12 months of their {\tt DIASource} records}
 \item postage stamps of the difference image and template at the {\tt DIASource} location
 \end{enumerate}
 
