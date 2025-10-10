@@ -6,7 +6,7 @@ Key numbers for Alert Production are summarized in \citeds{DMTN-102}.
 \subsection{Facilities}
 
 \subsubsection{Data Acquisition, Transfer, and Processing}
- 
+
 LSST will survey the sky repeatedly using standard or alternate standard visits (currently baselined as $2\times15$\,second exposures in a single band or a single 30\,second exposure, respectively).
 Immediately after the camera reads out, the images will be transferred via fiber networks to the LSST Data Facility (LDF; \S \ref{sec:LDF}).
 All subsequent data processing leading to alerts occurs in the LDF.
@@ -77,7 +77,7 @@ It will not be possible for individual science users to subscribe directly to th
 Rather, science users may access LSST alerts through a community broker, or through the alert filtering service (\S \ref{sec:filtering_service}) if they have data access rights (\S \ref{sec:data_rights}).
 A minimum of five full streams is required to be supported \citedsp{LSE-61}.
 The eventual number of selected community brokers (\S \ref{sec:numbrokers}) is still to be determined, as it depends on several quantities including available network capacity, packet size and contents, number of alerts per visit, and the rate of alert distribution.
-Current alert packets are estimated to be about 82\,KB \citedsp{DMTN-102}. 
+Current alert packets are estimated to be about 82\,KB \citedsp{DMTN-102}.
 Options to reduce the packet size are under consideration; these include removing postage stamps, reducing or removing history, or including only a subset of the \DIASource or \DIAObject record contents.
 
 
@@ -125,7 +125,7 @@ The contents of an {\tt Alert} packet are fully described in Section 3.5.1 of \c
 \item the database record of the {\tt DIASource} that triggered the {\tt Alert}, as well as the \texttt{filterName} and \texttt{programId} of the corresponding \texttt{Visit}
 \item the entire associated {\tt DIAObject} or {\tt SSObject} record from the Prompt Products Database, which include a variety of variability metrics computed on the
 updated \texttt{DIASource} lightcurve.
-\item Any \texttt{DIASource} and \texttt{DIAForcedSource} records that exist, and difference image noise estimates where they do not, taken from the previous 12 months. 
+\item Any \texttt{DIASource} and \texttt{DIAForcedSource} records that exist, and difference image noise estimates where they do not, taken from the previous 12 months.
 \item postage stamps of the difference image and template at the {\tt DIASource} location
 \end{enumerate}
 
@@ -154,7 +154,7 @@ This database is queryable through any of the aspects of the Science Platform.
 
 \subsubsection{Data Release Products} \label{sec:drp}
 
-Annual\footnote{There will be an additional initial data release containing data from the first six months of operations \citedsp{LSO-011}.}  releases of all the LSST data will include processed and stacked images, catalogs of {\tt Sources}, {\tt ForcedSources}, and {\tt Objects} from measurements on the stacked and individual images, as well as calibration information.
+Annual\footnote{There will be an additional initial data release containing data from the first six months of operations \citedsp{RDO-011}.}  releases of all the LSST data will include processed and stacked images, catalogs of {\tt Sources}, {\tt ForcedSources}, and {\tt Objects} from measurements on the stacked and individual images, as well as calibration information.
 It will also include a  reprocessing of all images with the latest pipelines and full-survey versions of {\tt DIASource} and {\tt DIAObject} catalogs---i.e., the variability characterization parameters are calculated from the entire survey to date.
 All of these products are queryable through the Science Platform.
 
