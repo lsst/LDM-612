@@ -1,6 +1,7 @@
 ## Ignore generated PDF and intermediate build files:
 LDM-612.pdf
 meta.tex
+authors.tex
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
@@ -14,6 +15,7 @@ meta.tex
 *.fot
 *.cb
 *.cb2
+*.xdv
 
 ## Intermediate documents:
 *.dvi
